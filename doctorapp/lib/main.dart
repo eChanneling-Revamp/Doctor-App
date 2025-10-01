@@ -34,6 +34,8 @@ class DoctorApp extends StatelessWidget {
         ),
       ),
       home: const SplashScreen(),
+      routes: {
+        '/home': (context) => const HomeScreen(),
         '/signin': (context) => const SignInScreen(),
         '/splash': (context) => const SplashScreen(),
         '/onboarding': (context) => const OnboardingScreen(),
