@@ -117,4 +117,93 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
+
+// Custom Checkbox
+class CustomCheckbox extends StatelessWidget {
+  final bool value;
+  final Function(bool?) onChanged;
+  final String text;
+
+  const CustomCheckbox({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Checkbox(
+          value: value,
+          onChanged: onChanged,
+          activeColor: const Color(0xFF4A3FFF),
+        ),
+        Text(text, style: TextStyle(color: Colors.grey.shade700, fontSize: 14)),
+      ],
+    );
+  }
+}
+
+// Divider with Text
+class DividerWithText extends StatelessWidget {
+  final String text;
+
+  const DividerWithText({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: Container(height: 1, color: Colors.grey.shade300)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+          ),
+        ),
+        Expanded(child: Container(height: 1, color: Colors.grey.shade300)),
+      ],
+    );
+  }
+}
+
+// Fingerprint Button
+class FingerprintButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const FingerprintButton({super.key, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.fingerprint,
+              size: 30,
+              color: Colors.black54,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Use Fingerprint',
+            style: TextStyle(fontSize: 14, color: Colors.black54),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 }
