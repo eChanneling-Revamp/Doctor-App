@@ -206,6 +206,45 @@ class FingerprintButton extends StatelessWidget {
   }
 }
 
+// OTP Input Field
+class OTPInputField extends StatelessWidget {
+  final TextEditingController controller;
+  final bool autoFocus;
+  final Function(String) onChanged;
+
+  const OTPInputField({
+    super.key,
+    required this.controller,
+    this.autoFocus = false,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 60,
+      height: 60,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: TextFormField(
+        controller: controller,
+        autofocus: autoFocus,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        keyboardType: TextInputType.number,
+        maxLength: 1,
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          counterText: '',
+        ),
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        onChanged: onChanged,
+      ),
+    );
+  }
+}
 // Back Button
 class CustomBackButton extends StatelessWidget {
   final VoidCallback? onPressed;
