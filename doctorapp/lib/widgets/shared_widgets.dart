@@ -245,6 +245,40 @@ class OTPInputField extends StatelessWidget {
     );
   }
 }
+
+// Password Strength Indicator
+class PasswordStrengthIndicator extends StatelessWidget {
+  final String label;
+  final bool isValid;
+
+  const PasswordStrengthIndicator({
+    super.key,
+    required this.label,
+    required this.isValid,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          isValid ? Icons.check : Icons.close,
+          size: 16,
+          color: isValid ? Colors.green : Colors.grey,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            color: isValid ? Colors.green : Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 // Back Button
 class CustomBackButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -258,4 +292,5 @@ class CustomBackButton extends StatelessWidget {
       icon: const Icon(Icons.arrow_back, color: Colors.black87),
     );
   }
+
 }
