@@ -4,6 +4,8 @@ import 'screens/splash_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/signin_screen.dart';
 import 'screens/forgot password/forgot_password_screen.dart';
+import 'screens/forgot password/verification_code_screen.dart';
+import 'screens/forgot password/new_password_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/singup/signup_screen.dart';
 import 'screens/singup/signup_photo_screen.dart';
@@ -40,6 +42,8 @@ class DoctorApp extends StatelessWidget {
         '/signin': (context) => const SignInScreen(),
         '/splash': (context) => const SplashScreen(),
         '/forgot-password': (context) => const ForgotPasswordScreen(),
+        '/verification': (context) => const VerificationCodeScreen(),
+        '/new-password': (context) => const NewPasswordScreen(),
         '/onboarding': (context) => const OnboardingScreen(),
         '/signup': (context) => const SignUpScreen(),
         '/signup-photo': (context) => const SignUpPhotoScreen(),
