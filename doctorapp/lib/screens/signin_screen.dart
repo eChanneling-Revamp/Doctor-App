@@ -1,3 +1,4 @@
+import 'package:doctorapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/shared_widgets.dart';
 
@@ -28,7 +29,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
     if (email.isNotEmpty && password.isNotEmpty) {
       // Navigate to home screen
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter email and password')),
@@ -44,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
   void _useFingerprint() {
     // Handle fingerprint authentication
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Fingerprint authentication coming soon')),
+      const SnackBar(content: Text('Fingerprint authentication coming soon'),behavior: SnackBarBehavior.floating,),
     );
   }
 
@@ -100,7 +104,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   // Email Field
                   CustomTextField(
-                    hintText: 'edoctorapp@.com',
+                    hintText: 'edoctorapp@domain.com',
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                   ),
@@ -158,7 +162,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   TextButton(
                     onPressed: _forgotPassword,
                     child: const Text(
-                      'Forget password?',
+                      'Forgot password?',
                       style: TextStyle(
                         color: Color(0xFF4A3FFF),
                         fontSize: 14,
@@ -182,7 +186,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Do you have an account? ',
+                        "Don't you have an account? ",
                         style: TextStyle(
                           color: Colors.grey.shade600,
                           fontSize: 14,

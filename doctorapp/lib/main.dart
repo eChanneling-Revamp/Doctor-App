@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'screens/splash_screen.dart';
-import 'screens/home_screen.dart';
-import 'screens/signin_screen.dart';
-import 'screens/forgot password/forgot_password_screen.dart';
-import 'screens/forgot password/verification_code_screen.dart';
-import 'screens/forgot password/new_password_screen.dart';
-import 'screens/onboarding_screen.dart';
-import 'screens/singup/signup_screen.dart';
-import 'screens/singup/signup_photo_screen.dart';
-import 'screens/singup/signup_contact_screen.dart';
-import 'screens/singup/signup_success_screen.dart';
 
 void main() {
   runApp(const DoctorApp());
@@ -37,19 +27,6 @@ class DoctorApp extends StatelessWidget {
         ),
       ),
       home: const SplashScreen(),
-      routes: {
-        '/home': (context) => const HomeScreen(),
-        '/signin': (context) => const SignInScreen(),
-        '/splash': (context) => const SplashScreen(),
-        '/forgot-password': (context) => const ForgotPasswordScreen(),
-        '/verification': (context) => const VerificationCodeScreen(),
-        '/new-password': (context) => const NewPasswordScreen(),
-        '/onboarding': (context) => const OnboardingScreen(),
-        '/signup': (context) => const SignUpScreen(),
-        '/signup-photo': (context) => const SignUpPhotoScreen(),
-        '/signup-contact': (context) => const SignUpContactScreen(),
-        '/signup-success': (context) => const SignUpSuccessScreen(),
-      },
     );
   }
 }

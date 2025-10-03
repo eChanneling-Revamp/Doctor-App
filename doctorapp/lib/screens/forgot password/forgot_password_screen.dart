@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import 'verification_code_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -21,7 +22,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     String email = _emailController.text.trim();
     if (email.isNotEmpty) {
       // Navigate to verification screen
-      Navigator.pushNamed(context, '/verification', arguments: email);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => VerificationCodeScreen(),
+          settings: RouteSettings(arguments: email),
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

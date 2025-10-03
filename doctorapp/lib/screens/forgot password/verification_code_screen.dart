@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import 'new_password_screen.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
   const VerificationCodeScreen({super.key});
@@ -35,6 +36,10 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     } else {
       if (index > 0) {
         _focusNodes[index - 1].requestFocus();
+        _controllers[index - 1].selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: _controllers[index - 1].text.length,
+        );
       }
     }
 
@@ -46,7 +51,10 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
   void _verify() {
     if (_verificationCode.length == 4) {
       // Navigate to new password screen
-      Navigator.pushNamed(context, '/new-password');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => NewPasswordScreen()),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

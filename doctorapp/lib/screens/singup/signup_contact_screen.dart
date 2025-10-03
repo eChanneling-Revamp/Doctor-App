@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import 'signup_success_screen.dart';
 
 class SignUpContactScreen extends StatefulWidget {
   const SignUpContactScreen({super.key});
@@ -57,6 +58,10 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
 
     // Navigate to success screen
     Navigator.pushNamed(context, '/signup-success');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SignUpSuccessScreen()),
+    );
   }
 
   @override

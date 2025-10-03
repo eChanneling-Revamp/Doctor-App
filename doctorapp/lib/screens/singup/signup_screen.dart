@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import '../signin_screen.dart';
+import 'signup_photo_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -29,11 +31,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _next() {
     // Validate and navigate to next screen
-    Navigator.pushNamed(context, '/signup-photo');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SignUpPhotoScreen()),
+    );
   }
 
   void _signIn() {
-    Navigator.pushNamed(context, '/signin');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SignInScreen()),
+    );
   }
 
   @override
@@ -200,10 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 32),
 
               // Next Button
-              CustomButton(
-                text: 'Next',
-                onPressed: _next,
-              ),
+              CustomButton(text: 'Next', onPressed: _next),
 
               const SizedBox(height: 24),
 

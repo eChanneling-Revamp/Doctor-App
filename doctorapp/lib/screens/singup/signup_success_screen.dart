@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import '../signin_screen.dart';
 
 class SignUpSuccessScreen extends StatelessWidget {
   const SignUpSuccessScreen({super.key});
 
   void _signUp(BuildContext context) {
-    // Navigate to sign in screen
-    Navigator.pushNamedAndRemoveUntil(context, '/signin', (route) => false);
+    // Navigator.pushNamedAndRemoveUntil(context, '/signin', (route) => false);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => SignInScreen()),
+      (route) => false,
+    );
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import '../signin_screen.dart';
 
 class NewPasswordScreen extends StatefulWidget {
   const NewPasswordScreen({super.key});
@@ -68,7 +69,11 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     ).showSnackBar(const SnackBar(content: Text('Password reset successful!')));
 
     // Navigate back to sign in
-    Navigator.pushNamedAndRemoveUntil(context, '/signin', (route) => false);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => SignInScreen()),
+      (route) => false,
+    );
   }
 
   @override
