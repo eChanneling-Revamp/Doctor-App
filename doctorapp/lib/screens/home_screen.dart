@@ -4,6 +4,7 @@ import '../widgets/home_widgets/appbar_widgets.dart';
 import '../widgets/home_widgets/doctor_overview_widgets.dart';
 import '../widgets/home_widgets/navigation_bar_widgets.dart';
 import '../widgets/home_widgets/patient_appointment_widgets.dart';
+import '../widgets/home_widgets/payment_widgets.dart';
 import '../widgets/home_widgets/quick_actions_widgets.dart';
 import '../widgets/home_widgets/schedule_buttons_widgets.dart';
 
@@ -146,6 +147,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 iconColor: Colors.green,
               ),
             ],
+      
+            // Recent Payments - conditionally shown
+            if (_showRecentPayments) ...[
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  "Recent Payments",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              const PaymentItem(
+                hospitalName: 'Hemas Hospital',
+                consultationType: 'General Consultation',
+                time: '4:00 PM',
+                amount: 'LKR 20,000',
+                isPaid: true,
+              ),
+              const PaymentItem(
+                hospitalName: 'Healan Hospital Homagama',
+                consultationType: 'Video Consultation',
+                time: '23:00 PM',
+                amount: 'LKR 12,000',
+                isPaid: false,
+              ),
+              const PaymentItem(
+                hospitalName: 'Ninewells Hospital',
+                consultationType: 'General Consultation',
+                time: '10:00 AM',
+                amount: 'LKR 60,000',
+                isPaid: true,
+              ),
+            ],
+      
             const SizedBox(height: 80), // Space for bottom navigation
           ],
         ),
