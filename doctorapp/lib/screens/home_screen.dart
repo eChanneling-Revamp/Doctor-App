@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/home_widgets/appbar_widgets.dart';
+import '../widgets/home_widgets/doctor_overview_widgets.dart';
 import '../widgets/home_widgets/navigation_bar_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,6 +18,22 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header with logo and navigation
+           // const HomeHeaderWidget(),
+      
+            // Doctor overview card
+            const DoctorOverviewCard(),
+      
+            const SizedBox(height: 5),
+            const SizedBox(height: 80), // Space for bottom navigation
+          ],
+        ),
+      ),
       bottomNavigationBar: HomeBottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
