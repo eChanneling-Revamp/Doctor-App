@@ -3,6 +3,7 @@ import '../widgets/home_widgets/active_session.dart';
 import '../widgets/home_widgets/appbar_widgets.dart';
 import '../widgets/home_widgets/doctor_overview_widgets.dart';
 import '../widgets/home_widgets/navigation_bar_widgets.dart';
+import '../widgets/home_widgets/patient_appointment_widgets.dart';
 import '../widgets/home_widgets/quick_actions_widgets.dart';
 import '../widgets/home_widgets/schedule_buttons_widgets.dart';
 
@@ -109,6 +110,42 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
       
+            // Active Sessions - conditionally shown
+            if (_showActiveSessions) ...[
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  "Active Sessions",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              const ActiveSessionItem(
+                hospitalName: 'Hemas Hospital',
+                patientCount: '10/20 Patients (H001)',
+                time: '5.00 PM',
+                sessionType: 'General Consultation Hours',
+                iconColor: Colors.green,
+              ),
+              const ActiveSessionItem(
+                hospitalName: 'Online Consultation',
+                patientCount: '8/10 Patients',
+                time: '7.00 PM - 9.00 PM',
+                sessionType: 'Video Consultation Slots',
+                iconColor: Colors.purple,
+              ),
+              const ActiveSessionItem(
+                hospitalName: 'Ninewells Hospital',
+                patientCount: '14/15 Patients (NW108)',
+                time: '10.00 AM',
+                sessionType: 'General Consultation Hours',
+                iconColor: Colors.green,
+              ),
+            ],
             const SizedBox(height: 80), // Space for bottom navigation
           ],
         ),
