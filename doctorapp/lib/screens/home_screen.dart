@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/home_widgets/appbar_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,12 +13,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Center(
-        child: Text(
-          'Welcome to the Home Screen!',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      backgroundColor: Colors.white,
+      appBar: CustomAppBar(),
     );
   }
 }
