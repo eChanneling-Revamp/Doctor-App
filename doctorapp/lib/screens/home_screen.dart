@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/home_widgets/active_session.dart';
 import '../widgets/home_widgets/appbar_widgets.dart';
 import '../widgets/home_widgets/doctor_overview_widgets.dart';
 import '../widgets/home_widgets/navigation_bar_widgets.dart';
@@ -70,6 +71,44 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
       
             const SizedBox(height: 15),
+      
+            // Appointments list - conditionally shown
+            if (_showPatientAppointments) ...[
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  "Today's Appointments",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              const PatientAppointmentItem(
+                patientName: 'Mary De Silva',
+                appointmentType: 'Teleconsult',
+                time: '10:30am - 11:30am',
+                avatarAsset: 'assets/images/avatar1.png',
+                isConfirmed: true,
+              ),
+              const PatientAppointmentItem(
+                patientName: 'Henry Gamage',
+                appointmentType: 'In Person',
+                time: '11:30am - 12:30pm',
+                avatarAsset: 'assets/images/avatar2.png',
+                isConfirmed: true,
+              ),
+              const PatientAppointmentItem(
+                patientName: 'Agnes Liyanage',
+                appointmentType: 'In Person',
+                time: '14:30pm - 15:30pm',
+                avatarAsset: 'assets/images/avatar3.png',
+                isConfirmed: true,
+              ),
+            ],
+      
             const SizedBox(height: 80), // Space for bottom navigation
           ],
         ),
