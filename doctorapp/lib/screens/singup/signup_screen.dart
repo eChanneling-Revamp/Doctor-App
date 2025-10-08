@@ -31,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _next() {
     // Validate and navigate to next screen
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SignUpPhotoScreen()),
     );

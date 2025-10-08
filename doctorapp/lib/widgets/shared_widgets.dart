@@ -9,7 +9,7 @@ class LogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
       child: Image.asset(
@@ -292,5 +292,4 @@ class CustomBackButton extends StatelessWidget {
       icon: const Icon(Icons.arrow_back, color: Colors.black87),
     );
   }
-
 }

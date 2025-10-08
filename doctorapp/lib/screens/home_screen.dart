@@ -31,19 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header with logo and navigation
-           // const HomeHeaderWidget(),
-      
             // Doctor overview card
             const DoctorOverviewCard(),
-      
+
             const SizedBox(height: 5),
-      
+
             // Quick actions
             const QuickActionsSection(),
-      
+
             const SizedBox(height: 15),
-      
+
             // Schedule buttons
             ScheduleButtonsSection(
               onTodayScheduleTap: () {
@@ -71,9 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
               isActiveSessionsActive: _showActiveSessions,
               isRecentPaymentsActive: _showRecentPayments,
             ),
-      
+
             const SizedBox(height: 15),
-      
+
             // Appointments list - conditionally shown
             if (_showPatientAppointments) ...[
               const Padding(
@@ -110,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 isConfirmed: true,
               ),
             ],
-      
+
             // Active Sessions - conditionally shown
             if (_showActiveSessions) ...[
               const Padding(
@@ -147,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 iconColor: Colors.green,
               ),
             ],
-      
+
             // Recent Payments - conditionally shown
             if (_showRecentPayments) ...[
               const Padding(
@@ -184,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 isPaid: true,
               ),
             ],
-      
+
             const SizedBox(height: 80), // Space for bottom navigation
           ],
         ),

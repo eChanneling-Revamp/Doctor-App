@@ -27,8 +27,7 @@ class _SignUpPhotoScreenState extends State<SignUpPhotoScreen> {
   }
 
   void _next() {
-    Navigator.pushNamed(context, '/signup-contact');
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SignUpContactScreen()),
     );
@@ -137,12 +136,7 @@ class _SignUpPhotoScreenState extends State<SignUpPhotoScreen> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Next',
-                      onPressed: _next,
-                    ),
-                  ),
+                  Expanded(child: CustomButton(text: 'Next', onPressed: _next)),
                 ],
               ),
             ],
