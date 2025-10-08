@@ -1,3 +1,4 @@
+import 'package:doctorapp/screens/singup/signup_contact_screen.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
 
@@ -26,7 +27,10 @@ class _SignUpPhotoScreenState extends State<SignUpPhotoScreen> {
   }
 
   void _next() {
-    Navigator.pushNamed(context, '/signup-contact');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignUpContactScreen()),
+    );
   }
 
   @override
@@ -132,12 +136,7 @@ class _SignUpPhotoScreenState extends State<SignUpPhotoScreen> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  Expanded(
-                    child: CustomButton(
-                      text: 'Next',
-                      onPressed: _next,
-                    ),
-                  ),
+                  Expanded(child: CustomButton(text: 'Next', onPressed: _next)),
                 ],
               ),
             ],

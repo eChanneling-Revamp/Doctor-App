@@ -1,3 +1,4 @@
+import 'package:doctorapp/screens/singup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/shared_widgets.dart';
 
@@ -83,7 +84,10 @@ class OnboardingScreen extends StatelessWidget {
               CustomButton(
                 text: 'Get Start',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/signup');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                  );
                 },
               ),
             ],

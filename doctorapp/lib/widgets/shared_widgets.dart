@@ -9,7 +9,7 @@ class LogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: size,
       height: size,
       child: Image.asset(
@@ -117,4 +117,179 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
+
+// Custom Checkbox
+class CustomCheckbox extends StatelessWidget {
+  final bool value;
+  final Function(bool?) onChanged;
+  final String text;
+
+  const CustomCheckbox({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Checkbox(
+          value: value,
+          onChanged: onChanged,
+          activeColor: const Color(0xFF4A3FFF),
+        ),
+        Text(text, style: TextStyle(color: Colors.grey.shade700, fontSize: 14)),
+      ],
+    );
+  }
+}
+
+// Divider with Text
+class DividerWithText extends StatelessWidget {
+  final String text;
+
+  const DividerWithText({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: Container(height: 1, color: Colors.grey.shade300)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+          ),
+        ),
+        Expanded(child: Container(height: 1, color: Colors.grey.shade300)),
+      ],
+    );
+  }
+}
+
+// Fingerprint Button
+class FingerprintButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const FingerprintButton({super.key, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.fingerprint,
+              size: 30,
+              color: Colors.black54,
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Use Fingerprint',
+            style: TextStyle(fontSize: 14, color: Colors.black54),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// OTP Input Field
+class OTPInputField extends StatelessWidget {
+  final TextEditingController controller;
+  final bool autoFocus;
+  final Function(String) onChanged;
+
+  const OTPInputField({
+    super.key,
+    required this.controller,
+    this.autoFocus = false,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 60,
+      height: 60,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: TextFormField(
+        controller: controller,
+        autofocus: autoFocus,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        keyboardType: TextInputType.number,
+        maxLength: 1,
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          counterText: '',
+        ),
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        onChanged: onChanged,
+      ),
+    );
+  }
+}
+
+// Password Strength Indicator
+class PasswordStrengthIndicator extends StatelessWidget {
+  final String label;
+  final bool isValid;
+
+  const PasswordStrengthIndicator({
+    super.key,
+    required this.label,
+    required this.isValid,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          isValid ? Icons.check : Icons.close,
+          size: 16,
+          color: isValid ? Colors.green : Colors.grey,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            color: isValid ? Colors.green : Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// Back Button
+class CustomBackButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+
+  const CustomBackButton({super.key, this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onPressed ?? () => Navigator.pop(context),
+      icon: const Icon(Icons.arrow_back, color: Colors.black87),
+    );
+  }
 }
