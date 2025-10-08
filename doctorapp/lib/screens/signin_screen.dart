@@ -1,6 +1,8 @@
 import 'package:doctorapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/shared_widgets.dart';
+import 'forgot password/forgot_password_screen.dart';
+import 'singup/signup_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -42,19 +44,28 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void _forgotPassword() {
     // Navigate to forgot password screen
-    Navigator.pushNamed(context, '/forgot-password');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()),
+    );
   }
 
   void _useFingerprint() {
     // Handle fingerprint authentication
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Fingerprint authentication coming soon'),behavior: SnackBarBehavior.floating,),
+      const SnackBar(
+        content: Text('Fingerprint authentication coming soon'),
+        behavior: SnackBarBehavior.floating,
+      ),
     );
   }
 
   void _signUp() {
     // Navigate to sign up screen
-    Navigator.pushNamed(context, '/signup');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const SignUpScreen()),
+    );
   }
 
   @override
@@ -151,10 +162,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(height: 20),
 
                   // Sign In Button
-                  CustomButton(
-                    text: 'Sign in',
-                    onPressed: _signIn,
-                  ),
+                  CustomButton(text: 'Sign in', onPressed: _signIn),
 
                   const SizedBox(height: 12),
 

@@ -57,7 +57,6 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
     }
 
     // Navigate to success screen
-    Navigator.pushNamed(context, '/signup-success');
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => SignUpSuccessScreen()),
@@ -224,10 +223,7 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: CustomButton(
-                      text: 'Sign up',
-                      onPressed: _signUp,
-                    ),
+                    child: CustomButton(text: 'Sign up', onPressed: _signUp),
                   ),
                 ],
               ),

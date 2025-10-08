@@ -6,7 +6,6 @@ class SignUpSuccessScreen extends StatelessWidget {
   const SignUpSuccessScreen({super.key});
 
   void _signUp(BuildContext context) {
-    // Navigator.pushNamedAndRemoveUntil(context, '/signin', (route) => false);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => SignInScreen()),
