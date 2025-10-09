@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import '../session_widgets/edit_session_widgets.dart';
 
 class ActiveSessionItem extends StatelessWidget {
   final String hospitalName;
@@ -109,7 +111,18 @@ class ActiveSessionItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder:
+                          (context) => EditSessionModal(
+                            hospitalName: hospitalName,
+                            patientCount: patientCount,
+                            time: time,
+                            sessionType: sessionType,
+                          ),
+                    );
+                  },
                   icon: const Icon(
                     Icons.edit_outlined,
                     color: Color(0xFF3B82F6),
