@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
 import '../signin_screen.dart';
+import '../../utils/snackbar_utils.dart';
 
 class NewPasswordScreen extends StatefulWidget {
   const NewPasswordScreen({super.key});
@@ -43,30 +44,22 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     String confirmPassword = _confirmPasswordController.text;
 
     if (password.isEmpty || confirmPassword.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields')),
-      );
+      SnackbarUtils.info(context, 'Please fill in all fields');
       return;
     }
 
     if (password != confirmPassword) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
+      SnackbarUtils.error(context, 'Passwords do not match');
       return;
     }
 
     if (!_hasMinLength || !_hasNumber || !_hasLowercase || !_hasUppercase) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password does not meet requirements')),
-      );
+      SnackbarUtils.error(context, 'Password does not meet requirements');
       return;
     }
 
     // Password reset successful
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Password reset successful!')));
+    SnackbarUtils.success(context, 'Password reset successful!');
 
     // Navigate back to sign in
     Navigator.pushAndRemoveUntil(

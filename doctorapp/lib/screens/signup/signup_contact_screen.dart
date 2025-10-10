@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import '../../utils/snackbar_utils.dart';
 import 'signup_success_screen.dart';
 
 class SignUpContactScreen extends StatefulWidget {
@@ -43,16 +44,12 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
         email.isEmpty ||
         password.isEmpty ||
         confirmPassword.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields')),
-      );
+      SnackbarUtils.info(context, 'Please fill in all fields');
       return;
     }
 
     if (password != confirmPassword) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
+      SnackbarUtils.error(context, 'Passwords do not match');
       return;
     }
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../screens/add_session_screen.dart';
+import '../../screens/prescription_screen.dart';
 
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key});
@@ -25,12 +27,26 @@ class QuickActionsSection extends StatelessWidget {
               _buildQuickActionItem(
                 icon: Icons.description_outlined,
                 label: 'Create\nPrescription',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CreatePrescriptionScreen(),
+                    ),
+                  );
+                },
               ),
               _buildQuickActionItem(
                 icon: Icons.add_circle_outline,
                 label: 'Add\nSession',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddSessionScreen(),
+                    ),
+                  );
+                },
               ),
               _buildQuickActionItem(
                 icon: Icons.calendar_today_outlined,
