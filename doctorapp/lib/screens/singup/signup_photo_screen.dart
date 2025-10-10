@@ -1,6 +1,7 @@
 import 'package:doctorapp/screens/singup/signup_contact_screen.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import '../../utils/snackbar_utils.dart';
 
 class SignUpPhotoScreen extends StatefulWidget {
   const SignUpPhotoScreen({super.key});
@@ -17,9 +18,7 @@ class _SignUpPhotoScreenState extends State<SignUpPhotoScreen> {
     setState(() {
       _hasPhoto = true;
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Photo upload feature coming soon')),
-    );
+    SnackbarUtils.info(context, 'Photo upload feature coming soon');
   }
 
   void _back() {

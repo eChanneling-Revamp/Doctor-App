@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import '../../utils/snackbar_utils.dart';
 import 'verification_code_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -30,11 +31,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter your email or phone number'),
-        ),
-      );
+      SnackbarUtils.info(context, 'Please enter your email or phone number');
     }
   }
 

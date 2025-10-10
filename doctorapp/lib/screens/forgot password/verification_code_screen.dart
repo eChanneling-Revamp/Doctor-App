@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
+import '../../utils/snackbar_utils.dart';
 import 'new_password_screen.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
@@ -56,18 +57,15 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
         MaterialPageRoute(builder: (context) => NewPasswordScreen()),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter the complete verification code'),
-        ),
+      SnackbarUtils.error(
+        context,
+        'Please enter the complete verification code',
       );
     }
   }
 
   void _resendCode() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Verification code resent!')));
+    SnackbarUtils.success(context, 'Verification code resent!');
   }
 
   @override
