@@ -1,8 +1,8 @@
 import 'package:doctorapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/shared_widgets.dart';
-import 'forgot password/forgot_password_screen.dart';
-import 'singup/signup_screen.dart';
+import 'forgot_password/forgot_password_screen.dart';
+import 'signup/signup_screen.dart';
 import '../utils/snackbar_utils.dart';
 
 class SignInScreen extends StatefulWidget {

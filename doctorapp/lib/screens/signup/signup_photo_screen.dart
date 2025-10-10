@@ -1,4 +1,4 @@
-import 'package:doctorapp/screens/singup/signup_contact_screen.dart';
+import 'package:doctorapp/screens/signup/signup_contact_screen.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/shared_widgets.dart';
 import '../../utils/snackbar_utils.dart';

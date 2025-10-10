@@ -1,4 +1,4 @@
-import 'package:doctorapp/screens/singup/signup_screen.dart';
+import 'package:doctorapp/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/shared_widgets.dart';
 
