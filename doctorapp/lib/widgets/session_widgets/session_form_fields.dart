@@ -117,7 +117,7 @@ class SessionFormFields extends StatelessWidget {
                     onTap: onPickDate,
                     child: AbsorbPointer(
                       child: CustomTextField(
-                        hintText: '00/09/2025',
+                        hintText: 'DD/MM/YYYY',
                         controller: dateController,
                         keyboardType: TextInputType.datetime,
                       ),
