@@ -40,9 +40,12 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
   void dispose() {
     appointmentSearchController.dispose();
     medicineSearchController.dispose();
-    for (final e in entries) e.dispose();
+    for (final e in entries) {
+      e.dispose();
+    }
     super.dispose();
   }
+
 
   void _onFavoriteTap(String medicine, int index, bool currentlySelected) {
     setState(() {
