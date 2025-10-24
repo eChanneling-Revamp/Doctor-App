@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../screens/home_screen.dart';
+import '../../screens/home/home_screen.dart';
 import '../../screens/appointment/appointments_screen.dart';
-import '../../screens/sesion.dart';
-import '../../screens/teleconsult.dart';
-import '../../screens/income.dart';
+import '../../screens/session/session_screen.dart';
+import '../../screens/teleconsultation/teleconsultation_screen.dart';
+import '../../screens/income/income_screen.dart';
 
 class HomeBottomNavigationBar extends StatelessWidget {
   final int currentIndex;

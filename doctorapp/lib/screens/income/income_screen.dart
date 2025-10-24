@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/home_widgets/navigation_bar_widgets.dart';
 
 class IncomeScreen extends StatefulWidget {
   const IncomeScreen({super.key});
@@ -19,7 +18,6 @@ class _IncomeScreenState extends State<IncomeScreen> {
         elevation: 0,
       ),
       body: const Center(child: Text('Income screen')),
-      bottomNavigationBar: const HomeBottomNavigationBar(currentIndex: 4),
     );
   }
 }

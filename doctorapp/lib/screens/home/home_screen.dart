@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import '../widgets/home_widgets/active_session.dart';
-import '../widgets/home_widgets/appbar_widgets.dart';
-import '../widgets/home_widgets/doctor_overview_widgets.dart';
-import '../widgets/home_widgets/navigation_bar_widgets.dart';
-import '../widgets/home_widgets/patient_appointment_widgets.dart';
-import '../widgets/home_widgets/payment_widgets.dart';
-import '../widgets/home_widgets/quick_actions_widgets.dart';
-import '../widgets/home_widgets/schedule_buttons_widgets.dart';
+import '../../widgets/home_widgets/active_session.dart';
+import '../../widgets/home_widgets/appbar_widgets.dart';
+import '../../widgets/home_widgets/doctor_overview_widgets.dart';
+import '../../widgets/home_widgets/patient_appointment_widgets.dart';
+import '../../widgets/home_widgets/payment_widgets.dart';
+import '../../widgets/home_widgets/quick_actions_widgets.dart';
+import '../../widgets/home_widgets/schedule_buttons_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final int _currentIndex = 0;
   bool _showPatientAppointments = true; // Always show on startup
   bool _showActiveSessions = false;
   bool _showRecentPayments = false;
@@ -186,7 +184,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: HomeBottomNavigationBar(currentIndex: _currentIndex),
     );
   }
 }

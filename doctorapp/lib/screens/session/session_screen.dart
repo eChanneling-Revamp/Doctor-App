@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/home_widgets/navigation_bar_widgets.dart';
 
 class SessionScreen extends StatefulWidget {
   const SessionScreen({super.key});
@@ -19,7 +18,6 @@ class _SessionScreenState extends State<SessionScreen> {
         elevation: 0,
       ),
       body: const Center(child: Text('Session screen')),
-      bottomNavigationBar: const HomeBottomNavigationBar(currentIndex: 2),
     );
   }
 }
