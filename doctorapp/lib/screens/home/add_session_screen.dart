@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/shared_widgets.dart';
-import '../widgets/session_widgets/add_session_widgets.dart';
+import '../../widgets/shared_widgets.dart';
+import '../../widgets/session_widgets/add_session_widgets.dart';
 
 class AddSessionScreen extends StatelessWidget {
   const AddSessionScreen({super.key});

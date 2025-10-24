@@ -293,3 +293,80 @@ class CustomBackButton extends StatelessWidget {
     );
   }
 }
+
+// Outlined Button
+class CustomOutlinedButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final Color borderColor;
+  final Color textColor;
+  final double height;
+  final double? width;
+
+  const CustomOutlinedButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.borderColor = const Color(0xFF4C40F7),
+    this.textColor = const Color(0xFF4C40F7),
+    this.height = 48,
+    this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: textColor,
+          side: BorderSide(color: borderColor),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+        child: Text(text),
+      ),
+    );
+  }
+}
+
+// Secondary Button (for Cancel actions)
+class SecondaryButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final double height;
+
+  const SecondaryButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.height = 48,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: height,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          side: BorderSide(color: Colors.grey.shade300, width: 1.5),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+      ),
+    );
+  }
+}

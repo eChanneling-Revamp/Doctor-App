@@ -1,4 +1,4 @@
-import 'package:doctorapp/screens/home_screen.dart';
+import 'package:doctorapp/screens/app_main_page.dart';
 import 'package:flutter/material.dart';
 import '../widgets/shared_widgets.dart';
 import 'forgot_password/forgot_password_screen.dart';
@@ -34,7 +34,7 @@ class _SignInScreenState extends State<SignInScreen> {
       // Navigate to home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const DoctorMainApp()),
       );
     } else {
       SnackbarUtils.info(context, 'Please enter email and password');

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../screens/add_session_screen.dart';
-import '../../screens/prescription_screen.dart';
+import '../../screens/home/add_session_screen.dart';
+import '../../screens/home/prescription_screen.dart';
 
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key});
