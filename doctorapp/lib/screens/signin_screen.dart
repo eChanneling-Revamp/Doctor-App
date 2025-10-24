@@ -1,4 +1,4 @@
-import 'package:doctorapp/screens/app_main_pge.dart';
+import 'package:doctorapp/screens/app_main_page.dart';
 import 'package:flutter/material.dart';
 import '../widgets/shared_widgets.dart';
 import 'forgot_password/forgot_password_screen.dart';

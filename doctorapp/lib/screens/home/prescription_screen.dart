@@ -155,13 +155,25 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                                 isSearching = true;
                               });
 
-                              final results = await DrugApi.searchMedicines(v);
-
-                              if (!mounted) return;
-                              setState(() {
-                                searchResults = results;
-                                isSearching = false;
-                              });
+                              try {
+                                final results = await DrugApi.searchMedicines(
+                                  v,
+                                );
+                                if (!mounted) return;
+                                setState(() {
+                                  searchResults = results;
+                                  isSearching = false;
+                                });
+                              } catch (e) {
+                                if (!mounted) return;
+                                setState(() {
+                                  isSearching = false;
+                                });
+                                SnackbarUtils.error(
+                                  context,
+                                  'Failed to search medicines. Please try again.',
+                                );
+                              }
                             },
                           );
                         },
