@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import '../widgets/shared_widgets.dart';
-import '../widgets/prescription_widgets.dart/favorite_medicine_list.dart';
-import '../widgets/prescription_widgets.dart/prescription_entry_card.dart';
-import '../widgets/prescription_widgets.dart/prescription_header_and_actions.dart';
-import '../models/prescription_entry.dart';
-import '../utils/snackbar_utils.dart';
+import '../../widgets/shared_widgets.dart';
+import '../../widgets/prescription_widgets.dart/favorite_medicine_list.dart';
+import '../../widgets/prescription_widgets.dart/prescription_entry_card.dart';
+import '../../widgets/prescription_widgets.dart/prescription_header_and_actions.dart';
+import '../../models/prescription_entry.dart';
+import '../../utils/snackbar_utils.dart';
+import '../../services/drug_api.dart';
+import 'dart:async';
 
 class CreatePrescriptionScreen extends StatefulWidget {
   const CreatePrescriptionScreen({super.key});
@@ -23,6 +25,11 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
   final TextEditingController medicineSearchController =
       TextEditingController();
 
+  // search state
+  List<String> searchResults = [];
+  bool isSearching = false;
+  Timer? _debounce;
+
   // Sample favorite medicines
   final List<String> favoriteMedicines = [
     'Paracetamol 500mg',
@@ -40,12 +47,12 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
   void dispose() {
     appointmentSearchController.dispose();
     medicineSearchController.dispose();
+    _debounce?.cancel();
     for (final e in entries) {
       e.dispose();
     }
     super.dispose();
   }
-
 
   void _onFavoriteTap(String medicine, int index, bool currentlySelected) {
     setState(() {
@@ -130,7 +137,88 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                         hintText: 'Search Medicine Name',
                         controller: medicineSearchController,
                         suffixIcon: const Icon(Icons.search),
+                        onChanged: (v) async {
+                          // debounce
+                          _debounce?.cancel();
+                          _debounce = Timer(
+                            const Duration(milliseconds: 400),
+                            () async {
+                              if (v.trim().isEmpty) {
+                                setState(() {
+                                  searchResults = [];
+                                  isSearching = false;
+                                });
+                                return;
+                              }
+
+                              setState(() {
+                                isSearching = true;
+                              });
+
+                              final results = await DrugApi.searchMedicines(v);
+
+                              if (!mounted) return;
+                              setState(() {
+                                searchResults = results;
+                                isSearching = false;
+                              });
+                            },
+                          );
+                        },
                       ),
+                      const SizedBox(height: 8),
+                      if (isSearching)
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Center(
+                            child: SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                          ),
+                        ),
+                      if (!isSearching && searchResults.isNotEmpty)
+                        Container(
+                          constraints: const BoxConstraints(maxHeight: 200),
+                          child: Card(
+                            margin: const EdgeInsets.only(top: 6),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: searchResults.length,
+                              separatorBuilder:
+                                  (_, __) => const Divider(height: 1),
+                              itemBuilder: (context, idx) {
+                                final name = searchResults[idx];
+                                return ListTile(
+                                  title: Text(name),
+                                  onTap: () {
+                                    // add to entries if not exists
+                                    if (entries.any(
+                                      (e) => e.medicineName == name,
+                                    )) {
+                                      SnackbarUtils.info(
+                                        context,
+                                        'Medicine already added',
+                                      );
+                                      return;
+                                    }
+                                    setState(() {
+                                      entries.add(
+                                        PrescriptionEntry(medicineName: name),
+                                      );
+                                      searchResults = [];
+                                      medicineSearchController.clear();
+                                    });
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
                       const SizedBox(height: 12),
                       Row(
                         children: const [

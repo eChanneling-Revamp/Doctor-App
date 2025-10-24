@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/home_widgets/navigation_bar_widgets.dart';
 
 class TeleconsultScreen extends StatefulWidget {
   const TeleconsultScreen({super.key});
@@ -19,7 +18,6 @@ class _TeleconsultScreenState extends State<TeleconsultScreen> {
         elevation: 0,
       ),
       body: const Center(child: Text('Teleconsult screen')),
-      bottomNavigationBar: const HomeBottomNavigationBar(currentIndex: 3),
     );
   }
 }
