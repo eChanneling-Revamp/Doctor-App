@@ -1,6 +1,7 @@
 import 'package:doctorapp/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
-import '../widgets/shared_widgets.dart';
+import '../widgets/share_widgets/buttons.dart';
+import '../widgets/share_widgets/logo_widget.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});

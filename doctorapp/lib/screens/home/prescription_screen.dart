@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../widgets/shared_widgets.dart';
+import '../../widgets/share_widgets/custom_back_button.dart';
+import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/prescription_widgets.dart/favorite_medicine_list.dart';
 import '../../widgets/prescription_widgets.dart/prescription_entry_card.dart';
 import '../../widgets/prescription_widgets.dart/prescription_header_and_actions.dart';

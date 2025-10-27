@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared_widgets.dart';
+import '../share_widgets/buttons.dart';
 import 'session_form_fields.dart';
 
 class EditSessionModal extends StatefulWidget {

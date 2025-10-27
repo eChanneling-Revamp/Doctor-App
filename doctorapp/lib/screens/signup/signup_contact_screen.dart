@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../widgets/shared_widgets.dart';
+import '../../widgets/share_widgets/buttons.dart';
+import '../../widgets/share_widgets/fingerprint_and_password.dart';
+import '../../widgets/share_widgets/inputs.dart';
+import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
 import 'signup_success_screen.dart';
 

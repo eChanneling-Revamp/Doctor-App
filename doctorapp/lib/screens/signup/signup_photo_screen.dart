@@ -1,6 +1,7 @@
 import 'package:doctorapp/screens/signup/signup_contact_screen.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/shared_widgets.dart';
+import '../../widgets/share_widgets/buttons.dart';
+import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
 
 class SignUpPhotoScreen extends StatefulWidget {

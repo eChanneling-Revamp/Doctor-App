@@ -3,7 +3,7 @@ import '../../widgets/appointment_widgets/schedule_widgets/location_selector.dar
 import '../../widgets/appointment_widgets/schedule_widgets/view_toggle.dart';
 import '../../widgets/appointment_widgets/schedule_widgets/daily_view.dart';
 import '../../widgets/appointment_widgets/schedule_widgets/week_view.dart';
-import '../../widgets/appointment_widgets/schedule_widgets/schedule_edit_dialog.dart';
+import '../../widgets/appointment_widgets/schedule_widgets/schedule_edit_widgets/schedule_edit_dialog.dart';
 
 class ScheduleManagerScreen extends StatefulWidget {
   const ScheduleManagerScreen({super.key});
