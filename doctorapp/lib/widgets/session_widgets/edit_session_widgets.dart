@@ -7,6 +7,7 @@ class EditSessionModal extends StatefulWidget {
   final String patientCount;
   final String time;
   final String sessionType;
+  final String note;
 
   const EditSessionModal({
     super.key,
@@ -14,6 +15,7 @@ class EditSessionModal extends StatefulWidget {
     required this.patientCount,
     required this.time,
     required this.sessionType,
+    required this.note,
   });
 
   @override
@@ -35,16 +37,27 @@ class _EditSessionModalState extends State<EditSessionModal> {
   void initState() {
     super.initState();
     selectedHospital = widget.hospitalName;
-    // Map incoming sessionType to one of available values
-    if (widget.sessionType.toLowerCase().contains('video') ||
-        widget.sessionType.toLowerCase().contains('tele')) {
-      selectedSessionType = 'Teleconsultation';
-    } else if (widget.sessionType.toLowerCase().contains('walk')) {
-      selectedSessionType = 'Walk-in';
-    } else if (widget.sessionType.toLowerCase().contains('home')) {
-      selectedSessionType = 'Home Visit';
+    // If the caller provided a high-level sessionType, use it; otherwise infer
+    if (widget.sessionType.isNotEmpty) {
+      selectedSessionType = widget.sessionType;
     } else {
-      selectedSessionType = 'Teleconsultation';
+      final noteLower = widget.note.toLowerCase();
+      if (noteLower.contains('video') || noteLower.contains('tele')) {
+        selectedSessionType = 'Teleconsultation';
+      } else if (noteLower.contains('general') ||
+          noteLower.contains('consult') ||
+          noteLower.contains('hospital')) {
+        selectedSessionType = 'Hospital';
+      } else if (noteLower.contains('walk')) {
+        selectedSessionType = 'Walk-in';
+      } else if (noteLower.contains('home')) {
+        selectedSessionType = 'Home Visit';
+      } else {
+        selectedSessionType =
+            widget.hospitalName.toLowerCase().contains('online')
+                ? 'Teleconsultation'
+                : 'Hospital';
+      }
     }
 
     // Initialize controllers from passed values when possible
@@ -79,7 +92,8 @@ class _EditSessionModalState extends State<EditSessionModal> {
       endTimeController.text = widget.time;
     }
 
-    notesController.text = widget.sessionType;
+    // Keep the note text (more specific description) intact
+    notesController.text = widget.note;
   }
 
   @override
