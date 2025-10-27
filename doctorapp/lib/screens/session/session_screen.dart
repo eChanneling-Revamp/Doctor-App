@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/home_widgets/active_session.dart';
+import '../../widgets/session_widgets/active_session.dart';
 import '../home/add_session_screen.dart';
 import '../../widgets/session_widgets/session_filter_row.dart';
 import '../../widgets/session_widgets/session_section.dart';

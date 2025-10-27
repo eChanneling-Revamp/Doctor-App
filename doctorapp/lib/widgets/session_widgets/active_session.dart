@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../session_widgets/edit_session_widgets.dart';
+import 'edit_session_widgets.dart';
 
 class ActiveSessionItem extends StatelessWidget {
   final String hospitalName;
@@ -42,7 +42,7 @@ class ActiveSessionItem extends StatelessWidget {
             child: Icon(
               hospitalName.contains('Online')
                   ? Icons.videocam
-                  : Icons.local_hospital,
+                  : Icons.domain,
               color: iconColor,
               size: 26,
             ),
