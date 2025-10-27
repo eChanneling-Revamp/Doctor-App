@@ -83,23 +83,13 @@ class PrescriptionBottomActions extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: SizedBox(
+          child: CustomOutlinedButton(
+            text: 'Send to Patient',
+            onPressed:
+                onSend ?? () => SnackbarUtils.info(context, 'Sent to patient'),
+            borderColor: Colors.grey.shade300,
+            textColor: Colors.black87,
             height: 48,
-            child: OutlinedButton(
-              onPressed:
-                  onSend ??
-                  () => SnackbarUtils.info(context, 'Sent to patient'),
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Colors.grey.shade300),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                'Send to Patient',
-                style: TextStyle(color: Colors.black87),
-              ),
-            ),
           ),
         ),
       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../utils/snackbar_utils.dart';
+import '../share_widgets/inputs.dart';
 import '../../models/prescription_entry.dart';
 
 typedef OnRemoveEntry = void Function(int index);
@@ -81,12 +82,10 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(height: 6),
-                      TextField(
+                      CustomTextField(
+                        hintText: '',
                         controller: entry.dosageController,
                         readOnly: !_editing,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
                       ),
                     ],
                   ),
@@ -204,10 +203,10 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 6),
-            TextField(
+            CustomTextField(
+              hintText: '',
               controller: entry.instructionsController,
               readOnly: !_editing,
-              decoration: const InputDecoration(border: OutlineInputBorder()),
             ),
           ],
         ),
