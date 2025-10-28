@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/appointment_widgets/appointment_tab_bar.dart';
 import '../../widgets/appointment_widgets/appointment_list_view.dart';
-import '../../widgets/shared_widgets.dart';
+import '../../widgets/share_widgets/buttons.dart';
 import 'schedule_manager_screen.dart';
 
 class AppointmentsScreen extends StatefulWidget {

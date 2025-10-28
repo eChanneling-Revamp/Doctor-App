@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../widgets/shared_widgets.dart';
+import '../../widgets/share_widgets/buttons.dart';
+import '../../widgets/share_widgets/logo_widget.dart';
 import '../signin_screen.dart';
 
 class SignUpSuccessScreen extends StatelessWidget {

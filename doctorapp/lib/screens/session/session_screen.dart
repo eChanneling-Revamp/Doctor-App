@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../widgets/home_widgets/active_session.dart';
+import '../../widgets/session_widgets/active_session.dart';
 import '../home/add_session_screen.dart';
 import '../../widgets/session_widgets/session_filter_row.dart';
 import '../../widgets/session_widgets/session_section.dart';
+import '../../widgets/share_widgets/buttons.dart';
 
 class SessionScreen extends StatefulWidget {
   const SessionScreen({super.key});
@@ -99,30 +100,27 @@ class _SessionScreenState extends State<SessionScreen> {
         elevation: 0,
         foregroundColor: Colors.black,
         title: const Text(
-          'Session Managment',
+          'Session Management',
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
         ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 12.0),
-            child: OutlinedButton.icon(
-              onPressed:
-                  () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const AddSessionScreen(),
-                    ),
-                  ),
-              icon: const Icon(Icons.add, color: Color(0xFF4A3FFF)),
-              label: const Text(
-                'Add Session',
-                style: TextStyle(color: Color(0xFF4A3FFF)),
-              ),
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Color(0xFF4A3FFF)),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+            child: Row(
+              children: [
+                CustomOutlinedButton(
+                  text: 'Add Session',
+                  onPressed:
+                      () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const AddSessionScreen(),
+                        ),
+                      ),
+                  borderColor: const Color(0xFF4A3FFF),
+                  textColor: const Color(0xFF4A3FFF),
+                  height: 40,
                 ),
-              ),
+              ],
             ),
           ),
         ],

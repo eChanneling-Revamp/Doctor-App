@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared_widgets.dart';
+import '../share_widgets/buttons.dart';
 import 'session_form_fields.dart';
 
 class EditSessionModal extends StatefulWidget {
@@ -202,25 +202,13 @@ class _EditSessionModalState extends State<EditSessionModal> {
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: SizedBox(
+                        child: CustomButton(
+                          text: 'Cancel',
+                          textColor: Colors.black,
+                          backgroundColor: Colors.white,
+                          borderColor: Colors.black,
+                          onPressed: () => Navigator.of(context).pop(),
                           height: 48,
-                          child: OutlinedButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: Colors.grey.shade300),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text(
-                              'Cancel',
-                              style: TextStyle(
-                                color: Color(0xFF374151),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
                         ),
                       ),
                     ],

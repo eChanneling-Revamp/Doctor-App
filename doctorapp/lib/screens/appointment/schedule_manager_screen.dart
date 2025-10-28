@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../widgets/share_widgets/custom_back_button.dart';
+import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/appointment_widgets/schedule_widgets/location_selector.dart';
 import '../../widgets/appointment_widgets/schedule_widgets/view_toggle.dart';
 import '../../widgets/appointment_widgets/schedule_widgets/daily_view.dart';
 import '../../widgets/appointment_widgets/schedule_widgets/week_view.dart';
-import '../../widgets/appointment_widgets/schedule_widgets/schedule_edit_dialog.dart';
+import '../../widgets/appointment_widgets/schedule_widgets/schedule_edit_widgets/schedule_edit_dialog.dart';
 
 class ScheduleManagerScreen extends StatefulWidget {
   const ScheduleManagerScreen({super.key});
@@ -51,10 +53,7 @@ class _ScheduleManagerScreenState extends State<ScheduleManagerScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
+        leading: const CustomBackButton(),
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -79,28 +78,14 @@ class _ScheduleManagerScreenState extends State<ScheduleManagerScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
-            child: GestureDetector(
-              onTap: _showEditScheduleDialog,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.edit, color: Colors.white, size: 16),
-                    SizedBox(width: 4),
-                    Text(
-                      'Edit',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ],
-                ),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 120),
+              child: CustomButton(
+                text: 'Edit',
+                onPressed: _showEditScheduleDialog,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                height: 36,
               ),
             ),
           ),

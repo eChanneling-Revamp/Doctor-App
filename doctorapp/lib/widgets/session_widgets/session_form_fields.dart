@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared_widgets.dart';
-
+import '../share_widgets/inputs.dart';
 class SessionFormFields extends StatelessWidget {
   final String sessionType;
   final String hospital;

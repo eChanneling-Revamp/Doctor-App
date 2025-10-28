@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/home_widgets/active_session.dart';
+import '../../widgets/session_widgets/active_session.dart';
 import '../../widgets/home_widgets/appbar_widgets.dart';
 import '../../widgets/home_widgets/doctor_overview_widgets.dart';
 import '../../widgets/home_widgets/patient_appointment_widgets.dart';

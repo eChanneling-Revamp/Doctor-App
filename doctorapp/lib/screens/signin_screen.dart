@@ -1,6 +1,11 @@
 import 'package:doctorapp/screens/app_main_page.dart';
 import 'package:flutter/material.dart';
-import '../widgets/shared_widgets.dart';
+import '../widgets/share_widgets/buttons.dart';
+import '../widgets/share_widgets/checkbox.dart';
+import '../widgets/share_widgets/divider_with_text.dart';
+import '../widgets/share_widgets/fingerprint_and_password.dart';
+import '../widgets/share_widgets/inputs.dart';
+import '../widgets/share_widgets/logo_widget.dart';
 import 'forgot_password/forgot_password_screen.dart';
 import 'signup/signup_screen.dart';
 import '../utils/snackbar_utils.dart';
