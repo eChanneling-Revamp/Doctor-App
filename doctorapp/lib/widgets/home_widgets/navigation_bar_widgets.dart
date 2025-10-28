@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../screens/home/home_screen.dart';
-import '../../screens/appointment/appointments_screen.dart';
-import '../../screens/session/session_screen.dart';
-import '../../screens/teleconsultation/teleconsultation_screen.dart';
-import '../../screens/income/income_screen.dart';
 
 class HomeBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -21,48 +16,9 @@ class HomeBottomNavigationBar extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       currentIndex: currentIndex,
       onTap: (index) {
-        // Prefer custom handler if provided
         if (onTap != null) {
           onTap!(index);
           return;
-        }
-
-        // Default navigation behaviour: avoid navigating to same index
-        if (index == currentIndex) return;
-
-        switch (index) {
-          case 0:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const HomeScreen()),
-            );
-            break;
-          case 1:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const AppointmentsScreen()),
-            );
-            break;
-          case 2:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const SessionScreen()),
-            );
-            break;
-          case 3:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const TeleconsultScreen()),
-            );
-            break;
-          case 4:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const IncomeScreen()),
-            );
-            break;
-          default:
-            break;
         }
       },
       selectedItemColor: const Color(0xFF4A3FFF),

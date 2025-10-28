@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/home_widgets/active_session.dart';
+import '../../widgets/session_widgets/active_session.dart';
 import '../../widgets/home_widgets/appbar_widgets.dart';
 import '../../widgets/home_widgets/doctor_overview_widgets.dart';
 import '../../widgets/home_widgets/patient_appointment_widgets.dart';
@@ -124,21 +124,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 hospitalName: 'Hemas Hospital',
                 patientCount: '10/20 Patients (H001)',
                 time: '5.00 PM',
-                sessionType: 'General Consultation Hours',
+                sessionType: 'Hospital',
+                note: 'General Consultation Hours',
                 iconColor: Colors.green,
               ),
               const ActiveSessionItem(
                 hospitalName: 'Online Consultation',
                 patientCount: '8/10 Patients',
                 time: '7.00 PM - 9.00 PM',
-                sessionType: 'Video Consultation Slots',
+                sessionType: 'Teleconsultation',
+                note: 'Video Consultation Slots',
                 iconColor: Colors.purple,
               ),
               const ActiveSessionItem(
                 hospitalName: 'Ninewells Hospital',
                 patientCount: '14/15 Patients (NW108)',
                 time: '10.00 AM',
-                sessionType: 'General Consultation Hours',
+                sessionType: 'Hospital',
+                note: 'Pediatric Consultation Hours',
                 iconColor: Colors.green,
               ),
             ],

@@ -1,12 +1,12 @@
-
 import 'package:flutter/material.dart';
-import '../session_widgets/edit_session_widgets.dart';
+import 'edit_session_widgets.dart';
 
 class ActiveSessionItem extends StatelessWidget {
   final String hospitalName;
   final String patientCount;
   final String time;
   final String sessionType;
+  final String? note;
   final Color iconColor;
 
   const ActiveSessionItem({
@@ -15,6 +15,7 @@ class ActiveSessionItem extends StatelessWidget {
     required this.patientCount,
     required this.time,
     required this.sessionType,
+    this.note,
     required this.iconColor,
   });
 
@@ -41,7 +42,7 @@ class ActiveSessionItem extends StatelessWidget {
             child: Icon(
               hospitalName.contains('Online')
                   ? Icons.videocam
-                  : Icons.local_hospital,
+                  : Icons.domain,
               color: iconColor,
               size: 26,
             ),
@@ -90,7 +91,8 @@ class ActiveSessionItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  sessionType,
+                  // Prefer note (more specific) when available, otherwise fall back to sessionType
+                  note ?? sessionType,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -120,6 +122,7 @@ class ActiveSessionItem extends StatelessWidget {
                             patientCount: patientCount,
                             time: time,
                             sessionType: sessionType,
+                            note: note ?? sessionType,
                           ),
                     );
                   },

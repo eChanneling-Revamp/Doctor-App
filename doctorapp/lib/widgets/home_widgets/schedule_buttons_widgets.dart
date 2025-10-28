@@ -32,6 +32,7 @@ class ScheduleButtonsSection extends StatelessWidget {
                   : const Color.fromARGB(255, 19, 11, 169),
               Colors.white,
               onTodayScheduleTap ?? () {},
+              isToday: true,
             ),
           ),
           const SizedBox(width: 4),
@@ -65,24 +66,26 @@ class ScheduleButtonsSection extends StatelessWidget {
     String text,
     Color backgroundColor,
     Color textColor,
-    VoidCallback onPressed,
-  ) {
+    VoidCallback onPressed, {
+    bool isToday = false,
+  }) {
     return SizedBox(
       height: 35,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
         ),
         child: Text(
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textColor,
-            fontSize: 9.43,
-            fontWeight: FontWeight.w700,
+            fontSize: isToday ? 12 : 12,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),

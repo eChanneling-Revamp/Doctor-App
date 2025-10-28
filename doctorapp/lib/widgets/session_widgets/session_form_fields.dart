@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared_widgets.dart';
-
+import '../share_widgets/inputs.dart';
 class SessionFormFields extends StatelessWidget {
   final String sessionType;
   final String hospital;
@@ -49,8 +48,7 @@ class SessionFormFields extends StatelessWidget {
               value: 'Teleconsultation',
               child: Text('Teleconsultation'),
             ),
-            DropdownMenuItem(value: 'Walk-in', child: Text('Walk-in')),
-            DropdownMenuItem(value: 'Home Visit', child: Text('Home Visit')),
+            DropdownMenuItem(value: 'Hospital', child: Text('Hospital')),
           ],
           onChanged: onSessionTypeChanged,
           decoration: InputDecoration(
