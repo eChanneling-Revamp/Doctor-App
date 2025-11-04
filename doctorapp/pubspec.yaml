@@ -36,8 +36,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   http: ^1.5.0
+  flutter_dotenv: ^5.1.0
   # ZEGOCLOUD prebuilt calling UI kit for 1:1 audio/video calls
   zego_uikit_prebuilt_call: ^4.21.1
+  # PDF viewer package
+  pdfx: ^2.5.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +67,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    # Load environment variables at runtime (development only)
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_windows
   connectivity_plus
   flutter_volume_controller
+  pdfx
   permission_handler_windows
   screen_brightness_windows
   share_plus
