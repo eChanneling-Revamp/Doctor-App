@@ -4,19 +4,23 @@ import 'edit_session_widgets.dart';
 class ActiveSessionItem extends StatelessWidget {
   final String hospitalName;
   final String patientCount;
+  final String date;
   final String time;
   final String sessionType;
   final String? note;
   final Color iconColor;
+  final ValueChanged<Map<String, dynamic>>? onUpdate;
 
   const ActiveSessionItem({
     super.key,
     required this.hospitalName,
     required this.patientCount,
+    required this.date,
     required this.time,
     required this.sessionType,
     this.note,
     required this.iconColor,
+    this.onUpdate,
   });
 
   @override
@@ -40,9 +44,7 @@ class ActiveSessionItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
-              hospitalName.contains('Online')
-                  ? Icons.videocam
-                  : Icons.domain,
+              hospitalName.contains('Online') ? Icons.videocam : Icons.domain,
               color: iconColor,
               size: 26,
             ),
@@ -113,8 +115,8 @@ class ActiveSessionItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: IconButton(
-                  onPressed: () {
-                    showDialog(
+                  onPressed: () async {
+                    final result = await showDialog<Map<String, dynamic>>(
                       context: context,
                       builder:
                           (context) => EditSessionModal(
@@ -123,8 +125,12 @@ class ActiveSessionItem extends StatelessWidget {
                             time: time,
                             sessionType: sessionType,
                             note: note ?? sessionType,
+                            date: date,
                           ),
                     );
+                    if (result != null) {
+                      onUpdate?.call(result);
+                    }
                   },
                   icon: const Icon(
                     Icons.edit_outlined,
