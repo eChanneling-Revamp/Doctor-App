@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../share_widgets/inputs.dart';
+
 class SessionFormFields extends StatelessWidget {
   final String sessionType;
   final String hospital;
@@ -118,6 +119,22 @@ class SessionFormFields extends StatelessWidget {
                         hintText: 'DD/MM/YYYY',
                         controller: dateController,
                         keyboardType: TextInputType.datetime,
+                        validator: (v) {
+                          final value = (v ?? '').trim();
+                          if (value.isEmpty) return 'Date is required';
+                          final parts = value.split('/');
+                          if (parts.length != 3) return 'Use DD/MM/YYYY';
+                          final d = int.tryParse(parts[0]);
+                          final m = int.tryParse(parts[1]);
+                          final y = int.tryParse(parts[2]);
+                          if (d == null || m == null || y == null) {
+                            return 'Invalid date';
+                          }
+                          if (m < 1 || m > 12 || d < 1 || d > 31) {
+                            return 'Invalid date';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                   ),
