@@ -5,12 +5,14 @@ class NextConsultationCard extends StatelessWidget {
   final Map<String, dynamic> consultation;
   final VoidCallback? onStart;
   final VoidCallback? onViewPHR;
+  final VoidCallback? onStop;
 
   const NextConsultationCard({
     super.key,
     required this.consultation,
     this.onStart,
     this.onViewPHR,
+    this.onStop,
   });
 
   @override
@@ -102,7 +104,7 @@ class NextConsultationCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      consultation['id'] as String,
+                      consultation['name'] as String,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -111,18 +113,30 @@ class NextConsultationCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Name : ${consultation['name']}',
+                      consultation['time'] as String,
                       style: const TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      consultation['type'] as String,
+                      consultation['day'] as String,
                       style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 13,
                       ),
                     ),
                   ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              SizedBox(
+                width: 90,
+                child: CustomButton(
+                  text: 'Stop',
+                  onPressed: onStop ?? () {},
+                  backgroundColor: const Color.fromARGB(255, 234, 136, 136),
+                  borderColor: Colors.redAccent,
+                  textColor: const Color.fromARGB(255, 255, 255, 255),
+                  height: 40,
                 ),
               ),
             ],
