@@ -2,15 +2,9 @@ import 'package:flutter/material.dart';
 
 class ConsultationCard extends StatelessWidget {
   final Map<String, dynamic> consultation;
-  final VoidCallback? onEdit;
-  final VoidCallback? onDelete;
+  final VoidCallback? onStart;
 
-  const ConsultationCard({
-    super.key,
-    required this.consultation,
-    this.onEdit,
-    this.onDelete,
-  });
+  const ConsultationCard({super.key, required this.consultation, this.onStart});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +43,7 @@ class ConsultationCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      consultation['id'] as String,
+                      consultation['name'] as String,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -83,15 +77,6 @@ class ConsultationCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  consultation['name'] as String,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF6B7280),
-                  ),
-                ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
@@ -123,56 +108,26 @@ class ConsultationCard extends StatelessWidget {
               ],
             ),
           ),
-          // Action Icons
-          Row(
-            children: [
-              Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF3B82F6).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: IconButton(
-                  onPressed: onEdit,
-                  icon: const Icon(
-                    Icons.edit_outlined,
-                    color: Color(0xFF3B82F6),
-                    size: 18,
-                  ),
-                  padding: EdgeInsets.zero,
-                ),
+          // Action: Start icon
+          if (onStart != null)
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: const Color(0xFF10B981).withOpacity(0.12),
+                borderRadius: BorderRadius.circular(10),
               ),
-              const SizedBox(width: 8),
-              Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEF4444).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
+              child: IconButton(
+                onPressed: onStart,
+                icon: const Icon(
+                  Icons.play_arrow_rounded,
+                  color: Color(0xFF10B981),
+                  size: 22,
                 ),
-                child: IconButton(
-                  onPressed:
-                      onDelete ??
-                      () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Delete appointment: ${consultation['name']}',
-                            ),
-                          ),
-                        );
-                      },
-                  icon: const Icon(
-                    Icons.delete_outline,
-                    color: Color(0xFFEF4444),
-                    size: 18,
-                  ),
-                  padding: EdgeInsets.zero,
-                ),
+                padding: EdgeInsets.zero,
+                tooltip: 'Start consultation',
               ),
-            ],
-          ),
+            ),
         ],
       ),
     );
