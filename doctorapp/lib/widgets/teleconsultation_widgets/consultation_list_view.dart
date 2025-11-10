@@ -3,25 +3,26 @@ import 'consultation_card.dart';
 
 class ConsultationListView extends StatelessWidget {
   final List<Map<String, dynamic>> consultations;
-  final Function(Map<String, dynamic>)? onEdit;
-  final Function(Map<String, dynamic>)? onDelete;
+  final Function(Map<String, dynamic>)? onStart;
+  final String emptyText;
 
   const ConsultationListView({
     super.key,
     required this.consultations,
-    this.onEdit,
-    this.onDelete,
+    this.onStart,
+    this.emptyText = 'No upcoming teleconsultations',
   });
 
   @override
   Widget build(BuildContext context) {
     if (consultations.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(32.0),
+          padding: const EdgeInsets.all(32.0),
           child: Text(
-            'No upcoming teleconsultations',
-            style: TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
+            emptyText,
+            style: const TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
+            textAlign: TextAlign.center,
           ),
         ),
       );
@@ -35,9 +36,8 @@ class ConsultationListView extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 12),
                   child: ConsultationCard(
                     consultation: consultation,
-                    onEdit: onEdit != null ? () => onEdit!(consultation) : null,
-                    onDelete:
-                        onDelete != null ? () => onDelete!(consultation) : null,
+                    onStart:
+                        onStart != null ? () => onStart!(consultation) : null,
                   ),
                 ),
               )
