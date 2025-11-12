@@ -88,8 +88,18 @@ class _AddSessionFormState extends State<AddSessionForm> {
           CustomButton(
             text: 'Create Session',
             onPressed: () {
-              if (_formKey.currentState?.validate() ?? true) {
-                Navigator.pop(context);
+              if (_formKey.currentState?.validate() == true) {
+                final result = {
+                  'sessionType':
+                      _sessionType, // 'Teleconsultation' | 'Hospital'
+                  'hospital': _hospital,
+                  'date': _dateCtrl.text, // dd/MM/yyyy
+                  'maxPatients': _maxPatientsCtrl.text,
+                  'startTime': _startTimeCtrl.text,
+                  'endTime': _endTimeCtrl.text,
+                  'notes': _notesCtrl.text,
+                };
+                Navigator.pop(context, result);
               }
             },
           ),

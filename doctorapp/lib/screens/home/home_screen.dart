@@ -123,6 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const ActiveSessionItem(
                 hospitalName: 'Hemas Hospital',
                 patientCount: '10/20 Patients (H001)',
+                date: '10/09/2024',
                 time: '5.00 PM',
                 sessionType: 'Hospital',
                 note: 'General Consultation Hours',
@@ -131,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const ActiveSessionItem(
                 hospitalName: 'Online Consultation',
                 patientCount: '8/10 Patients',
+                date: '12/09/2024',
                 time: '7.00 PM - 9.00 PM',
                 sessionType: 'Teleconsultation',
                 note: 'Video Consultation Slots',
@@ -139,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const ActiveSessionItem(
                 hospitalName: 'Ninewells Hospital',
                 patientCount: '14/15 Patients (NW108)',
+                date: '15/09/2024',
                 time: '10.00 AM',
                 sessionType: 'Hospital',
                 note: 'Pediatric Consultation Hours',
