@@ -8,6 +8,7 @@ class EditSessionModal extends StatefulWidget {
   final String time;
   final String sessionType;
   final String note;
+  final String date;
 
   const EditSessionModal({
     super.key,
@@ -16,6 +17,7 @@ class EditSessionModal extends StatefulWidget {
     required this.time,
     required this.sessionType,
     required this.note,
+    required this.date,
   });
 
   @override
@@ -61,8 +63,8 @@ class _EditSessionModalState extends State<EditSessionModal> {
     }
 
     // Initialize controllers from passed values when possible
-    // Date: leave blank or set a sensible placeholder
-    dateController.text = '';
+    // Date: prefill with provided value if any
+    dateController.text = widget.date;
 
     // Try to extract max patients from the passed patientCount string
     final slashMatch = RegExp(r"/(\d+)").firstMatch(widget.patientCount);
@@ -194,8 +196,16 @@ class _EditSessionModalState extends State<EditSessionModal> {
                         child: CustomButton(
                           text: 'Update',
                           onPressed: () {
-                            if (_formKey.currentState?.validate() ?? true) {
-                              Navigator.of(context).pop();
+                            if (_formKey.currentState?.validate() == true) {
+                              Navigator.of(context).pop({
+                                'sessionType': selectedSessionType,
+                                'hospital': selectedHospital,
+                                'date': dateController.text,
+                                'maxPatients': maxPatientsController.text,
+                                'startTime': startTimeController.text,
+                                'endTime': endTimeController.text,
+                                'notes': notesController.text,
+                              });
                             }
                           },
                         ),
