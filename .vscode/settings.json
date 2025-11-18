@@ -1,3 +1,8 @@
 {
-  "cmake.sourceDirectory": "/Users/sakith/Doctor-App/doctorapp/linux"
+  "cmake.sourceDirectory": "/Users/sakith/Doctor-App/doctorapp/linux",
+  "files.associations": {
+    "*.embeddedhtml": "html",
+    "array": "cpp",
+    "tuple": "cpp"
+  }
 }
