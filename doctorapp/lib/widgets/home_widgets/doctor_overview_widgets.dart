@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/date_time_utils.dart';
 
 class DoctorOverviewCard extends StatelessWidget {
   const DoctorOverviewCard({super.key});
@@ -11,9 +12,8 @@ class DoctorOverviewCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: const DecorationImage(
-          image:  AssetImage('assets/images/Mask group.png'),
+          image: AssetImage('assets/images/Mask group.png'),
           fit: BoxFit.cover,
-          
         ),
       ),
       child: Container(
@@ -30,9 +30,9 @@ class DoctorOverviewCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Good Morning',
-                      style: TextStyle(
+                    Text(
+                      DateTimeUtils.getGreeting(),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -53,17 +53,17 @@ class DoctorOverviewCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Thursday',
-                        style: TextStyle(
+                      Text(
+                        DateTimeUtils.getCurrentDayName(),
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      const Text(
-                        'Sep, 25',
-                        style: TextStyle(
+                      Text(
+                        DateTimeUtils.getCurrentDate(),
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
