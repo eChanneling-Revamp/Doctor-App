@@ -5,6 +5,7 @@ import '../../widgets/session_widgets/session_filter_row.dart';
 import '../../widgets/session_widgets/session_section.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../utils/date_time_utils.dart';
+import '../../utils/snackbar_utils.dart';
 
 class SessionScreen extends StatefulWidget {
   const SessionScreen({super.key});
@@ -37,7 +38,7 @@ class _Session {
 class _SessionScreenState extends State<SessionScreen> {
   String _selectedFilter = 'All';
 
-    /// Returns a color for the session type.
+  /// Returns a color for the session type.
   static Color colorForType(String type) =>
       type == 'Hospital' ? const Color(0xFF10B981) : const Color(0xFF6D28D9);
 
@@ -172,6 +173,7 @@ class _SessionScreenState extends State<SessionScreen> {
         );
       }
     });
+    SnackbarUtils.success(context, 'Session added successfully');
   }
 
   _Session _buildSessionFromEdit(
@@ -250,6 +252,7 @@ class _SessionScreenState extends State<SessionScreen> {
         );
       }
     });
+    SnackbarUtils.success(context, 'Session updated successfully');
   }
 
   List<_Session> _applyFilter(List<_Session> list) {
@@ -292,6 +295,8 @@ class _SessionScreenState extends State<SessionScreen> {
                     );
                     if (result is Map<String, dynamic>) {
                       _addSessionFromForm(result);
+                    } else if (result == null) {
+                      SnackbarUtils.info(context, 'Session creation cancelled');
                     }
                   },
                   borderColor: const Color(0xFF4A3FFF),
