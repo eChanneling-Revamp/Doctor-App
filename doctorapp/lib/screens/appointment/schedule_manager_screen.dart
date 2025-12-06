@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/share_widgets/buttons.dart';
+import '../../utils/snackbar_utils.dart';
 import '../../widgets/appointment_widgets/schedule_widgets/location_selector.dart';
 import '../../widgets/appointment_widgets/schedule_widgets/view_toggle.dart';
 import '../../widgets/appointment_widgets/schedule_widgets/daily_view.dart';
@@ -102,6 +103,7 @@ class _ScheduleManagerScreenState extends State<ScheduleManagerScreen> {
                 setState(() {
                   _selectedLocation = newValue;
                 });
+                SnackbarUtils.info(context, 'Location changed to $newValue');
               }
             },
           ),
@@ -116,27 +118,26 @@ class _ScheduleManagerScreenState extends State<ScheduleManagerScreen> {
           ),
           // Content
           Expanded(
-            child:
-                _isDailyView
-                    ? DailyView(timeSlots: _timeSlots)
-                    : WeekView(
-                      timeSlots: _timeSlots,
-                      selectedDate: _selectedDate,
-                      onPreviousWeek: () {
-                        setState(() {
-                          _selectedDate = _selectedDate.subtract(
-                            const Duration(days: 7),
-                          );
-                        });
-                      },
-                      onNextWeek: () {
-                        setState(() {
-                          _selectedDate = _selectedDate.add(
-                            const Duration(days: 7),
-                          );
-                        });
-                      },
-                    ),
+            child: _isDailyView
+                ? DailyView(timeSlots: _timeSlots)
+                : WeekView(
+                    timeSlots: _timeSlots,
+                    selectedDate: _selectedDate,
+                    onPreviousWeek: () {
+                      setState(() {
+                        _selectedDate = _selectedDate.subtract(
+                          const Duration(days: 7),
+                        );
+                      });
+                    },
+                    onNextWeek: () {
+                      setState(() {
+                        _selectedDate = _selectedDate.add(
+                          const Duration(days: 7),
+                        );
+                      });
+                    },
+                  ),
           ),
         ],
       ),
@@ -144,6 +145,7 @@ class _ScheduleManagerScreenState extends State<ScheduleManagerScreen> {
   }
 
   void _showEditScheduleDialog() {
+    SnackbarUtils.info(context, 'Opening schedule editor');
     showDialog(
       context: context,
       builder: (BuildContext context) {
