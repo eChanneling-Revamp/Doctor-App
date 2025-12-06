@@ -4,17 +4,21 @@ import '../share_widgets/inputs.dart';
 import '../../models/prescription_entry.dart';
 
 typedef OnRemoveEntry = void Function(int index);
+typedef OnToggleFavorite =
+    void Function(int index, String medicineName, bool isFavorite);
 
 class PrescriptionEntryCard extends StatefulWidget {
   final PrescriptionEntry entry;
   final int index;
   final OnRemoveEntry onRemove;
+  final OnToggleFavorite? onToggleFavorite;
 
   const PrescriptionEntryCard({
     super.key,
     required this.entry,
     required this.index,
     required this.onRemove,
+    this.onToggleFavorite,
   });
 
   @override
@@ -109,12 +113,11 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                           DropdownMenuItem(value: 4, child: Text('4')),
                           DropdownMenuItem(value: 6, child: Text('6')),
                         ],
-                        onChanged:
-                            _editing
-                                ? (v) => setState(
-                                  () => entry.frequency = v ?? entry.frequency,
-                                )
-                                : null,
+                        onChanged: _editing
+                            ? (v) => setState(
+                                () => entry.frequency = v ?? entry.frequency,
+                              )
+                            : null,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                         ),
@@ -157,12 +160,11 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                             child: Text('1 Month'),
                           ),
                         ],
-                        onChanged:
-                            _editing
-                                ? (v) => setState(
-                                  () => entry.period = v ?? entry.period,
-                                )
-                                : null,
+                        onChanged: _editing
+                            ? (v) => setState(
+                                () => entry.period = v ?? entry.period,
+                              )
+                            : null,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                         ),
@@ -174,18 +176,31 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                 SizedBox(
                   height: 48,
                   child: OutlinedButton.icon(
-                    onPressed:
-                        () => setState(
-                          () => entry.isFavorite = !entry.isFavorite,
-                        ),
+                    onPressed: () {
+                      setState(() {
+                        entry.isFavorite = !entry.isFavorite;
+                      });
+                      widget.onToggleFavorite?.call(
+                        widget.index,
+                        entry.medicineName,
+                        entry.isFavorite,
+                      );
+                      SnackbarUtils.success(
+                        context,
+                        entry.isFavorite
+                            ? 'Added to favorites'
+                            : 'Removed from favorites',
+                      );
+                    },
                     icon: Icon(
                       entry.isFavorite ? Icons.star : Icons.star_border,
-                      color:
-                          entry.isFavorite
-                              ? const Color(0xFFF59E0B)
-                              : Colors.grey.shade600,
+                      color: entry.isFavorite
+                          ? const Color(0xFFF59E0B)
+                          : Colors.grey.shade600,
                     ),
-                    label: const Text('Add to favorite'),
+                    label: Text(
+                      entry.isFavorite ? 'Remove favorite' : 'Add to favorite',
+                    ),
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
