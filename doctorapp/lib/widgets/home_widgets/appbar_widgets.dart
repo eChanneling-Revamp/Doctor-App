@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../screens/profile/profile_screen.dart';
+import '../../screens/notifications/notifications_screen.dart';
 
 // Header Widget with Logo and Navigation using AppBar
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -19,7 +20,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const NotificationsScreen(),
+              ),
+            );
+          },
           icon: const Icon(
             Icons.notifications_outlined,
             size: 24,
@@ -47,4 +55,3 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-
