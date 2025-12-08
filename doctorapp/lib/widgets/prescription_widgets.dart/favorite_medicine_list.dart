@@ -55,24 +55,17 @@ class FavoriteMedicineList extends StatelessWidget {
                   width: 28,
                   height: 28,
                   decoration: BoxDecoration(
-                    color:
-                        isSelected
-                            ? const Color(0xFF09CD4A)
-                            : Colors.transparent,
+                    color: isSelected
+                        ? const Color(0xFF09CD4A)
+                        : Colors.transparent,
                     shape: BoxShape.circle,
-                    border:
-                        isSelected
-                            ? null
-                            : Border.all(color: Colors.grey.shade300),
+                    border: isSelected
+                        ? null
+                        : Border.all(color: Colors.grey.shade300),
                   ),
-                  child:
-                      isSelected
-                          ? const Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 18,
-                          )
-                          : const SizedBox.shrink(),
+                  child: isSelected
+                      ? const Icon(Icons.check, color: Colors.white, size: 18)
+                      : const SizedBox.shrink(),
                 ),
               ],
             ),

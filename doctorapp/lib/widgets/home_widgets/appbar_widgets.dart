@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../screens/profile/profile_screen.dart';
 
 // Header Widget with Logo and Navigation using AppBar
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -26,7 +27,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+            );
+          },
           icon: const Icon(
             Icons.account_circle_outlined,
             size: 24,

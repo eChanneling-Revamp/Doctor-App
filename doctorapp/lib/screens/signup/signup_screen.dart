@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
+import '../../utils/snackbar_utils.dart';
 import '../signin_screen.dart';
 import 'signup_photo_screen.dart';
 
@@ -33,6 +34,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _next() {
     // Validate and navigate to next screen
+    if (_fullNameController.text.isEmpty ||
+        _medicalSpecialtyController.text.isEmpty ||
+        _primaryHospitalController.text.isEmpty ||
+        _slmcNumberController.text.isEmpty ||
+        _selectedSpecialty == 'Select your specialty') {
+      SnackbarUtils.error(context, 'Please fill in all fields');
+      return;
+    }
+    SnackbarUtils.success(context, 'Step 1 completed');
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SignUpPhotoScreen()),
@@ -143,10 +153,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: Text(
                                   value,
                                   style: TextStyle(
-                                    color:
-                                        value == 'Select your specialty'
-                                            ? Colors.grey.shade500
-                                            : Colors.black87,
+                                    color: value == 'Select your specialty'
+                                        ? Colors.grey.shade500
+                                        : Colors.black87,
                                     fontSize: 16,
                                   ),
                                 ),

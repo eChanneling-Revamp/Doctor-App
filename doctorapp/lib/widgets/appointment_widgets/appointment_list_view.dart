@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/snackbar_utils.dart';
 import 'appointment_card.dart';
 
 class AppointmentListView extends StatelessWidget {
@@ -20,6 +21,12 @@ class AppointmentListView extends StatelessWidget {
           time: appointment['time'],
           isConfirmed: appointment['isConfirmed'],
           initials: appointment['initials'],
+          onTap: () {
+            SnackbarUtils.info(
+              context,
+              'Appointment with ${appointment['name']}',
+            );
+          },
         );
       },
     );

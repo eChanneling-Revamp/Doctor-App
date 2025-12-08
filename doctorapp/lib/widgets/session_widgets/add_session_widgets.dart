@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/snackbar_utils.dart';
 import '../share_widgets/buttons.dart';
 import 'session_form_fields.dart';
 
@@ -72,10 +73,10 @@ class _AddSessionFormState extends State<AddSessionForm> {
           SessionFormFields(
             sessionType: _sessionType,
             hospital: _hospital,
-            onSessionTypeChanged:
-                (v) => setState(() => _sessionType = v ?? _sessionType),
-            onHospitalChanged:
-                (v) => setState(() => _hospital = v ?? _hospital),
+            onSessionTypeChanged: (v) =>
+                setState(() => _sessionType = v ?? _sessionType),
+            onHospitalChanged: (v) =>
+                setState(() => _hospital = v ?? _hospital),
             dateController: _dateCtrl,
             maxPatientsController: _maxPatientsCtrl,
             startTimeController: _startTimeCtrl,
@@ -99,7 +100,13 @@ class _AddSessionFormState extends State<AddSessionForm> {
                   'endTime': _endTimeCtrl.text,
                   'notes': _notesCtrl.text,
                 };
+                SnackbarUtils.success(context, 'Session created successfully');
                 Navigator.pop(context, result);
+              } else {
+                SnackbarUtils.error(
+                  context,
+                  'Please fill in all required fields',
+                );
               }
             },
           ),
