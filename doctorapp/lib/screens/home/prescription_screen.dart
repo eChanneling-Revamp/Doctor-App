@@ -60,8 +60,9 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
       if (currentlySelected) {
         // deselect and remove any entries with that medicine
         selectedFavoriteIndices.remove(index);
-        final toRemove =
-            entries.where((e) => e.medicineName == medicine).toList();
+        final toRemove = entries
+            .where((e) => e.medicineName == medicine)
+            .toList();
         for (final r in toRemove) {
           r.dispose();
           entries.remove(r);
@@ -69,15 +70,22 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
         return;
       }
 
+      // Check if medicine already exists in entries
+      if (entries.any((e) => e.medicineName == medicine)) {
+        // Medicine already in prescription, just mark it as selected
+        selectedFavoriteIndices.add(index);
+        SnackbarUtils.info(context, 'Medicine already added');
+        return;
+      }
+
       // select
       selectedFavoriteIndices.add(index);
 
-      // add entry if not exists
-      if (!entries.any((e) => e.medicineName == medicine)) {
-        entries.add(PrescriptionEntry(medicineName: medicine));
-      } else {
-        SnackbarUtils.info(context, 'Medicine already added');
-      }
+      // add entry
+      final newEntry = PrescriptionEntry(medicineName: medicine);
+      newEntry.isFavorite =
+          true; // Mark as favorite since it's from favorites list
+      entries.add(newEntry);
     });
   }
 
@@ -89,6 +97,45 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
       // if it was a favorite, clear its tick
       final favIndex = favoriteMedicines.indexOf(removed.medicineName);
       if (favIndex >= 0) selectedFavoriteIndices.remove(favIndex);
+    });
+  }
+
+  void _onToggleFavorite(int index, String medicineName, bool isFavorite) {
+    setState(() {
+      if (isFavorite) {
+        // Add to favorites list if not already there
+        if (!favoriteMedicines.contains(medicineName)) {
+          favoriteMedicines.add(medicineName);
+          // Mark the tick for the newly added favorite
+          selectedFavoriteIndices.add(favoriteMedicines.length - 1);
+        } else {
+          // Already in favorites, just mark the tick
+          final favIndex = favoriteMedicines.indexOf(medicineName);
+          if (favIndex >= 0) {
+            selectedFavoriteIndices.add(favIndex);
+          }
+        }
+      } else {
+        // Get index before removing
+        final favIndex = favoriteMedicines.indexOf(medicineName);
+        // Remove from favorites list
+        if (favIndex >= 0) {
+          favoriteMedicines.removeAt(favIndex);
+          // Clear selection for this index
+          selectedFavoriteIndices.remove(favIndex);
+          // Update all indices greater than removed index
+          final updatedIndices = <int>{};
+          for (final idx in selectedFavoriteIndices) {
+            if (idx > favIndex) {
+              updatedIndices.add(idx - 1);
+            } else {
+              updatedIndices.add(idx);
+            }
+          }
+          selectedFavoriteIndices.clear();
+          selectedFavoriteIndices.addAll(updatedIndices);
+        }
+      }
     });
   }
 
@@ -202,8 +249,8 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                             child: ListView.separated(
                               shrinkWrap: true,
                               itemCount: searchResults.length,
-                              separatorBuilder:
-                                  (_, __) => const Divider(height: 1),
+                              separatorBuilder: (_, __) =>
+                                  const Divider(height: 1),
                               itemBuilder: (context, idx) {
                                 final name = searchResults[idx];
                                 return ListTile(
@@ -217,12 +264,21 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                                         context,
                                         'Medicine already added',
                                       );
+                                      setState(() {
+                                        searchResults = [];
+                                        medicineSearchController.clear();
+                                      });
                                       return;
                                     }
                                     setState(() {
-                                      entries.add(
-                                        PrescriptionEntry(medicineName: name),
+                                      final newEntry = PrescriptionEntry(
+                                        medicineName: name,
                                       );
+                                      // Check if this medicine is already in favorites
+                                      if (favoriteMedicines.contains(name)) {
+                                        newEntry.isFavorite = true;
+                                      }
+                                      entries.add(newEntry);
                                       searchResults = [];
                                       medicineSearchController.clear();
                                     });
@@ -268,6 +324,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                     entry: entries[i],
                     index: i,
                     onRemove: _removeEntry,
+                    onToggleFavorite: _onToggleFavorite,
                   ),
                 ),
               ),

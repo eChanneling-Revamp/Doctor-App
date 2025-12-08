@@ -4,7 +4,8 @@ import '../home/add_session_screen.dart';
 import '../../widgets/session_widgets/session_filter_row.dart';
 import '../../widgets/session_widgets/session_section.dart';
 import '../../widgets/share_widgets/buttons.dart';
-import '../../utils/session_utils.dart';
+import '../../utils/date_time_utils.dart';
+import '../../utils/snackbar_utils.dart';
 
 class SessionScreen extends StatefulWidget {
   const SessionScreen({super.key});
@@ -36,6 +37,17 @@ class _Session {
 
 class _SessionScreenState extends State<SessionScreen> {
   String _selectedFilter = 'All';
+
+  /// Returns a color for the session type.
+  static Color colorForType(String type) =>
+      type == 'Hospital' ? const Color(0xFF10B981) : const Color(0xFF6D28D9);
+
+  /// Updates the max patients text keeping the current prefix.
+  ///
+  /// Example: `10/20 Patients` with `newMax=30` => `10/30 Patients`.
+  static String updateMaxPatientsText(String current, int newMax) {
+    return current.replaceFirst(RegExp(r"/(\d+)"), '/$newMax');
+  }
 
   // sample data - in a real app this would come from a provider / API
   final List<_Session> _todayData = [
@@ -93,14 +105,10 @@ class _SessionScreenState extends State<SessionScreen> {
   final List<_Session> _upcomingData = [];
 
   void _addSessionFromForm(Map<String, dynamic> data) {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final date = SessionUtils.parseDate(data['date']) ?? today;
-    final isToday =
-        date.year == today.year &&
-        date.month == today.month &&
-        date.day == today.day;
-    final isTomorrow = date.difference(today).inDays == 1;
+    final today = DateTimeUtils.getToday();
+    final date = DateTimeUtils.parseDate(data['date']) ?? today;
+    final isToday = DateTimeUtils.isToday(date);
+    final isTomorrow = DateTimeUtils.isTomorrow(date);
 
     final sessionType = (data['sessionType'] as String?) ?? 'Teleconsultation';
     final hospital = (data['hospital'] as String?) ?? 'Online Consultation';
@@ -110,12 +118,12 @@ class _SessionScreenState extends State<SessionScreen> {
     final endTime = (data['endTime'] as String?) ?? '';
     final notes = (data['notes'] as String?) ?? '';
 
-    final displayHospital =
-        sessionType == 'Teleconsultation' ? 'Online Consultation' : hospital;
-    final displayTime =
-        (startTime.isNotEmpty && endTime.isNotEmpty)
-            ? '$startTime - $endTime'
-            : (startTime.isNotEmpty ? startTime : '');
+    final displayHospital = sessionType == 'Teleconsultation'
+        ? 'Online Consultation'
+        : hospital;
+    final displayTime = (startTime.isNotEmpty && endTime.isNotEmpty)
+        ? '$startTime - $endTime'
+        : (startTime.isNotEmpty ? startTime : '');
     final displayPatients = '0/${maxPatients > 0 ? maxPatients : 0} Patients';
 
     setState(() {
@@ -125,10 +133,10 @@ class _SessionScreenState extends State<SessionScreen> {
           _Session(
             hospitalName: displayHospital,
             patientCount: displayPatients,
-            date: SessionUtils.formatDMY(date),
+            date: DateTimeUtils.formatDMY(date),
             time: displayTime,
             sessionType: sessionType,
-            iconColor: SessionUtils.colorForType(sessionType),
+            iconColor: colorForType(sessionType),
             note: notes,
           ),
         );
@@ -138,32 +146,34 @@ class _SessionScreenState extends State<SessionScreen> {
           _Session(
             hospitalName: displayHospital,
             patientCount: displayPatients,
-            date: SessionUtils.formatDMY(date),
+            date: DateTimeUtils.formatDMY(date),
             time: displayTime,
             sessionType: sessionType,
-            iconColor: SessionUtils.colorForType(sessionType),
+            iconColor: colorForType(sessionType),
             note: notes,
           ),
         );
       } else {
         // Move to Upcoming (other dates) and include date in the subtitle
-        final dateLabel = SessionUtils.formatDate(date);
-        final composedNote =
-            notes.isNotEmpty ? 'Date: $dateLabel • $notes' : 'Date: $dateLabel';
+        final dateLabel = DateTimeUtils.formatDate(date);
+        final composedNote = notes.isNotEmpty
+            ? 'Date: $dateLabel • $notes'
+            : 'Date: $dateLabel';
         _upcomingData.insert(
           0,
           _Session(
             hospitalName: displayHospital,
             patientCount: displayPatients,
-            date: SessionUtils.formatDMY(date),
+            date: DateTimeUtils.formatDMY(date),
             time: displayTime,
             sessionType: sessionType,
-            iconColor: SessionUtils.colorForType(sessionType),
+            iconColor: colorForType(sessionType),
             note: composedNote,
           ),
         );
       }
     });
+    SnackbarUtils.success(context, 'Session added successfully');
   }
 
   _Session _buildSessionFromEdit(
@@ -180,28 +190,23 @@ class _SessionScreenState extends State<SessionScreen> {
     final notes = (data['notes'] as String?) ?? original.note;
     final dateStr = (data['date'] as String?) ?? original.date;
 
-    final displayHospital =
-        sessionType == 'Teleconsultation' ? 'Online Consultation' : hospital;
-    final displayTime =
-        (startTime.isNotEmpty && endTime.isNotEmpty)
-            ? '$startTime - $endTime'
-            : (startTime.isNotEmpty ? startTime : original.time);
-    final displayPatients =
-        maxPatients != null
-            ? SessionUtils.updateMaxPatientsText(
-              original.patientCount,
-              maxPatients,
-            )
-            : original.patientCount;
+    final displayHospital = sessionType == 'Teleconsultation'
+        ? 'Online Consultation'
+        : hospital;
+    final displayTime = (startTime.isNotEmpty && endTime.isNotEmpty)
+        ? '$startTime - $endTime'
+        : (startTime.isNotEmpty ? startTime : original.time);
+    final displayPatients = maxPatients != null
+        ? updateMaxPatientsText(original.patientCount, maxPatients)
+        : original.patientCount;
 
-    final parsed = SessionUtils.parseDate(dateStr) ?? DateTime.now();
-    final dateLabel = SessionUtils.formatDate(parsed);
-    final composedNote =
-        forUpcoming
-            ? ((notes.isNotEmpty)
-                ? 'Date: $dateLabel • $notes'
-                : 'Date: $dateLabel')
-            : notes;
+    final parsed = DateTimeUtils.parseDate(dateStr) ?? DateTime.now();
+    final dateLabel = DateTimeUtils.formatDate(parsed);
+    final composedNote = forUpcoming
+        ? ((notes.isNotEmpty)
+              ? 'Date: $dateLabel • $notes'
+              : 'Date: $dateLabel')
+        : notes;
 
     return _Session(
       hospitalName: displayHospital,
@@ -209,22 +214,17 @@ class _SessionScreenState extends State<SessionScreen> {
       date: dateStr,
       time: displayTime,
       sessionType: sessionType,
-      iconColor: SessionUtils.colorForType(sessionType),
+      iconColor: colorForType(sessionType),
       note: composedNote,
     );
   }
 
   void _onEditSession(_Session original, Map<String, dynamic> data) {
-    final date = SessionUtils.parseDate(data['date'] as String?);
+    final date = DateTimeUtils.parseDate(data['date'] as String?);
     if (date == null) return;
 
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final isToday =
-        date.year == today.year &&
-        date.month == today.month &&
-        date.day == today.day;
-    final isTomorrow = date.difference(today).inDays == 1;
+    final isToday = DateTimeUtils.isToday(date);
+    final isTomorrow = DateTimeUtils.isTomorrow(date);
 
     setState(() {
       if (_todayData.contains(original)) {
@@ -252,6 +252,7 @@ class _SessionScreenState extends State<SessionScreen> {
         );
       }
     });
+    SnackbarUtils.success(context, 'Session updated successfully');
   }
 
   List<_Session> _applyFilter(List<_Session> list) {
@@ -261,8 +262,8 @@ class _SessionScreenState extends State<SessionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final today = DateTime.now();
-    final tomorrow = today.add(const Duration(days: 1));
+    final today = DateTimeUtils.getToday();
+    final tomorrow = DateTimeUtils.getTomorrow();
     final todaySessions = _applyFilter(_todayData);
     final tomorrowSessions = _applyFilter(_tomorrowData);
     final otherUpcomingSessions = _applyFilter(_upcomingData);
@@ -294,6 +295,8 @@ class _SessionScreenState extends State<SessionScreen> {
                     );
                     if (result is Map<String, dynamic>) {
                       _addSessionFromForm(result);
+                    } else if (result == null) {
+                      SnackbarUtils.info(context, 'Session creation cancelled');
                     }
                   },
                   borderColor: const Color(0xFF4A3FFF),
@@ -323,64 +326,61 @@ class _SessionScreenState extends State<SessionScreen> {
               const SizedBox(height: 16),
 
               SessionSection(
-                title: 'Today - ${SessionUtils.formatDate(today)}',
-                children:
-                    todaySessions
-                        .map(
-                          (s) => ActiveSessionItem(
-                            hospitalName: s.hospitalName,
-                            patientCount: s.patientCount,
-                            date: s.date,
-                            time: s.time,
-                            sessionType: s.sessionType,
-                            note: s.note,
-                            iconColor: s.iconColor,
-                            onUpdate: (updated) => _onEditSession(s, updated),
-                          ),
-                        )
-                        .toList(),
+                title: 'Today - ${DateTimeUtils.formatDate(today)}',
+                children: todaySessions
+                    .map(
+                      (s) => ActiveSessionItem(
+                        hospitalName: s.hospitalName,
+                        patientCount: s.patientCount,
+                        date: s.date,
+                        time: s.time,
+                        sessionType: s.sessionType,
+                        note: s.note,
+                        iconColor: s.iconColor,
+                        onUpdate: (updated) => _onEditSession(s, updated),
+                      ),
+                    )
+                    .toList(),
               ),
 
               const SizedBox(height: 16),
 
               SessionSection(
-                title: 'Tomorrow - ${SessionUtils.formatDate(tomorrow)}',
-                children:
-                    tomorrowSessions
-                        .map(
-                          (s) => ActiveSessionItem(
-                            hospitalName: s.hospitalName,
-                            patientCount: s.patientCount,
-                            date: s.date,
-                            time: s.time,
-                            sessionType: s.sessionType,
-                            note: s.note,
-                            iconColor: s.iconColor,
-                            onUpdate: (updated) => _onEditSession(s, updated),
-                          ),
-                        )
-                        .toList(),
+                title: 'Tomorrow - ${DateTimeUtils.formatDate(tomorrow)}',
+                children: tomorrowSessions
+                    .map(
+                      (s) => ActiveSessionItem(
+                        hospitalName: s.hospitalName,
+                        patientCount: s.patientCount,
+                        date: s.date,
+                        time: s.time,
+                        sessionType: s.sessionType,
+                        note: s.note,
+                        iconColor: s.iconColor,
+                        onUpdate: (updated) => _onEditSession(s, updated),
+                      ),
+                    )
+                    .toList(),
               ),
 
               const SizedBox(height: 16),
 
               SessionSection(
                 title: 'Upcoming Sessions',
-                children:
-                    otherUpcomingSessions
-                        .map(
-                          (s) => ActiveSessionItem(
-                            hospitalName: s.hospitalName,
-                            patientCount: s.patientCount,
-                            date: s.date,
-                            time: s.time,
-                            sessionType: s.sessionType,
-                            note: s.note,
-                            iconColor: s.iconColor,
-                            onUpdate: (updated) => _onEditSession(s, updated),
-                          ),
-                        )
-                        .toList(),
+                children: otherUpcomingSessions
+                    .map(
+                      (s) => ActiveSessionItem(
+                        hospitalName: s.hospitalName,
+                        patientCount: s.patientCount,
+                        date: s.date,
+                        time: s.time,
+                        sessionType: s.sessionType,
+                        note: s.note,
+                        iconColor: s.iconColor,
+                        onUpdate: (updated) => _onEditSession(s, updated),
+                      ),
+                    )
+                    .toList(),
               ),
 
               const SizedBox(height: 48),

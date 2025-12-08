@@ -128,15 +128,20 @@ class NextConsultationCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              SizedBox(
-                width: 90,
-                child: CustomButton(
-                  text: 'Stop',
-                  onPressed: onStop ?? () {},
-                  backgroundColor: const Color.fromARGB(255, 234, 136, 136),
-                  borderColor: Colors.redAccent,
-                  textColor: const Color.fromARGB(255, 255, 255, 255),
-                  height: 40,
+              GestureDetector(
+                onTap: onStop ?? () {},
+                child: Container(
+                  width: 36,
+                  height: 36,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.stop_rounded,
+                    color: Colors.white,
+                    size: 18,
+                  ),
                 ),
               ),
             ],

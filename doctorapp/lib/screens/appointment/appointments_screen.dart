@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/appointment_widgets/appointment_tab_bar.dart';
 import '../../widgets/appointment_widgets/appointment_list_view.dart';
 import '../../widgets/share_widgets/buttons.dart';
+import '../../utils/snackbar_utils.dart';
 import 'schedule_manager_screen.dart';
 
 class AppointmentsScreen extends StatefulWidget {
@@ -169,6 +170,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
             child: CustomOutlinedButton(
               text: 'Schedule',
               onPressed: () {
+                SnackbarUtils.info(context, 'Opening schedule manager');
                 Navigator.push(
                   context,
                   MaterialPageRoute(
