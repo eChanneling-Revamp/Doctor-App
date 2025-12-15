@@ -41,6 +41,8 @@ dependencies:
   zego_uikit_prebuilt_call: ^4.21.1
   # PDF viewer package
   pdfx: ^2.5.0
+  # Chart library for income trends
+  fl_chart: ^0.69.0
 
 dev_dependencies:
   flutter_test:
