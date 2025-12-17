@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/share_widgets/inputs.dart';
@@ -47,8 +48,9 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
       }
     }
 
-    _verificationCode =
-        _controllers.map((controller) => controller.text).join();
+    _verificationCode = _controllers
+        .map((controller) => controller.text)
+        .join();
     setState(() {});
   }
 
@@ -83,102 +85,110 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
         elevation: 0,
         leading: const CustomBackButton(),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 40),
-
-            // Logo
-            const LogoWidget(size: 60),
-
-            const SizedBox(height: 40),
-
-            // Title
-            const Text(
-              'Verification Code',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Description
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade600,
-                  height: 1.5,
-                ),
-                children: [
-                  const TextSpan(
-                    text:
-                        'Please enter the 4 digit code sent to your mobile\nnumber ',
-                  ),
-                  TextSpan(
-                    text: '+40 700 000 000',
-                    style: TextStyle(
-                      color: Colors.blue.shade600,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 40),
-
-            // OTP Input Fields
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(4, (index) {
-                return OTPInputField(
-                  controller: _controllers[index],
-                  autoFocus: index == 0,
-                  onChanged: (value) => _onCodeChanged(value, index),
-                );
-              }),
-            ),
-
-            const SizedBox(height: 32),
-
-            // Verify Button
-            CustomButton(
-              text: 'Verify',
-              onPressed: _verify,
-              backgroundColor: const Color(0xFF4A3FFF),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Resend Code
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(24.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 40.h),
+
+                // Logo
+                LogoWidget(size: 60.w),
+
+                SizedBox(height: 40.h),
+
+                // Title
                 Text(
-                  "Didn't get the code? ",
-                  style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
-                ),
-                GestureDetector(
-                  onTap: _resendCode,
-                  child: Text(
-                    'Resend code',
-                    style: TextStyle(
-                      color: Colors.blue.shade600,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  'Verification Code',
+                  style: TextStyle(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
+                ),
+
+                SizedBox(height: 16.h),
+
+                // Description
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.grey.shade600,
+                      height: 1.5,
+                    ),
+                    children: [
+                      const TextSpan(
+                        text:
+                            'Please enter the 4 digit code sent to your mobile\nnumber ',
+                      ),
+                      TextSpan(
+                        text: email,
+                        style: TextStyle(
+                          color: Colors.blue.shade600,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 40.h),
+
+                // OTP Input Fields
+                Row(
+                  children: List.generate(4, (index) {
+                    return Expanded(
+                      child: OTPInputField(
+                        controller: _controllers[index],
+                        autoFocus: index == 0,
+                        onChanged: (value) => _onCodeChanged(value, index),
+                      ),
+                    );
+                  }),
+                ),
+
+                SizedBox(height: 32.h),
+
+                // Verify Button
+                CustomButton(
+                  text: 'Verify',
+                  onPressed: _verify,
+                  backgroundColor: const Color(0xFF4A3FFF),
+                ),
+
+                SizedBox(height: 24.h),
+
+                // Resend Code
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Didn't get the code? ",
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: _resendCode,
+                      child: Text(
+                        'Resend code',
+                        style: TextStyle(
+                          color: Colors.blue.shade600,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
