@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
@@ -68,29 +69,29 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.r),
           child: Column(
             children: [
-              const SizedBox(height: 40),
+              SizedBox(height: 40.h),
 
               // Logo
-              const LogoWidget(size: 60),
+              LogoWidget(size: 60.w),
 
-              const SizedBox(height: 40),
+              SizedBox(height: 40.h),
 
               // Contact Number Field
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Contact Number',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   CustomTextField(
                     hintText: 'Enter your contact number',
                     controller: _contactController,
@@ -99,21 +100,21 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
 
               // Email Address Field
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Email Address',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   CustomTextField(
                     hintText: 'Enter your email address',
                     controller: _emailController,
@@ -122,21 +123,21 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
 
               // Password Field
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Password',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   CustomTextField(
                     hintText: 'Create a strong password',
                     controller: _passwordController,
@@ -158,21 +159,21 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
 
               // Confirm Password Field
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Confirm Password',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   CustomTextField(
                     hintText: 'Confirm your password',
                     controller: _confirmPasswordController,
@@ -195,7 +196,7 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                 ],
               ),
 
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
 
               // Buttons
               Row(
@@ -206,21 +207,21 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: Colors.grey.shade300),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: EdgeInsets.symmetric(vertical: 12.h),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Back',
                         style: TextStyle(
                           color: Colors.black87,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(width: 16.w),
                   Expanded(
                     child: CustomButton(text: 'Sign up', onPressed: _signUp),
                   ),
