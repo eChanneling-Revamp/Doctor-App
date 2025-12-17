@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../utils/snackbar_utils.dart';
@@ -55,14 +56,14 @@ class _ScheduleManagerScreenState extends State<ScheduleManagerScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: const CustomBackButton(),
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Schedule Manager',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -70,7 +71,7 @@ class _ScheduleManagerScreenState extends State<ScheduleManagerScreen> {
               'Manage Availability & Booking',
               style: TextStyle(
                 color: Colors.grey,
-                fontSize: 12,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -78,68 +79,70 @@ class _ScheduleManagerScreenState extends State<ScheduleManagerScreen> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16),
+            padding: EdgeInsets.only(right: 16.r),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 120),
+              constraints: BoxConstraints(maxWidth: 120.w),
               child: CustomButton(
                 text: 'Edit',
                 onPressed: _showEditScheduleDialog,
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
-                height: 36,
+                height: 36.h,
               ),
             ),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Location Dropdown
-          LocationSelector(
-            selectedLocation: _selectedLocation,
-            locations: _locations,
-            onChanged: (String? newValue) {
-              if (newValue != null) {
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Location Dropdown
+            LocationSelector(
+              selectedLocation: _selectedLocation,
+              locations: _locations,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    _selectedLocation = newValue;
+                  });
+                  SnackbarUtils.info(context, 'Location changed to $newValue');
+                }
+              },
+            ),
+            // View Toggle
+            ViewToggle(
+              isDailyView: _isDailyView,
+              onViewChanged: (bool isDailyView) {
                 setState(() {
-                  _selectedLocation = newValue;
+                  _isDailyView = isDailyView;
                 });
-                SnackbarUtils.info(context, 'Location changed to $newValue');
-              }
-            },
-          ),
-          // View Toggle
-          ViewToggle(
-            isDailyView: _isDailyView,
-            onViewChanged: (bool isDailyView) {
-              setState(() {
-                _isDailyView = isDailyView;
-              });
-            },
-          ),
-          // Content
-          Expanded(
-            child: _isDailyView
-                ? DailyView(timeSlots: _timeSlots)
-                : WeekView(
-                    timeSlots: _timeSlots,
-                    selectedDate: _selectedDate,
-                    onPreviousWeek: () {
-                      setState(() {
-                        _selectedDate = _selectedDate.subtract(
-                          const Duration(days: 7),
-                        );
-                      });
-                    },
-                    onNextWeek: () {
-                      setState(() {
-                        _selectedDate = _selectedDate.add(
-                          const Duration(days: 7),
-                        );
-                      });
-                    },
-                  ),
-          ),
-        ],
+              },
+            ),
+            // Content
+            Expanded(
+              child: _isDailyView
+                  ? DailyView(timeSlots: _timeSlots)
+                  : WeekView(
+                      timeSlots: _timeSlots,
+                      selectedDate: _selectedDate,
+                      onPreviousWeek: () {
+                        setState(() {
+                          _selectedDate = _selectedDate.subtract(
+                            const Duration(days: 7),
+                          );
+                        });
+                      },
+                      onNextWeek: () {
+                        setState(() {
+                          _selectedDate = _selectedDate.add(
+                            const Duration(days: 7),
+                          );
+                        });
+                      },
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }
