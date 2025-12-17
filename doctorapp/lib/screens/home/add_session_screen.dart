@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/session_widgets/add_session_widgets.dart';
 
@@ -13,15 +14,21 @@ class AddSessionScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         leading: const CustomBackButton(),
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Add New Session',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w700),
+          style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.w700,
+            fontSize: 20.sp,
+          ),
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-        child: const AddSessionForm(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 20.h),
+          child: const AddSessionForm(),
+        ),
       ),
     );
   }

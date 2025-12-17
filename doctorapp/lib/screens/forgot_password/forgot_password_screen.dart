@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/share_widgets/inputs.dart';
@@ -47,59 +48,63 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         elevation: 0,
         leading: const CustomBackButton(),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 40),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(24.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 40.h),
 
-            // Logo
-            const LogoWidget(size: 60),
+                // Logo
+                LogoWidget(size: 60.w),
 
-            const SizedBox(height: 40),
+                SizedBox(height: 40.h),
 
-            // Title
-            const Text(
-              'Forgot Password',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+                // Title
+                Text(
+                  'Forgot Password',
+                  style: TextStyle(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+
+                SizedBox(height: 16.h),
+
+                // Description
+                Text(
+                  'We need your registration phone number to send\nyou password reset code!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.grey.shade600,
+                    height: 1.5,
+                  ),
+                ),
+
+                SizedBox(height: 40.h),
+
+                // Email/Phone Field
+                CustomTextField(
+                  hintText: 'Enter your email or phone',
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+
+                SizedBox(height: 24.h),
+
+                // Send Code Button
+                CustomButton(
+                  text: 'Send Code',
+                  onPressed: _sendCode,
+                  backgroundColor: const Color(0xFF4A3FFF),
+                ),
+              ],
             ),
-
-            const SizedBox(height: 16),
-
-            // Description
-            Text(
-              'We need your registration phone number to send\nyou password reset code!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey.shade600,
-                height: 1.5,
-              ),
-            ),
-
-            const SizedBox(height: 40),
-
-            // Email/Phone Field
-            CustomTextField(
-              hintText: 'Enter your email or phone',
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-            ),
-
-            const SizedBox(height: 24),
-
-            // Send Code Button
-            CustomButton(
-              text: 'Send Code',
-              onPressed: _sendCode,
-              backgroundColor: const Color(0xFF4A3FFF),
-            ),
-          ],
+          ),
         ),
       ),
     );

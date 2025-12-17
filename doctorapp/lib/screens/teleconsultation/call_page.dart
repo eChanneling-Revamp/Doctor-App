@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import '../../widgets/teleconsultation_widgets/call_widgets/error_scaffold.dart';
 import '../../widgets/teleconsultation_widgets/call_widgets/phr_button.dart';
@@ -85,8 +86,8 @@ class TeleconsultationCallPage extends StatelessWidget {
             ),
             // PHR quick access button
             Positioned(
-              top: 12,
-              right: 12,
+              top: 12.r,
+              right: 12.r,
               child: SafeArea(child: PHRButton(onTap: () => _openPHR(context))),
             ),
           ],
@@ -104,5 +105,4 @@ class TeleconsultationCallPage extends StatelessWidget {
       builder: (ctx) => PHRViewer(appointmentId: appointmentId),
     );
   }
-
 }

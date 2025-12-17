@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/session_widgets/active_session.dart';
 import '../home/add_session_screen.dart';
 import '../../widgets/session_widgets/session_filter_row.dart';
@@ -276,13 +277,13 @@ class _SessionScreenState extends State<SessionScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
-        title: const Text(
+        title: Text(
           'Session Management',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+          style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w700),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 12.0),
+            padding: EdgeInsets.only(right: 12.r),
             child: Row(
               children: [
                 CustomOutlinedButton(
@@ -301,90 +302,93 @@ class _SessionScreenState extends State<SessionScreen> {
                   },
                   borderColor: const Color(0xFF4A3FFF),
                   textColor: const Color(0xFF4A3FFF),
-                  height: 40,
+                  height: 40.h,
                 ),
               ],
             ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 8),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 8.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 8.h),
 
-              // Filter row (extracted widget)
-              SessionFilterRow(
-                selectedFilter: _selectedFilter,
-                activeFilterCount: activeFilterCount,
-                onSelected: (value) => setState(() => _selectedFilter = value),
-              ),
+                // Filter row (extracted widget)
+                SessionFilterRow(
+                  selectedFilter: _selectedFilter,
+                  activeFilterCount: activeFilterCount,
+                  onSelected: (value) =>
+                      setState(() => _selectedFilter = value),
+                ),
 
-              const SizedBox(height: 16),
+                SizedBox(height: 16.h),
 
-              SessionSection(
-                title: 'Today - ${DateTimeUtils.formatDate(today)}',
-                children: todaySessions
-                    .map(
-                      (s) => ActiveSessionItem(
-                        hospitalName: s.hospitalName,
-                        patientCount: s.patientCount,
-                        date: s.date,
-                        time: s.time,
-                        sessionType: s.sessionType,
-                        note: s.note,
-                        iconColor: s.iconColor,
-                        onUpdate: (updated) => _onEditSession(s, updated),
-                      ),
-                    )
-                    .toList(),
-              ),
+                SessionSection(
+                  title: 'Today - ${DateTimeUtils.formatDate(today)}',
+                  children: todaySessions
+                      .map(
+                        (s) => ActiveSessionItem(
+                          hospitalName: s.hospitalName,
+                          patientCount: s.patientCount,
+                          date: s.date,
+                          time: s.time,
+                          sessionType: s.sessionType,
+                          note: s.note,
+                          iconColor: s.iconColor,
+                          onUpdate: (updated) => _onEditSession(s, updated),
+                        ),
+                      )
+                      .toList(),
+                ),
 
-              const SizedBox(height: 16),
+                SizedBox(height: 16.h),
 
-              SessionSection(
-                title: 'Tomorrow - ${DateTimeUtils.formatDate(tomorrow)}',
-                children: tomorrowSessions
-                    .map(
-                      (s) => ActiveSessionItem(
-                        hospitalName: s.hospitalName,
-                        patientCount: s.patientCount,
-                        date: s.date,
-                        time: s.time,
-                        sessionType: s.sessionType,
-                        note: s.note,
-                        iconColor: s.iconColor,
-                        onUpdate: (updated) => _onEditSession(s, updated),
-                      ),
-                    )
-                    .toList(),
-              ),
+                SessionSection(
+                  title: 'Tomorrow - ${DateTimeUtils.formatDate(tomorrow)}',
+                  children: tomorrowSessions
+                      .map(
+                        (s) => ActiveSessionItem(
+                          hospitalName: s.hospitalName,
+                          patientCount: s.patientCount,
+                          date: s.date,
+                          time: s.time,
+                          sessionType: s.sessionType,
+                          note: s.note,
+                          iconColor: s.iconColor,
+                          onUpdate: (updated) => _onEditSession(s, updated),
+                        ),
+                      )
+                      .toList(),
+                ),
 
-              const SizedBox(height: 16),
+                SizedBox(height: 16.h),
 
-              SessionSection(
-                title: 'Upcoming Sessions',
-                children: otherUpcomingSessions
-                    .map(
-                      (s) => ActiveSessionItem(
-                        hospitalName: s.hospitalName,
-                        patientCount: s.patientCount,
-                        date: s.date,
-                        time: s.time,
-                        sessionType: s.sessionType,
-                        note: s.note,
-                        iconColor: s.iconColor,
-                        onUpdate: (updated) => _onEditSession(s, updated),
-                      ),
-                    )
-                    .toList(),
-              ),
+                SessionSection(
+                  title: 'Upcoming Sessions',
+                  children: otherUpcomingSessions
+                      .map(
+                        (s) => ActiveSessionItem(
+                          hospitalName: s.hospitalName,
+                          patientCount: s.patientCount,
+                          date: s.date,
+                          time: s.time,
+                          sessionType: s.sessionType,
+                          note: s.note,
+                          iconColor: s.iconColor,
+                          onUpdate: (updated) => _onEditSession(s, updated),
+                        ),
+                      )
+                      .toList(),
+                ),
 
-              const SizedBox(height: 48),
-            ],
+                SizedBox(height: 48.h),
+              ],
+            ),
           ),
         ),
       ),

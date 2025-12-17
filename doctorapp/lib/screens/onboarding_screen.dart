@@ -1,5 +1,6 @@
 import 'package:doctorapp/screens/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/share_widgets/buttons.dart';
 import '../widgets/share_widgets/logo_widget.dart';
 
@@ -12,76 +13,64 @@ class OnboardingScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.r),
           child: Column(
             children: [
-              const SizedBox(height: 60),
-
-              // Logo
-              const LogoWidget(size: 80),
-
-              const SizedBox(height: 40),
-
-              // Title
-              const Text(
+              SizedBox(height: 60.h),
+              LogoWidget(size: 80.w),
+              SizedBox(height: 40.h),
+              Text(
                 'Welcome to eChannelling',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
                 textAlign: TextAlign.center,
               ),
-
-              const SizedBox(height: 16),
-
-              // Subtitle
+              SizedBox(height: 16.h),
               Text(
-                'Convenient for you, patient & specialist.\nPracttce everywhere quality healthcare through\nSri Lanka\'s leading telemedicine platform.',
+                "Convenient for you, patient & specialist.\nPracttce everywhere quality healthcare through\nSri Lanka's leading telemedicine platform.",
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   color: Colors.grey.shade600,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
               ),
-
-              const SizedBox(height: 40),
-
-              // Feature List
-              const Expanded(
-                child: Column(
-                  children: [
-                    FeatureItem(
-                      icon: Icons.security,
-                      text: 'Secure Patient Consultations',
-                      isCompleted: true,
-                    ),
-                    SizedBox(height: 20),
-                    FeatureItem(
-                      icon: Icons.medication,
-                      text: 'Digital prescription management',
-                      isCompleted: true,
-                    ),
-                    SizedBox(height: 20),
-                    FeatureItem(
-                      icon: Icons.phone,
-                      text: 'Teleconsultations',
-                      isCompleted: true,
-                    ),
-                    SizedBox(height: 20),
-                    FeatureItem(
-                      icon: Icons.analytics,
-                      text: 'Income tracking and analytics',
-                      isCompleted: true,
-                    ),
-                  ],
+              SizedBox(height: 40.h),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      FeatureItem(
+                        icon: Icons.security,
+                        text: 'Secure Patient Consultations',
+                        isCompleted: true,
+                      ),
+                      SizedBox(height: 20.h),
+                      FeatureItem(
+                        icon: Icons.medication,
+                        text: 'Digital prescription management',
+                        isCompleted: true,
+                      ),
+                      SizedBox(height: 20.h),
+                      FeatureItem(
+                        icon: Icons.phone,
+                        text: 'Teleconsultations',
+                        isCompleted: true,
+                      ),
+                      SizedBox(height: 20.h),
+                      FeatureItem(
+                        icon: Icons.analytics,
+                        text: 'Income tracking and analytics',
+                        isCompleted: true,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-
-              const SizedBox(height: 24),
-
-              // Get Start Button
+              SizedBox(height: 24.h),
               CustomButton(
                 text: 'Get Start',
                 onPressed: () {
@@ -116,20 +105,20 @@ class FeatureItem extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 24,
-          height: 24,
+          width: 24.w,
+          height: 24.h,
           decoration: BoxDecoration(
             color: isCompleted ? Colors.green : Colors.grey.shade300,
             shape: BoxShape.circle,
           ),
-          child: Icon(Icons.check, size: 16, color: Colors.white),
+          child: Icon(Icons.check, size: 16.sp, color: Colors.white),
         ),
-        const SizedBox(width: 16),
+        SizedBox(width: 16.w),
         Expanded(
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 16.sp,
               color: Colors.black87,
               fontWeight: FontWeight.w500,
             ),

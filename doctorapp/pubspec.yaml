@@ -43,6 +43,7 @@ dependencies:
   pdfx: ^2.5.0
   # Chart library for income trends
   fl_chart: ^0.69.0
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:

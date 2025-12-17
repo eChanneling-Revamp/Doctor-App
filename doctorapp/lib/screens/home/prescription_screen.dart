@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/prescription_widgets.dart/favorite_medicine_list.dart';
@@ -148,194 +149,211 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
         backgroundColor: Colors.transparent,
         leading: const CustomBackButton(),
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'ePrescription',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w700),
+          style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.w700,
+            fontSize: 20.sp,
+          ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CustomTextField(
-                hintText: 'Search Active Appointment',
-                controller: appointmentSearchController,
-                suffixIcon: const Icon(Icons.search),
-              ),
-              const PrescriptionHeader(),
-              const SizedBox(height: 14),
-
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 8.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CustomTextField(
+                  hintText: 'Search Active Appointment',
+                  controller: appointmentSearchController,
+                  suffixIcon: const Icon(Icons.search),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Add Medicine',
-                        style: TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBox(height: 8),
-                      CustomTextField(
-                        hintText: 'Search Medicine Name',
-                        controller: medicineSearchController,
-                        suffixIcon: const Icon(Icons.search),
-                        onChanged: (v) async {
-                          // debounce
-                          _debounce?.cancel();
-                          _debounce = Timer(
-                            const Duration(milliseconds: 400),
-                            () async {
-                              if (v.trim().isEmpty) {
-                                setState(() {
-                                  searchResults = [];
-                                  isSearching = false;
-                                });
-                                return;
-                              }
+                const PrescriptionHeader(),
+                SizedBox(height: 14.h),
 
-                              setState(() {
-                                isSearching = true;
-                              });
-
-                              try {
-                                final results = await DrugApi.searchMedicines(
-                                  v,
-                                );
-                                if (!mounted) return;
-                                setState(() {
-                                  searchResults = results;
-                                  isSearching = false;
-                                });
-                              } catch (e) {
-                                if (!mounted) return;
-                                setState(() {
-                                  isSearching = false;
-                                });
-                                SnackbarUtils.error(
-                                  context,
-                                  'Failed to search medicines. Please try again.',
-                                );
-                              }
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 8),
-                      if (isSearching)
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Center(
-                            child: SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(12.r),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Add Medicine',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.sp,
                           ),
                         ),
-                      if (!isSearching && searchResults.isNotEmpty)
-                        Container(
-                          constraints: const BoxConstraints(maxHeight: 200),
-                          child: Card(
-                            margin: const EdgeInsets.only(top: 6),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                        SizedBox(height: 8.h),
+                        CustomTextField(
+                          hintText: 'Search Medicine Name',
+                          controller: medicineSearchController,
+                          suffixIcon: const Icon(Icons.search),
+                          onChanged: (v) async {
+                            // debounce
+                            _debounce?.cancel();
+                            _debounce = Timer(
+                              const Duration(milliseconds: 400),
+                              () async {
+                                if (v.trim().isEmpty) {
+                                  setState(() {
+                                    searchResults = [];
+                                    isSearching = false;
+                                  });
+                                  return;
+                                }
+
+                                setState(() {
+                                  isSearching = true;
+                                });
+
+                                try {
+                                  final results = await DrugApi.searchMedicines(
+                                    v,
+                                  );
+                                  if (!mounted) return;
+                                  setState(() {
+                                    searchResults = results;
+                                    isSearching = false;
+                                  });
+                                } catch (e) {
+                                  if (!mounted) return;
+                                  setState(() {
+                                    isSearching = false;
+                                  });
+                                  SnackbarUtils.error(
+                                    context,
+                                    'Failed to search medicines. Please try again.',
+                                  );
+                                }
+                              },
+                            );
+                          },
+                        ),
+                        SizedBox(height: 8.h),
+                        if (isSearching)
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.h),
+                            child: Center(
+                              child: SizedBox(
+                                width: 24.w,
+                                height: 24.w,
+                                child: const CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
                             ),
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: searchResults.length,
-                              separatorBuilder: (_, __) =>
-                                  const Divider(height: 1),
-                              itemBuilder: (context, idx) {
-                                final name = searchResults[idx];
-                                return ListTile(
-                                  title: Text(name),
-                                  onTap: () {
-                                    // add to entries if not exists
-                                    if (entries.any(
-                                      (e) => e.medicineName == name,
-                                    )) {
-                                      SnackbarUtils.info(
-                                        context,
-                                        'Medicine already added',
-                                      );
+                          ),
+                        if (!isSearching && searchResults.isNotEmpty)
+                          Container(
+                            constraints: BoxConstraints(maxHeight: 200.h),
+                            child: Card(
+                              margin: EdgeInsets.only(top: 6.r),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                itemCount: searchResults.length,
+                                separatorBuilder: (_, __) =>
+                                    Divider(height: 1.h),
+                                itemBuilder: (context, idx) {
+                                  final name = searchResults[idx];
+                                  return ListTile(
+                                    title: Text(name),
+                                    onTap: () {
+                                      // add to entries if not exists
+                                      if (entries.any(
+                                        (e) => e.medicineName == name,
+                                      )) {
+                                        SnackbarUtils.info(
+                                          context,
+                                          'Medicine already added',
+                                        );
+                                        setState(() {
+                                          searchResults = [];
+                                          medicineSearchController.clear();
+                                        });
+                                        return;
+                                      }
                                       setState(() {
+                                        final newEntry = PrescriptionEntry(
+                                          medicineName: name,
+                                        );
+                                        // Check if this medicine is already in favorites
+                                        if (favoriteMedicines.contains(name)) {
+                                          newEntry.isFavorite = true;
+                                        }
+                                        entries.add(newEntry);
                                         searchResults = [];
                                         medicineSearchController.clear();
                                       });
-                                      return;
-                                    }
-                                    setState(() {
-                                      final newEntry = PrescriptionEntry(
-                                        medicineName: name,
-                                      );
-                                      // Check if this medicine is already in favorites
-                                      if (favoriteMedicines.contains(name)) {
-                                        newEntry.isFavorite = true;
-                                      }
-                                      entries.add(newEntry);
-                                      searchResults = [];
-                                      medicineSearchController.clear();
-                                    });
-                                  },
-                                );
-                              },
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
+                        SizedBox(height: 12.h),
+                        Row(
+                          children: [
+                            const Icon(Icons.star, color: Color(0xFFF59E0B)),
+                            SizedBox(width: 8.w),
+                            Text(
+                              'Favorite Medicine',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
                         ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: const [
-                          Icon(Icons.star, color: Color(0xFFF59E0B)),
-                          SizedBox(width: 8),
-                          Text(
-                            'Favorite Medicine',
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      FavoriteMedicineList(
-                        favorites: favoriteMedicines,
-                        selectedIndices: selectedFavoriteIndices,
-                        onTap: _onFavoriteTap,
-                      ),
-                    ],
+                        SizedBox(height: 8.h),
+                        FavoriteMedicineList(
+                          favorites: favoriteMedicines,
+                          selectedIndices: selectedFavoriteIndices,
+                          onTap: _onFavoriteTap,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 14),
-              const Text(
-                'Prescription Details',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-              ),
-              const SizedBox(height: 8),
-
-              Column(
-                children: List.generate(
-                  entries.length,
-                  (i) => PrescriptionEntryCard(
-                    entry: entries[i],
-                    index: i,
-                    onRemove: _removeEntry,
-                    onToggleFavorite: _onToggleFavorite,
+                SizedBox(height: 14.h),
+                Text(
+                  'Prescription Details',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16.sp,
                   ),
                 ),
-              ),
+                SizedBox(height: 8.h),
 
-              const SizedBox(height: 18),
-              PrescriptionBottomActions(
-                onShare: () => SnackbarUtils.info(context, 'Shared'),
-                onSend: () => SnackbarUtils.info(context, 'Sent to patient'),
-              ),
-              const SizedBox(height: 30),
-            ],
+                Column(
+                  children: List.generate(
+                    entries.length,
+                    (i) => PrescriptionEntryCard(
+                      entry: entries[i],
+                      index: i,
+                      onRemove: _removeEntry,
+                      onToggleFavorite: _onToggleFavorite,
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 18.h),
+                PrescriptionBottomActions(
+                  onShare: () => SnackbarUtils.info(context, 'Shared'),
+                  onSend: () => SnackbarUtils.info(context, 'Sent to patient'),
+                ),
+                SizedBox(height: 30.h),
+              ],
+            ),
           ),
         ),
       ),
