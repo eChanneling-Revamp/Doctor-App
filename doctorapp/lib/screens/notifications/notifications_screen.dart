@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/notification_widgets/notification_section.dart';
 import '../../models/notification_model.dart';
@@ -115,38 +116,40 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: CustomBackButton(onPressed: () => Navigator.pop(context)),
-        title: const Text(
+        title: Text(
           'Notifications',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              // Today Section
-              NotificationSection(
-                title: 'Today',
-                notifications: todayNotifications,
-                onMarkAllAsRead: () => _markAllAsRead('today'),
-                onNotificationTap: _markAsRead,
-              ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(20.r),
+            child: Column(
+              children: [
+                // Today Section
+                NotificationSection(
+                  title: 'Today',
+                  notifications: todayNotifications,
+                  onMarkAllAsRead: () => _markAllAsRead('today'),
+                  onNotificationTap: _markAsRead,
+                ),
 
-              const SizedBox(height: 24),
+                SizedBox(height: 24.h),
 
-              // Yesterday Section
-              NotificationSection(
-                title: 'YESTERDAY',
-                notifications: yesterdayNotifications,
-                onMarkAllAsRead: () => _markAllAsRead('yesterday'),
-                onNotificationTap: _markAsRead,
-              ),
-            ],
+                // Yesterday Section
+                NotificationSection(
+                  title: 'YESTERDAY',
+                  notifications: yesterdayNotifications,
+                  onMarkAllAsRead: () => _markAllAsRead('yesterday'),
+                  onNotificationTap: _markAsRead,
+                ),
+              ],
+            ),
           ),
         ),
       ),
