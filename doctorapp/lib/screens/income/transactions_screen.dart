@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/income/transaction_search_bar.dart';
 import '../../widgets/income/export_buttons.dart';
@@ -40,58 +41,60 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         leading: const CustomBackButton(),
-        title: const Text(
+        title: Text(
           'Transactions',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 20.sp,
             fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          // Blue header section with search and export buttons
-          Container(
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: const Color(0xFF4C40F7),
-              borderRadius: BorderRadius.circular(16),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Blue header section with search and export buttons
+            Container(
+              margin: EdgeInsets.all(16.r),
+              padding: EdgeInsets.all(20.r),
+              decoration: BoxDecoration(
+                color: const Color(0xFF4C40F7),
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+              child: Column(
+                children: [
+                  // Search bar
+                  TransactionSearchBar(controller: _searchController),
+                  SizedBox(height: 16.h),
+                  // Export buttons
+                  const ExportButtons(),
+                ],
+              ),
             ),
-            child: Column(
-              children: [
-                // Search bar
-                TransactionSearchBar(controller: _searchController),
-                const SizedBox(height: 16),
-                // Export buttons
-                const ExportButtons(),
-              ],
-            ),
-          ),
 
-          // Transaction list
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: transactions.length,
-              itemBuilder: (context, index) {
-                final transaction = transactions[index];
-                return TransactionItem(
-                  id: transaction['id'],
-                  date: transaction['date'],
-                  time: transaction['time'],
-                  hospital: transaction['hospital'],
-                  paymentMethod: transaction['paymentMethod'],
-                  amount: transaction['amount'],
-                  type: transaction['type'],
-                );
-              },
+            // Transaction list
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 16.r),
+                itemCount: transactions.length,
+                itemBuilder: (context, index) {
+                  final transaction = transactions[index];
+                  return TransactionItem(
+                    id: transaction['id'],
+                    date: transaction['date'],
+                    time: transaction['time'],
+                    hospital: transaction['hospital'],
+                    paymentMethod: transaction['paymentMethod'],
+                    amount: transaction['amount'],
+                    type: transaction['type'],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
