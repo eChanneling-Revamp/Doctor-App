@@ -1,5 +1,6 @@
 import 'package:doctorapp/screens/app_main_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/share_widgets/buttons.dart';
 import '../widgets/share_widgets/checkbox.dart';
 import '../widgets/share_widgets/divider_with_text.dart';
@@ -73,44 +74,47 @@ class _SignInScreenState extends State<SignInScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.r),
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minHeight:
                   MediaQuery.of(context).size.height -
                   MediaQuery.of(context).padding.top -
                   MediaQuery.of(context).padding.bottom -
-                  48,
+                  48.h,
             ),
             child: IntrinsicHeight(
               child: Column(
                 children: [
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40.h),
 
                   // Logo
-                  const LogoWidget(size: 60),
+                  LogoWidget(size: 60.w),
 
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30.h),
 
                   // Title
-                  const Text(
+                  Text(
                     'Sign in',
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 28.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
                   ),
 
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
 
                   // Subtitle
                   Text(
                     'Welcome back! Please enter your details.',
-                    style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
 
                   // Email Field
                   CustomTextField(
@@ -119,7 +123,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     keyboardType: TextInputType.emailAddress,
                   ),
 
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
 
                   // Password Field
                   CustomTextField(
@@ -141,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
 
                   // Remember me checkbox
                   Row(
@@ -158,32 +162,32 @@ class _SignInScreenState extends State<SignInScreen> {
                     ],
                   ),
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
 
                   // Sign In Button
                   CustomButton(text: 'Sign in', onPressed: _signIn),
 
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
 
                   // Forgot Password
                   TextButton(
                     onPressed: _forgotPassword,
-                    child: const Text(
+                    child: Text(
                       'Forgot password?',
                       style: TextStyle(
                         color: Color(0xFF4A3FFF),
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
 
                   // Divider
                   const DividerWithText(text: 'Or'),
 
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
 
                   // Fingerprint Button
                   FingerprintButton(onPressed: _useFingerprint),
@@ -196,16 +200,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         "Don't you have an account? ",
                         style: TextStyle(
                           color: Colors.grey.shade600,
-                          fontSize: 14,
+                          fontSize: 14.sp,
                         ),
                       ),
                       GestureDetector(
                         onTap: _signUp,
-                        child: const Text(
+                        child: Text(
                           'Sign up',
                           style: TextStyle(
                             color: Color(0xFF4A3FFF),
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
