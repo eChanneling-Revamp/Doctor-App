@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Back Button
 class CustomBackButton extends StatelessWidget {
@@ -11,6 +12,7 @@ class CustomBackButton extends StatelessWidget {
     return IconButton(
       onPressed: onPressed ?? () => Navigator.pop(context),
       icon: const Icon(Icons.arrow_back, color: Colors.black87),
+      iconSize: 24.r,
     );
   }
 }
