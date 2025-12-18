@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../share_widgets/buttons.dart';
 import '../../../../utils/snackbar_utils.dart';
 
@@ -25,7 +26,7 @@ class ScheduleActionButtons extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(width: 16),
+        SizedBox(width: 16.w),
         Expanded(
           child: CustomButton(
             text: 'Cancel',
