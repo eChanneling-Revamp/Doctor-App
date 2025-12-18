@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -15,6 +16,9 @@ class HomeBottomNavigationBar extends StatelessWidget {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       currentIndex: currentIndex,
+      iconSize: 22.r,
+      selectedLabelStyle: TextStyle(fontSize: 12.sp),
+      unselectedLabelStyle: TextStyle(fontSize: 12.sp),
       onTap: (index) {
         if (onTap != null) {
           onTap!(index);
