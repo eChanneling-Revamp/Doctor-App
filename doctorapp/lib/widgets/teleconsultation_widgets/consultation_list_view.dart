@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'consultation_card.dart';
 
 class ConsultationListView extends StatelessWidget {
@@ -18,10 +19,10 @@ class ConsultationListView extends StatelessWidget {
     if (consultations.isEmpty) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: EdgeInsets.all(32.r),
           child: Text(
             emptyText,
-            style: const TextStyle(fontSize: 14, color: Color(0xFF6B7280)),
+            style: TextStyle(fontSize: 14.sp, color: const Color(0xFF6B7280)),
             textAlign: TextAlign.center,
           ),
         ),
@@ -29,19 +30,17 @@ class ConsultationListView extends StatelessWidget {
     }
 
     return Column(
-      children:
-          consultations
-              .map(
-                (consultation) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: ConsultationCard(
-                    consultation: consultation,
-                    onStart:
-                        onStart != null ? () => onStart!(consultation) : null,
-                  ),
-                ),
-              )
-              .toList(),
+      children: consultations
+          .map(
+            (consultation) => Padding(
+              padding: EdgeInsets.only(bottom: 12.h),
+              child: ConsultationCard(
+                consultation: consultation,
+                onStart: onStart != null ? () => onStart!(consultation) : null,
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }
