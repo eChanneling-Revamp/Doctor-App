@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChartLegend extends StatelessWidget {
   final Color color;
@@ -11,12 +12,15 @@ class ChartLegend extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 8,
-          height: 8,
+          width: 8.r,
+          height: 8.r,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
-        const SizedBox(width: 8),
-        Text(label, style: TextStyle(color: Colors.grey[700], fontSize: 14)),
+        SizedBox(width: 8.w),
+        Text(
+          label,
+          style: TextStyle(color: Colors.grey[700], fontSize: 14.sp),
+        ),
       ],
     );
   }

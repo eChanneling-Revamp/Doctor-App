@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'chart_legend.dart';
 
@@ -8,25 +9,28 @@ class IncomeTrendsChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: Colors.grey[200]!),
       ),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              ChartLegend(color: Colors.blue, label: 'Normal'),
-              SizedBox(width: 24),
-              ChartLegend(color: Colors.purple, label: 'Teleconsultation'),
+            children: [
+              const ChartLegend(color: Colors.blue, label: 'Normal'),
+              SizedBox(width: 24.w),
+              const ChartLegend(
+                color: Colors.purple,
+                label: 'Teleconsultation',
+              ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           SizedBox(
-            height: 250,
+            height: 250.h,
             child: LineChart(
               LineChartData(
                 gridData: FlGridData(
@@ -34,7 +38,7 @@ class IncomeTrendsChart extends StatelessWidget {
                   drawVerticalLine: false,
                   horizontalInterval: 50000,
                   getDrawingHorizontalLine: (value) {
-                    return FlLine(color: Colors.grey[200], strokeWidth: 1);
+                    return FlLine(color: Colors.grey[200], strokeWidth: 1.r);
                   },
                 ),
                 titlesData: FlTitlesData(
@@ -48,30 +52,30 @@ class IncomeTrendsChart extends StatelessWidget {
                   bottomTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
-                      reservedSize: 30,
+                      reservedSize: 30.h,
                       interval: 1,
                       getTitlesWidget: (double value, TitleMeta meta) {
-                        const style = TextStyle(
+                        final style = TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.w500,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                         );
                         Widget text;
                         switch (value.toInt()) {
                           case 0:
-                            text = const Text('week 1', style: style);
+                            text = Text('week 1', style: style);
                             break;
                           case 1:
-                            text = const Text('week 2', style: style);
+                            text = Text('week 2', style: style);
                             break;
                           case 2:
-                            text = const Text('Week 3', style: style);
+                            text = Text('Week 3', style: style);
                             break;
                           case 3:
-                            text = const Text('week 4', style: style);
+                            text = Text('week 4', style: style);
                             break;
                           default:
-                            text = const Text('', style: style);
+                            text = Text('', style: style);
                             break;
                         }
                         return SideTitleWidget(
@@ -85,12 +89,12 @@ class IncomeTrendsChart extends StatelessWidget {
                     sideTitles: SideTitles(
                       showTitles: true,
                       interval: 50000,
-                      reservedSize: 42,
+                      reservedSize: 42.w,
                       getTitlesWidget: (double value, TitleMeta meta) {
-                        const style = TextStyle(
+                        final style = TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.w500,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                         );
                         String text;
                         if (value == 0) {
@@ -129,15 +133,15 @@ class IncomeTrendsChart extends StatelessWidget {
                     ],
                     isCurved: true,
                     color: Colors.blue,
-                    barWidth: 3,
+                    barWidth: 3.r,
                     isStrokeCapRound: true,
                     dotData: FlDotData(
                       show: true,
                       getDotPainter: (spot, percent, barData, index) {
                         return FlDotCirclePainter(
-                          radius: 4,
+                          radius: 4.r,
                           color: Colors.blue,
-                          strokeWidth: 2,
+                          strokeWidth: 2.r,
                           strokeColor: Colors.white,
                         );
                       },
@@ -154,15 +158,15 @@ class IncomeTrendsChart extends StatelessWidget {
                     ],
                     isCurved: true,
                     color: Colors.purple,
-                    barWidth: 3,
+                    barWidth: 3.r,
                     isStrokeCapRound: true,
                     dotData: FlDotData(
                       show: true,
                       getDotPainter: (spot, percent, barData, index) {
                         return FlDotCirclePainter(
-                          radius: 4,
+                          radius: 4.r,
                           color: Colors.purple,
-                          strokeWidth: 2,
+                          strokeWidth: 2.r,
                           strokeColor: Colors.white,
                         );
                       },
