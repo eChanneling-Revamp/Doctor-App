@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DateNavigator extends StatelessWidget {
   final DateTime selectedDate;
@@ -15,17 +16,17 @@ class DateNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 12.h),
       decoration: BoxDecoration(
         color: const Color(0xFFE3F2FD),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: EdgeInsets.symmetric(horizontal: 16.r),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            icon: const Icon(Icons.chevron_left, color: Colors.black, size: 24),
+            icon: Icon(Icons.chevron_left, color: Colors.black, size: 24.sp),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
             onPressed: onPrevious,
@@ -38,10 +39,10 @@ class DateNavigator extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Monday',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
                       ),
@@ -49,7 +50,7 @@ class DateNavigator extends StatelessWidget {
                     Text(
                       'Oct 15,2025',
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 13.sp,
                         color: Colors.grey.shade600,
                         fontWeight: FontWeight.w400,
                       ),
@@ -60,18 +61,18 @@ class DateNavigator extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
+                    Text(
                       '18 slots',
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 13.sp,
                         color: Color.fromARGB(255, 26, 87, 208),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const Text(
+                    Text(
                       '5 Booked',
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 13.sp,
                         color: Colors.grey,
                         fontWeight: FontWeight.w400,
                       ),
@@ -82,11 +83,7 @@ class DateNavigator extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: const Icon(
-              Icons.chevron_right,
-              color: Colors.black,
-              size: 24,
-            ),
+            icon: Icon(Icons.chevron_right, color: Colors.black, size: 24.sp),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
             onPressed: onNext,

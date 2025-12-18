@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'stat_card.dart';
 import 'time_slot_card.dart';
 
@@ -15,7 +16,7 @@ class DailyView extends StatelessWidget {
         children: [
           // Stats
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             child: Row(
               children: [
                 Expanded(
@@ -25,7 +26,7 @@ class DailyView extends StatelessWidget {
                     color: const Color.fromARGB(255, 62, 100, 206),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 Expanded(
                   child: StatCard(
                     value: '12',
@@ -33,7 +34,7 @@ class DailyView extends StatelessWidget {
                     color: const Color.fromARGB(255, 62, 100, 206),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 Expanded(
                   child: StatCard(
                     value: '6',
@@ -47,11 +48,11 @@ class DailyView extends StatelessWidget {
           // Time Slots Grid
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.all(16),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              padding: EdgeInsets.all(16.r),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                crossAxisSpacing: 14,
-                mainAxisSpacing: 14,
+                crossAxisSpacing: 14.r,
+                mainAxisSpacing: 14.r,
                 childAspectRatio: 2,
               ),
               itemCount: timeSlots.length,
