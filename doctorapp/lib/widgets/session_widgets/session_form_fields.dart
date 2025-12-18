@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../share_widgets/inputs.dart';
 
 class SessionFormFields extends StatelessWidget {
@@ -36,12 +37,12 @@ class SessionFormFields extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 6),
+        SizedBox(height: 6.h),
         const Text(
           'Session Type',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         DropdownButtonFormField<String>(
           value: sessionType,
           items: const [
@@ -53,23 +54,23 @@ class SessionFormFields extends StatelessWidget {
           ],
           onChanged: onSessionTypeChanged,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 14,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+              vertical: 14.h,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(color: Colors.grey.shade300),
             ),
           ),
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         const Text(
           'Hospital / Location',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         DropdownButtonFormField<String>(
           value: hospital,
           items: const [
@@ -89,18 +90,18 @@ class SessionFormFields extends StatelessWidget {
           ],
           onChanged: onHospitalChanged,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 14,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+              vertical: 14.h,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(color: Colors.grey.shade300),
             ),
           ),
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         Row(
           children: [
             Expanded(
@@ -111,7 +112,7 @@ class SessionFormFields extends StatelessWidget {
                     'Date',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   GestureDetector(
                     onTap: onPickDate,
                     child: AbsorbPointer(
@@ -141,7 +142,7 @@ class SessionFormFields extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,7 +151,7 @@ class SessionFormFields extends StatelessWidget {
                     'Max Patients',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   CustomTextField(
                     hintText: '20',
                     controller: maxPatientsController,
@@ -162,7 +163,7 @@ class SessionFormFields extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         Row(
           children: [
             Expanded(
@@ -173,7 +174,7 @@ class SessionFormFields extends StatelessWidget {
                     'Start Time',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   GestureDetector(
                     onTap: () => onPickTime?.call(startTimeController),
                     child: AbsorbPointer(
@@ -187,7 +188,7 @@ class SessionFormFields extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,7 +197,7 @@ class SessionFormFields extends StatelessWidget {
                     'End Time',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   GestureDetector(
                     onTap: () => onPickTime?.call(endTimeController),
                     child: AbsorbPointer(
@@ -213,21 +214,21 @@ class SessionFormFields extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
         const Text('Notes', style: TextStyle(fontWeight: FontWeight.w600)),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         CustomTextField(
           hintText: 'Video Consultation Slots',
           controller: notesController,
         ),
 
-        const SizedBox(height: 14),
+        SizedBox(height: 14.h),
         Text(
           'Current: 12/${maxPatientsController.text} Patients Booked',
           style: const TextStyle(color: Colors.green),
         ),
 
-        const SizedBox(height: 24),
+        SizedBox(height: 24.h),
       ],
     );
   }
