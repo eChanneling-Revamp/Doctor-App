@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../share_widgets/buttons.dart';
 import '../../screens/profile/edit_profile_screen.dart';
 
@@ -17,66 +18,66 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(24),
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.all(24.r),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Column(
         children: [
           // Profile Image
           Container(
-            width: 100,
-            height: 100,
+            width: 100.r,
+            height: 100.r,
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.person, size: 50, color: Colors.grey.shade400),
+            child: Icon(Icons.person, size: 50.r, color: Colors.grey.shade400),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
           // Doctor Name
           Text(
             name,
-            style: const TextStyle(
-              fontSize: 20,
+            style: TextStyle(
+              fontSize: 20.sp,
               fontWeight: FontWeight.w600,
               color: Colors.black87,
             ),
           ),
 
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
 
           // Specialty
           Text(
             specialty,
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade600),
           ),
 
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
 
           // Hospital
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
             decoration: BoxDecoration(
               color: const Color(0xFFE8F5E9),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),
             ),
             child: Text(
               hospital,
-              style: const TextStyle(
-                fontSize: 12,
+              style: TextStyle(
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF2E7D32),
+                color: const Color(0xFF2E7D32),
               ),
             ),
           ),
 
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
           // Edit Profile Button
           CustomButton(

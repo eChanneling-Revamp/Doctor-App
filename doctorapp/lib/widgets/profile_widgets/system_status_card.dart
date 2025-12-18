@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SystemStatusCard extends StatelessWidget {
   const SystemStatusCard({super.key});
@@ -6,48 +7,54 @@ class SystemStatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
         color: const Color(0xFFE3F2FD),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: const Color(0xFF90CAF9)),
       ),
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: 48.r,
+            height: 48.r,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.check_circle,
               color: Color(0xFF4CAF50),
-              size: 28,
+              size: 28.r,
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'All System Operational',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                     color: Colors.black87,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Text(
                   'App Version 1.00',
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.grey.shade700,
+                  ),
                 ),
                 Text(
                   'Last update: November 30, 2025',
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.grey.shade600,
+                  ),
                 ),
               ],
             ),

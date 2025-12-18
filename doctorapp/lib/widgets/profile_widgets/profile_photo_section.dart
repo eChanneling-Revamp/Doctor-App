@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/snackbar_utils.dart';
 
 class ProfilePhotoSection extends StatelessWidget {
@@ -12,10 +13,10 @@ class ProfilePhotoSection extends StatelessWidget {
       },
       child: Container(
         width: double.infinity,
-        height: 160,
+        height: 160.h,
         decoration: BoxDecoration(
           color: Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.grey.shade300),
         ),
         child: Column(
@@ -23,13 +24,13 @@ class ProfilePhotoSection extends StatelessWidget {
           children: [
             Icon(
               Icons.camera_alt_outlined,
-              size: 48,
+              size: 48.r,
               color: Colors.grey.shade400,
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               'Click camera icon to change photo',
-              style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+              style: TextStyle(color: Colors.grey.shade600, fontSize: 14.sp),
             ),
           ],
         ),
