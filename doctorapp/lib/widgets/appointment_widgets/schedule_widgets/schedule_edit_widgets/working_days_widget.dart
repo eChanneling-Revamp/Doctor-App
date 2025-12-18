@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WorkingDaysWidget extends StatelessWidget {
   final Map<String, bool> workingDays;
@@ -15,23 +16,23 @@ class WorkingDaysWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Working Days',
           style: TextStyle(
-            fontSize: 15,
+            fontSize: 15.sp,
             fontWeight: FontWeight.w600,
             color: Colors.black,
           ),
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10.h),
         ...workingDays.entries.map((entry) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: 5),
+            padding: EdgeInsets.only(bottom: 5.h),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 2.h),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
                 color: Colors.white,
               ),
               child: Row(
@@ -40,13 +41,13 @@ class WorkingDaysWidget extends StatelessWidget {
                   Text(
                     entry.key,
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       color: entry.value ? Colors.black : Colors.grey,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                   Transform.scale(
-                    scale: 0.8,
+                    scale: 0.8.r,
                     child: Switch(
                       value: entry.value,
                       onChanged: (bool value) => onToggle(entry.key, value),

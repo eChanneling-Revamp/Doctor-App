@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../screens/profile/profile_screen.dart';
 import '../../screens/notifications/notifications_screen.dart';
 
@@ -14,7 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       title: Image.asset(
         'assets/images/logo1.png',
-        height: 40,
+        height: 40.h,
         fit: BoxFit.contain,
       ),
       centerTitle: false,
@@ -28,9 +29,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             );
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.notifications_outlined,
-            size: 24,
+            size: 24.r,
             color: Colors.black87,
           ),
         ),
@@ -41,13 +42,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               MaterialPageRoute(builder: (context) => const ProfileScreen()),
             );
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.account_circle_outlined,
-            size: 24,
+            size: 24.r,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8.w),
       ],
     );
   }

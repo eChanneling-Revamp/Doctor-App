@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SessionGroup extends StatelessWidget {
   final String title;
   final List<Widget> children;
 
-  const SessionGroup({
-    super.key,
-    required this.title,
-    required this.children,
-  });
+  const SessionGroup({super.key, required this.title, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +13,10 @@ class SessionGroup extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: EdgeInsets.symmetric(vertical: 8.h),
           child: Text(
             title,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
           ),
         ),
         if (children.isEmpty) const Text('No sessions for selected filter.'),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 typedef OnFavoriteTap =
     void Function(String medicineName, int index, bool selected);
@@ -24,11 +25,11 @@ class FavoriteMedicineList extends StatelessWidget {
         return GestureDetector(
           onTap: () => onTap(m, index, isSelected),
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 6),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            margin: EdgeInsets.symmetric(vertical: 6.h),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               border: Border.all(color: Colors.grey.shade200),
             ),
             child: Row(
@@ -41,7 +42,7 @@ class FavoriteMedicineList extends StatelessWidget {
                         m,
                         style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4.h),
                       const Text(
                         '1-2 tablets / Every 6 hours',
                         style: TextStyle(color: Colors.black54),
@@ -49,11 +50,11 @@ class FavoriteMedicineList extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
-                  width: 28,
-                  height: 28,
+                  width: 28.r,
+                  height: 28.r,
                   decoration: BoxDecoration(
                     color: isSelected
                         ? const Color(0xFF09CD4A)
@@ -64,7 +65,7 @@ class FavoriteMedicineList extends StatelessWidget {
                         : Border.all(color: Colors.grey.shade300),
                   ),
                   child: isSelected
-                      ? const Icon(Icons.check, color: Colors.white, size: 18)
+                      ? Icon(Icons.check, color: Colors.white, size: 18.r)
                       : const SizedBox.shrink(),
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ScheduleEditHeader extends StatelessWidget {
   final String title;
@@ -7,11 +8,11 @@ class ScheduleEditHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Text(
         'Schedule Edit',
         style: TextStyle(
-          fontSize: 22,
+          fontSize: 22.sp,
           fontWeight: FontWeight.w700,
           color: Colors.black,
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../share_widgets/buttons.dart';
 import 'session_form_fields.dart';
 
@@ -57,8 +58,8 @@ class _EditSessionModalState extends State<EditSessionModal> {
       } else {
         selectedSessionType =
             widget.hospitalName.toLowerCase().contains('online')
-                ? 'Teleconsultation'
-                : 'Hospital';
+            ? 'Teleconsultation'
+            : 'Hospital';
       }
     }
 
@@ -146,11 +147,11 @@ class _EditSessionModalState extends State<EditSessionModal> {
         ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.r),
         ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24.r),
             child: Form(
               key: _formKey,
               child: Column(
@@ -172,14 +173,12 @@ class _EditSessionModalState extends State<EditSessionModal> {
                   SessionFormFields(
                     sessionType: selectedSessionType,
                     hospital: selectedHospital,
-                    onSessionTypeChanged:
-                        (v) => setState(
-                          () => selectedSessionType = v ?? selectedSessionType,
-                        ),
-                    onHospitalChanged:
-                        (v) => setState(
-                          () => selectedHospital = v ?? selectedHospital,
-                        ),
+                    onSessionTypeChanged: (v) => setState(
+                      () => selectedSessionType = v ?? selectedSessionType,
+                    ),
+                    onHospitalChanged: (v) => setState(
+                      () => selectedHospital = v ?? selectedHospital,
+                    ),
                     dateController: dateController,
                     maxPatientsController: maxPatientsController,
                     startTimeController: startTimeController,

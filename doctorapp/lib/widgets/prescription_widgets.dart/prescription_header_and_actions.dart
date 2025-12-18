@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../share_widgets/buttons.dart';
 import '../../utils/snackbar_utils.dart';
 
@@ -10,21 +11,21 @@ class PrescriptionHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12.r),
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: 28,
+                  radius: 28.r,
                   backgroundImage: const AssetImage('assets/images/logo.png'),
                   backgroundColor: Colors.grey.shade200,
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,13 +43,13 @@ class PrescriptionHeader extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 6.h,
                   ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFE6F7EB),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: const Text(
                     'Active',
@@ -81,7 +82,7 @@ class PrescriptionBottomActions extends StatelessWidget {
             backgroundColor: const Color(0xFF4A3FFF),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12.w),
         Expanded(
           child: CustomOutlinedButton(
             text: 'Send to Patient',
@@ -89,7 +90,7 @@ class PrescriptionBottomActions extends StatelessWidget {
                 onSend ?? () => SnackbarUtils.info(context, 'Sent to patient'),
             borderColor: Colors.grey.shade300,
             textColor: Colors.black87,
-            height: 48,
+            height: 48.h,
           ),
         ),
       ],

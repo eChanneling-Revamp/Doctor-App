@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Custom Checkbox
 class CustomCheckbox extends StatelessWidget {
@@ -22,7 +23,10 @@ class CustomCheckbox extends StatelessWidget {
           onChanged: onChanged,
           activeColor: const Color(0xFF4A3FFF),
         ),
-        Text(text, style: TextStyle(color: Colors.grey.shade700, fontSize: 14)),
+        Text(
+          text,
+          style: TextStyle(color: Colors.grey.shade700, fontSize: 14.sp),
+        ),
       ],
     );
   }

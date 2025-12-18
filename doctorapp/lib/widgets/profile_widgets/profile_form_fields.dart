@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../share_widgets/inputs.dart';
 
 class ProfileFormFields extends StatelessWidget {
@@ -29,41 +30,41 @@ class ProfileFormFields extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Full Name
-        const Text(
+        Text(
           'Full Name',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         CustomTextField(hintText: 'Your Name', controller: fullNameController),
 
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
 
         // Medical Specialty
-        const Text(
+        Text(
           'Medical Specialty',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Container(
           width: double.infinity,
-          height: 48,
+          height: 48.h,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey.shade300),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: selectedSpecialty,
               isExpanded: true,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               items:
                   [
                     'Select your specialty',
@@ -81,7 +82,7 @@ class ProfileFormFields extends StatelessWidget {
                           color: value == 'Select your specialty'
                               ? Colors.grey.shade500
                               : Colors.black87,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
                     );
@@ -91,85 +92,85 @@ class ProfileFormFields extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
 
         // Primary Hospital
-        const Text(
+        Text(
           'Primary Hospital',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         CustomTextField(
           hintText: 'Hospital Name',
           controller: hospitalController,
         ),
 
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
 
         // SLMC Register Number
-        const Text(
+        Text(
           'SLMC Register Number',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         CustomTextField(hintText: 'SLMC Number', controller: slmcController),
 
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
 
         // Contact Number
-        const Text(
+        Text(
           'Contact Number',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         CustomTextField(
           hintText: 'Enter your contact number',
           controller: contactController,
           keyboardType: TextInputType.phone,
         ),
 
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
 
         // Email Address
-        const Text(
+        Text(
           'Email Address',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         CustomTextField(
           hintText: 'Enter your email address',
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
         ),
 
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
 
         // Password
-        const Text(
+        Text(
           'Password',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w500,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         CustomTextField(
           hintText: '••••••••',
           controller: passwordController,

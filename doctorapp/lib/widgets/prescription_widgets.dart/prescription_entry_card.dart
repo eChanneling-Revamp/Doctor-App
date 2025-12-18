@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/snackbar_utils.dart';
 import '../share_widgets/inputs.dart';
 import '../../models/prescription_entry.dart';
@@ -40,10 +41,10 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
   Widget build(BuildContext context) {
     final entry = widget.entry;
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      margin: EdgeInsets.symmetric(vertical: 8.h),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(12.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -59,22 +60,18 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                   onPressed: _toggleEditSave,
                   icon: Icon(
                     _editing ? Icons.save : Icons.edit,
-                    size: 20,
+                    size: 20.r,
                     color: _editing ? Colors.green : Colors.blueAccent,
                   ),
                 ),
                 IconButton(
                   onPressed: () => widget.onRemove(widget.index),
-                  icon: const Icon(
-                    Icons.delete,
-                    size: 20,
-                    color: Colors.redAccent,
-                  ),
+                  icon: Icon(Icons.delete, size: 20.r, color: Colors.redAccent),
                 ),
               ],
             ),
 
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Row(
               children: [
                 Expanded(
@@ -85,7 +82,7 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                         'Dosage',
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6.h),
                       CustomTextField(
                         hintText: '',
                         controller: entry.dosageController,
@@ -94,7 +91,7 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                     ],
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +100,7 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                         'Frequency',
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6.h),
                       DropdownButtonFormField<int>(
                         value: entry.frequency,
                         items: const [
@@ -128,7 +125,7 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
               ],
             ),
 
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Row(
               children: [
                 Expanded(
@@ -139,7 +136,7 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                         'Duration',
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6.h),
                       DropdownButtonFormField<String>(
                         value: entry.period,
                         items: const [
@@ -172,9 +169,9 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                     ],
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 SizedBox(
-                  height: 48,
+                  height: 48.h,
                   child: OutlinedButton.icon(
                     onPressed: () {
                       setState(() {
@@ -203,7 +200,7 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                     ),
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                       ),
                       side: BorderSide(color: Colors.grey.shade300),
                     ),
@@ -212,12 +209,12 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
               ],
             ),
 
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             const Text(
               'Special Instructions',
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 6),
+            SizedBox(height: 6.h),
             CustomTextField(
               hintText: '',
               controller: entry.instructionsController,

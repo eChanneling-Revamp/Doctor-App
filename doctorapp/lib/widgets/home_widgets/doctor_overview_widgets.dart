@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/date_time_utils.dart';
 
 class DoctorOverviewCard extends StatelessWidget {
@@ -8,17 +9,17 @@ class DoctorOverviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.all(15),
+      margin: EdgeInsets.all(15.r),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),
         image: const DecorationImage(
           image: AssetImage('assets/images/Mask group.png'),
           fit: BoxFit.cover,
         ),
       ),
       child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+        padding: EdgeInsets.all(20.r),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.r)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,40 +33,40 @@ class DoctorOverviewCard extends StatelessWidget {
                   children: [
                     Text(
                       DateTimeUtils.getGreeting(),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const Text(
+                    Text(
                       'Dr. Erika Fernando',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 60),
+                  padding: EdgeInsets.only(right: 60.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         DateTimeUtils.getCurrentDayName(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
                       Text(
                         DateTimeUtils.getCurrentDate(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -75,31 +76,30 @@ class DoctorOverviewCard extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 10),
+            SizedBox(height: 10.h),
 
             // Today's Overview title
-            const Text(
+            Text(
               "Today's Overview",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),
-
-            const SizedBox(height: 5), // Statistics row
+            SizedBox(height: 5.h), // Statistics row
             Row(
               children: [
                 _buildStatItem('30', ' Appointment '),
-                const SizedBox(width: 5),
+                SizedBox(width: 5.w),
                 _buildStatItem('06', ' Sessions '),
-                const SizedBox(width: 5),
+                SizedBox(width: 5.w),
                 _buildStatItem('02', ' Teleconsults '),
                 // const SizedBox(width: 10),
               ],
             ),
 
-            const SizedBox(height: 5),
+            SizedBox(height: 5.h),
           ],
         ),
       ),
@@ -109,10 +109,10 @@ class DoctorOverviewCard extends StatelessWidget {
   Widget _buildStatItem(String number, String label) {
     return Flexible(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+        padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 4.h),
         decoration: BoxDecoration(
           // color: Colors.white.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(6.r),
           border: Border.all(color: Colors.white.withOpacity(0.6)),
         ),
         child: Column(
@@ -120,17 +120,17 @@ class DoctorOverviewCard extends StatelessWidget {
           children: [
             Text(
               number,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Color.fromARGB(255, 212, 233, 21),
-                fontSize: 25,
+                fontSize: 25.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
-                fontSize: 12,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.center,

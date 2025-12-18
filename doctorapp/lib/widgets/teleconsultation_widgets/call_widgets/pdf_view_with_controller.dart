@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:pdfx/pdfx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PdfViewWithController extends StatefulWidget {
   final Uint8List bytes;
@@ -33,7 +34,7 @@ class _PdfViewWithControllerState extends State<PdfViewWithController> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+          padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 4.h),
           child: Row(
             children: [
               IconButton(
@@ -41,10 +42,10 @@ class _PdfViewWithControllerState extends State<PdfViewWithController> {
                 onPressed: () => Navigator.of(context).maybePop(),
                 tooltip: 'Close',
               ),
-              const SizedBox(width: 8),
-              const Text(
+              SizedBox(width: 8.w),
+              Text(
                 'Patient Health Record (PDF)',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
               ),
               const Spacer(),
               IconButton(
