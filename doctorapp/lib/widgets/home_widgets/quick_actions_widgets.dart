@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../screens/home/add_session_screen.dart';
 import '../../screens/home/prescription_screen.dart';
+import '../../screens/home/reminders_screen.dart';
 
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key});
@@ -50,9 +51,16 @@ class QuickActionsSection extends StatelessWidget {
                 },
               ),
               _buildQuickActionItem(
-                icon: Icons.calendar_today_outlined,
-                label: 'Upcoming\nAppointment',
-                onTap: () {},
+                icon: Icons.assignment_outlined,
+                label: 'Reminders\nManager',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RemindersScreen(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
