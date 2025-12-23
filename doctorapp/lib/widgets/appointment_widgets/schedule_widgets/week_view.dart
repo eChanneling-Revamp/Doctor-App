@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'stat_card.dart';
 import 'time_slot_card.dart';
 import 'date_navigator.dart';
@@ -25,7 +26,7 @@ class WeekView extends StatelessWidget {
         children: [
           // Stats
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             child: Row(
               children: [
                 Expanded(
@@ -35,7 +36,7 @@ class WeekView extends StatelessWidget {
                     color: const Color.fromARGB(255, 62, 100, 206),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 Expanded(
                   child: StatCard(
                     value: '10',
@@ -43,7 +44,7 @@ class WeekView extends StatelessWidget {
                     color: const Color.fromARGB(255, 62, 100, 206),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 Expanded(
                   child: StatCard(
                     value: '50',
@@ -60,15 +61,15 @@ class WeekView extends StatelessWidget {
             onPrevious: onPreviousWeek,
             onNext: onNextWeek,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           // Time Slots Grid
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.all(16),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              padding: EdgeInsets.all(16.r),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                crossAxisSpacing: 14,
-                mainAxisSpacing: 14,
+                crossAxisSpacing: 14.r,
+                mainAxisSpacing: 14.r,
                 childAspectRatio: 2,
               ),
               itemCount: timeSlots.length,

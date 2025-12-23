@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'edit_session_widgets.dart';
 
 class ActiveSessionItem extends StatelessWidget {
@@ -26,30 +27,30 @@ class ActiveSessionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      padding: const EdgeInsets.all(10),
+      margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
+      padding: EdgeInsets.all(10.r),
       decoration: BoxDecoration(
         color: const Color(0xFFF8F9FA),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: const Color(0xFFE9ECEF), width: 1),
       ),
       child: Row(
         children: [
           // Icon
           Container(
-            width: 52,
-            height: 52,
+            width: 52.w,
+            height: 52.h,
             decoration: BoxDecoration(
               color: iconColor.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             ),
             child: Icon(
               hospitalName.contains('Online') ? Icons.videocam : Icons.domain,
               color: iconColor,
-              size: 26,
+              size: 26.r,
             ),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10.w),
           // Session info
           Expanded(
             child: Column(
@@ -57,46 +58,46 @@ class ActiveSessionItem extends StatelessWidget {
               children: [
                 Text(
                   hospitalName,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF1A1A1A),
                   ),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 Text(
                   patientCount,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF6B7280),
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Row(
                   children: [
                     Icon(
                       Icons.access_time,
-                      size: 16,
+                      size: 16.r,
                       color: const Color(0xFF6B7280),
                     ),
-                    const SizedBox(width: 6),
+                    SizedBox(width: 6.w),
                     Text(
                       time,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: TextStyle(
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF6B7280),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Text(
                   // Prefer note (more specific) when available, otherwise fall back to sessionType
                   note ?? sessionType,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: TextStyle(
+                    fontSize: 12.sp,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF9CA3AF),
                   ),
@@ -108,52 +109,51 @@ class ActiveSessionItem extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 36,
-                height: 36,
+                width: 36.w,
+                height: 36.h,
                 decoration: BoxDecoration(
                   color: const Color(0xFF3B82F6).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: IconButton(
                   onPressed: () async {
                     final result = await showDialog<Map<String, dynamic>>(
                       context: context,
-                      builder:
-                          (context) => EditSessionModal(
-                            hospitalName: hospitalName,
-                            patientCount: patientCount,
-                            time: time,
-                            sessionType: sessionType,
-                            note: note ?? sessionType,
-                            date: date,
-                          ),
+                      builder: (context) => EditSessionModal(
+                        hospitalName: hospitalName,
+                        patientCount: patientCount,
+                        time: time,
+                        sessionType: sessionType,
+                        note: note ?? sessionType,
+                        date: date,
+                      ),
                     );
                     if (result != null) {
                       onUpdate?.call(result);
                     }
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.edit_outlined,
-                    color: Color(0xFF3B82F6),
-                    size: 18,
+                    color: const Color(0xFF3B82F6),
+                    size: 18.r,
                   ),
                   padding: EdgeInsets.zero,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               Container(
-                width: 36,
-                height: 36,
+                width: 36.w,
+                height: 36.h,
                 decoration: BoxDecoration(
                   color: const Color(0xFFEF4444).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: IconButton(
                   onPressed: () {},
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.delete_outline,
-                    color: Color(0xFFEF4444),
-                    size: 18,
+                    color: const Color(0xFFEF4444),
+                    size: 18.r,
                   ),
                   padding: EdgeInsets.zero,
                 ),

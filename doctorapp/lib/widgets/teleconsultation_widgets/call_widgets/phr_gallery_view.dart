@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../services/teleconsultation_service.dart';
 import 'pdf_loader.dart';
 import 'dots_indicator.dart';
@@ -33,7 +34,7 @@ class _PhrGalleryViewState extends State<PhrGalleryView> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+          padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 4.h),
           child: Row(
             children: [
               IconButton(
@@ -41,12 +42,12 @@ class _PhrGalleryViewState extends State<PhrGalleryView> {
                 onPressed: () => Navigator.of(context).maybePop(),
                 tooltip: 'Close',
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8.w),
               Expanded(
                 child: Text(
                   _titleFor(items[_index]),
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -98,9 +99,9 @@ class _PhrGalleryViewState extends State<PhrGalleryView> {
             },
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         DotsIndicator(count: items.length, index: _index),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
       ],
     );
   }

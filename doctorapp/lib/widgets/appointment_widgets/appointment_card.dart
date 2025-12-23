@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppointmentCard extends StatelessWidget {
   final String name;
@@ -20,63 +21,69 @@ class AppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+        padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F4FF),
-          borderRadius: BorderRadius.circular(12),
+          color: Colors.grey.shade50,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: Colors.grey.shade200),
         ),
         child: Row(
           children: [
             // Avatar
             CircleAvatar(
-              radius: 24,
+              radius: 24.r,
               backgroundColor: Colors.grey.shade300,
-              backgroundImage: const AssetImage('assets/images/avatar.png'),
-              onBackgroundImageError: (_, __) {},
               child: Text(
                 initials,
                 style: const TextStyle(
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
               ),
             ),
-            const SizedBox(width: 12),
-            // Info
+            SizedBox(width: 12.w),
+            // Patient info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     name,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Text(
                     type,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Row(
                     children: [
                       Icon(
                         Icons.access_time,
-                        size: 16,
+                        size: 16.r,
                         color: Colors.grey.shade600,
                       ),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 4.w),
                       Text(
                         time,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           color: Colors.grey.shade600,
                         ),
                       ),
@@ -87,21 +94,21 @@ class AppointmentCard extends StatelessWidget {
             ),
             // Status
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
               decoration: BoxDecoration(
                 color: isConfirmed
-                    ? const Color(0xFFE8F5E9)
-                    : const Color(0xFFFFF3E0),
-                borderRadius: BorderRadius.circular(12),
+                    ? Colors.green.shade100
+                    : Colors.orange.shade100,
+                borderRadius: BorderRadius.circular(12.r),
               ),
               child: Text(
                 isConfirmed ? 'Confirmed' : 'Pending',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                   color: isConfirmed
-                      ? const Color(0xFF4CAF50)
-                      : const Color(0xFFFFA726),
+                      ? Colors.green.shade700
+                      : Colors.orange.shade700,
                 ),
               ),
             ),

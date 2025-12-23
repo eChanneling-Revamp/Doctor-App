@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/profile_widgets/profile_photo_section.dart';
 import '../../widgets/profile_widgets/profile_form_fields.dart';
@@ -49,34 +50,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: CustomBackButton(onPressed: () => Navigator.pop(context)),
-        title: const Text(
+        title: Text(
           'Edit Profile',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16),
+            padding: EdgeInsets.only(right: 16.r),
             child: TextButton(
               onPressed: _saveProfile,
               style: TextButton.styleFrom(
                 backgroundColor: const Color(0xFF4C40F7),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 8,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Save',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -84,34 +82,38 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Profile Photo Section
-            const Center(child: ProfilePhotoSection()),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Profile Photo Section
+                const Center(child: ProfilePhotoSection()),
 
-            const SizedBox(height: 24),
+                SizedBox(height: 24.h),
 
-            // Form Fields
-            ProfileFormFields(
-              fullNameController: _fullNameController,
-              hospitalController: _hospitalController,
-              slmcController: _slmcController,
-              contactController: _contactController,
-              emailController: _emailController,
-              passwordController: _passwordController,
-              selectedSpecialty: _selectedSpecialty,
-              onSpecialtyChanged: (String? newValue) {
-                setState(() {
-                  _selectedSpecialty = newValue!;
-                });
-              },
+                // Form Fields
+                ProfileFormFields(
+                  fullNameController: _fullNameController,
+                  hospitalController: _hospitalController,
+                  slmcController: _slmcController,
+                  contactController: _contactController,
+                  emailController: _emailController,
+                  passwordController: _passwordController,
+                  selectedSpecialty: _selectedSpecialty,
+                  onSpecialtyChanged: (String? newValue) {
+                    setState(() {
+                      _selectedSpecialty = newValue!;
+                    });
+                  },
+                ),
+
+                SizedBox(height: 32.h),
+              ],
             ),
-
-            const SizedBox(height: 32),
-          ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/snackbar_utils.dart';
 
 class SupportContactItem extends StatelessWidget {
@@ -24,45 +25,48 @@ class SupportContactItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.grey.shade200),
         ),
         child: Row(
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: 48.r,
+              height: 48.r,
               decoration: BoxDecoration(
                 color: iconBgColor,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
               ),
-              child: Icon(icon, color: iconColor, size: 24),
+              child: Icon(icon, color: iconColor, size: 24.r),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2.h),
                   Text(
                     subtitle,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                 ],
               ),
             ),
-            Icon(Icons.chevron_right, color: Colors.grey.shade400, size: 24),
+            Icon(Icons.chevron_right, color: Colors.grey.shade400, size: 24.r),
           ],
         ),
       ),
@@ -78,15 +82,15 @@ class SupportContactList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Contact Support',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
 
         // Phone Support
         SupportContactItem(
@@ -100,7 +104,7 @@ class SupportContactList extends StatelessWidget {
           },
         ),
 
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
 
         // Email Support
         SupportContactItem(
@@ -114,7 +118,7 @@ class SupportContactList extends StatelessWidget {
           },
         ),
 
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
 
         // WhatsApp Support
         SupportContactItem(

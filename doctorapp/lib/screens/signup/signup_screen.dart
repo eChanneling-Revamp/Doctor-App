@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
@@ -15,8 +16,6 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _medicalSpecialtyController =
-      TextEditingController();
   final TextEditingController _primaryHospitalController =
       TextEditingController();
   final TextEditingController _slmcNumberController = TextEditingController();
@@ -26,7 +25,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void dispose() {
     _fullNameController.dispose();
-    _medicalSpecialtyController.dispose();
     _primaryHospitalController.dispose();
     _slmcNumberController.dispose();
     super.dispose();
@@ -35,7 +33,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _next() {
     // Validate and navigate to next screen
     if (_fullNameController.text.isEmpty ||
-        _medicalSpecialtyController.text.isEmpty ||
         _primaryHospitalController.text.isEmpty ||
         _slmcNumberController.text.isEmpty ||
         _selectedSpecialty == 'Select your specialty') {
@@ -62,49 +59,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.r),
           child: Column(
             children: [
-              const SizedBox(height: 40),
+              SizedBox(height: 40.h),
 
               // Logo
-              const LogoWidget(size: 60),
+              LogoWidget(size: 60.w),
 
-              const SizedBox(height: 30),
+              SizedBox(height: 30.h),
 
               // Title
-              const Text(
+              Text(
                 'Create Your Account',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
               ),
 
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
 
               // Subtitle
               Text(
                 'Hello there! Let\'s create your account',
-                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                style: TextStyle(fontSize: 14.sp, color: Colors.grey.shade600),
               ),
 
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
 
               // Full Name Field
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Full Name',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   CustomTextField(
                     hintText: 'Your Name',
                     controller: _fullNameController,
@@ -112,33 +109,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
 
               // Medical Specialty Field
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Medical Specialty',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Container(
                     width: double.infinity,
-                    height: 48,
+                    height: 48.h,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: _selectedSpecialty,
                         isExpanded: true,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: EdgeInsets.symmetric(horizontal: 16.r),
                         items:
                             [
                               'Select your specialty',
@@ -156,7 +153,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     color: value == 'Select your specialty'
                                         ? Colors.grey.shade500
                                         : Colors.black87,
-                                    fontSize: 16,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
                               );
@@ -172,21 +169,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
 
               // Primary Hospital Field
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Primary Hospital',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   CustomTextField(
                     hintText: 'Hospital Name',
                     controller: _primaryHospitalController,
@@ -194,21 +191,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
 
               // SLMC Register Number Field
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'SLMC Register Number',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   CustomTextField(
                     hintText: 'SLMC Number',
                     controller: _slmcNumberController,
@@ -216,12 +213,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
 
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
 
               // Next Button
               CustomButton(text: 'Next', onPressed: _next),
 
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
 
               // Sign In Link
               Row(
@@ -229,15 +226,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   Text(
                     'Do you have an account? ',
-                    style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 14.sp,
+                    ),
                   ),
                   GestureDetector(
                     onTap: _signIn,
-                    child: const Text(
+                    child: Text(
                       'Sign in',
                       style: TextStyle(
                         color: Color(0xFF4A3FFF),
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

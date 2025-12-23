@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../share_widgets/buttons.dart';
 
 class NextConsultationCard extends StatelessWidget {
@@ -18,14 +19,14 @@ class NextConsultationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [Color(0xFF5B4EF7), Color(0xFF7B6FF9)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,47 +34,40 @@ class NextConsultationCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
+              Row(
                 children: [
                   Icon(
                     Icons.double_arrow_rounded,
                     color: Colors.white,
-                    size: 20,
+                    size: 20.r,
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 8.w),
                   Text(
                     'Next Consultation',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                   border: Border.all(color: Colors.white.withOpacity(0.3)),
                 ),
                 child: Row(
                   children: [
-                    const Icon(
-                      Icons.access_time,
-                      color: Colors.white,
-                      size: 16,
-                    ),
-                    const SizedBox(width: 4),
+                    Icon(Icons.access_time, color: Colors.white, size: 16.r),
+                    SizedBox(width: 4.w),
                     Text(
                       (consultation['time'] as String).split(' - ').first,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -82,71 +76,68 @@ class NextConsultationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Row(
             children: [
               CircleAvatar(
-                radius: 28,
+                radius: 28.r,
                 backgroundColor: Colors.white.withOpacity(0.2),
                 backgroundImage: const AssetImage('assets/images/avatar.png'),
                 onBackgroundImageError: (_, __) {},
                 child: Text(
                   consultation['initials'] as String,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       consultation['name'] as String,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Text(
                       consultation['time'] as String,
-                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                      style: TextStyle(color: Colors.white, fontSize: 14.sp),
                     ),
-                    const SizedBox(height: 2),
+                    SizedBox(height: 2.h),
                     Text(
                       consultation['day'] as String,
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 13,
-                      ),
+                      style: TextStyle(color: Colors.white70, fontSize: 13.sp),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               GestureDetector(
                 onTap: onStop ?? () {},
                 child: Container(
-                  width: 36,
-                  height: 36,
+                  width: 36.r,
+                  height: 36.r,
                   decoration: const BoxDecoration(
                     color: Colors.red,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.stop_rounded,
                     color: Colors.white,
-                    size: 18,
+                    size: 18.r,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Row(
             children: [
               Expanded(
@@ -156,17 +147,17 @@ class NextConsultationCard extends StatelessWidget {
                   backgroundColor: Colors.white,
                   textColor: const Color(0xFF5B4EF7),
                   borderColor: Colors.white,
-                  height: 44,
+                  height: 44.h,
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               Expanded(
                 child: CustomOutlinedButton(
                   text: 'View PHR',
                   onPressed: onViewPHR ?? () {},
                   borderColor: Colors.white,
                   textColor: Colors.white,
-                  height: 44,
+                  height: 44.h,
                 ),
               ),
             ],

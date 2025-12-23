@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Fingerprint Button
 class FingerprintButton extends StatelessWidget {
@@ -13,22 +14,18 @@ class FingerprintButton extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 60,
-            height: 60,
+            width: 60.r,
+            height: 60.r,
             decoration: BoxDecoration(
               color: Colors.grey.shade100,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
-              Icons.fingerprint,
-              size: 30,
-              color: Colors.black54,
-            ),
+            child: Icon(Icons.fingerprint, size: 30.r, color: Colors.black54),
           ),
-          const SizedBox(height: 8),
-          const Text(
+          SizedBox(height: 8.h),
+          Text(
             'Use Fingerprint',
-            style: TextStyle(fontSize: 14, color: Colors.black54),
+            style: TextStyle(fontSize: 14.sp, color: Colors.black54),
           ),
         ],
       ),
@@ -53,14 +50,14 @@ class PasswordStrengthIndicator extends StatelessWidget {
       children: [
         Icon(
           isValid ? Icons.check : Icons.close,
-          size: 16,
+          size: 16.r,
           color: isValid ? Colors.green : Colors.grey,
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8.w),
         Text(
           label,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 12.sp,
             color: isValid ? Colors.green : Colors.grey,
           ),
         ),

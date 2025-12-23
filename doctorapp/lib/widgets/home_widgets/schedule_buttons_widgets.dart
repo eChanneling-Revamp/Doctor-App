@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ScheduleButtonsSection extends StatelessWidget {
   final VoidCallback? onTodayScheduleTap;
@@ -21,7 +22,7 @@ class ScheduleButtonsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
       child: Row(
         children: [
           Expanded(
@@ -35,7 +36,7 @@ class ScheduleButtonsSection extends StatelessWidget {
               isToday: true,
             ),
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: 4.w),
           Expanded(
             child: _buildScheduleButton(
               'Active Sessions',
@@ -46,7 +47,7 @@ class ScheduleButtonsSection extends StatelessWidget {
               onActiveSessionsTap ?? () {},
             ),
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: 4.w),
           Expanded(
             child: _buildScheduleButton(
               'Recent Payments',
@@ -70,21 +71,23 @@ class ScheduleButtonsSection extends StatelessWidget {
     bool isToday = false,
   }) {
     return SizedBox(
-      height: 35,
+      height: 35.h,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6.r),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
         ),
         child: Text(
           text,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textColor,
-            fontSize: isToday ? 12 : 12,
+            fontSize: (isToday ? 12 : 12).sp,
             fontWeight: FontWeight.w600,
           ),
         ),

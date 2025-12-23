@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'settings_item.dart';
 import '../../utils/snackbar_utils.dart';
 import '../../screens/profile/security_settings_screen.dart';
@@ -21,15 +22,15 @@ class _SettingsSectionState extends State<SettingsSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Settings',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
 
         // Biometric Login
         SettingsItem(
@@ -54,7 +55,7 @@ class _SettingsSectionState extends State<SettingsSection> {
           showArrow: false,
         ),
 
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
 
         // Terms and Conditions
         SettingsItem(
@@ -72,7 +73,7 @@ class _SettingsSectionState extends State<SettingsSection> {
           },
         ),
 
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
 
         // App Theme
         SettingsItem(
@@ -97,7 +98,7 @@ class _SettingsSectionState extends State<SettingsSection> {
           showArrow: false,
         ),
 
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
 
         // Security
         SettingsItem(
@@ -115,7 +116,7 @@ class _SettingsSectionState extends State<SettingsSection> {
           },
         ),
 
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
 
         // Help Center
         SettingsItem(

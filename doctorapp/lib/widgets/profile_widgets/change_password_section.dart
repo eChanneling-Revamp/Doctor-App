@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../share_widgets/inputs.dart';
 import '../share_widgets/buttons.dart';
 import '../../utils/snackbar_utils.dart';
@@ -45,7 +46,6 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
   }
 
   void _changePassword() {
-    // Validate fields
     if (_currentPasswordController.text.isEmpty) {
       SnackbarUtils.error(context, 'Please enter current password');
       return;
@@ -66,7 +66,6 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
       return;
     }
 
-    // Change password logic here
     SnackbarUtils.success(context, 'Password changed successfully');
     Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {
@@ -78,29 +77,29 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Change Password',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 18.sp,
               fontWeight: FontWeight.w600,
               color: Colors.black87,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(
             'Update Your Account Password',
-            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            style: TextStyle(fontSize: 12.sp, color: Colors.grey.shade600),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
           // Current Password
           CustomTextField(
@@ -122,7 +121,7 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
           // New Password
           CustomTextField(
@@ -145,7 +144,7 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
           // Confirm Password
           CustomTextField(
@@ -167,7 +166,7 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
           // Password Requirements
           _PasswordRequirement(
@@ -183,7 +182,7 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
             isMet: _hasLowercase && _hasUppercase,
           ),
 
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
           // Change Password Button
           CustomButton(
@@ -206,19 +205,19 @@ class _PasswordRequirement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: EdgeInsets.only(bottom: 4.h),
       child: Row(
         children: [
           Icon(
             isMet ? Icons.check_circle : Icons.circle_outlined,
-            size: 16,
+            size: 16.r,
             color: isMet ? Colors.green : Colors.grey,
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w),
           Text(
             text,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 12.sp,
               color: isMet ? Colors.green : Colors.grey.shade700,
             ),
           ),

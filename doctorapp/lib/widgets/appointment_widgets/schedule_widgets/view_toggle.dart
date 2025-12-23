@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ViewToggle extends StatelessWidget {
   final bool isDailyView;
@@ -14,36 +15,35 @@ class ViewToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 16.r, vertical: 8.h),
       child: Row(
         children: [
           Expanded(
             child: GestureDetector(
               onTap: () => onViewChanged(false),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: EdgeInsets.symmetric(vertical: 12.h),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color:
-                          !isDailyView
-                              ? const Color(0xFF4C40F7)
-                              : Colors.transparent,
-                      width: 2,
+                      color: !isDailyView
+                          ? const Color(0xFF4C40F7)
+                          : Colors.transparent,
+                      width: 2.r,
                     ),
                   ),
                 ),
                 child: Text(
                   'Week View',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight:
-                        !isDailyView ? FontWeight.w600 : FontWeight.w400,
-                    color:
-                        !isDailyView
-                            ? const Color(0xFF4C40F7)
-                            : Colors.grey.shade600,
+                    fontSize: 16.sp,
+                    fontWeight: !isDailyView
+                        ? FontWeight.w600
+                        : FontWeight.w400,
+                    color: !isDailyView
+                        ? const Color(0xFF4C40F7)
+                        : Colors.grey.shade600,
                   ),
                 ),
               ),
@@ -53,28 +53,26 @@ class ViewToggle extends StatelessWidget {
             child: GestureDetector(
               onTap: () => onViewChanged(true),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: EdgeInsets.symmetric(vertical: 12.h),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color:
-                          isDailyView
-                              ? const Color(0xFF4C40F7)
-                              : Colors.transparent,
-                      width: 2,
+                      color: isDailyView
+                          ? const Color(0xFF4C40F7)
+                          : Colors.transparent,
+                      width: 2.r,
                     ),
                   ),
                 ),
                 child: Text(
                   'Daily View',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: isDailyView ? FontWeight.w600 : FontWeight.w400,
-                    color:
-                        isDailyView
-                            ? const Color(0xFF4C40F7)
-                            : Colors.grey.shade600,
+                    color: isDailyView
+                        ? const Color(0xFF4C40F7)
+                        : Colors.grey.shade600,
                   ),
                 ),
               ),

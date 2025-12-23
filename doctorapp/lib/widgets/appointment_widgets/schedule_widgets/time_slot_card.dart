@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TimeSlotCard extends StatelessWidget {
   final String time;
@@ -10,13 +11,13 @@ class TimeSlotCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isBooked = patient != null;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 3.r, vertical: 4.h),
       decoration: BoxDecoration(
         color: isBooked ? const Color(0xFF4CAF50) : Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
           color: isBooked ? const Color(0xFF4CAF50) : Colors.grey.shade300,
-          width: 1.5,
+          width: 1.5.r,
         ),
       ),
       child: Column(
@@ -25,17 +26,17 @@ class TimeSlotCard extends StatelessWidget {
           Text(
             time,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w600,
               color: isBooked ? Colors.white : Colors.black87,
             ),
           ),
           if (isBooked) ...[
-            const SizedBox(height: 2),
+            SizedBox(height: 2.h),
             Text(
               patient!,
-              style: const TextStyle(
-                fontSize: 11,
+              style: TextStyle(
+                fontSize: 11.sp,
                 color: Colors.white,
                 fontWeight: FontWeight.w400,
               ),

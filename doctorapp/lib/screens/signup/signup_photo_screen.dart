@@ -1,5 +1,6 @@
 import 'package:doctorapp/screens/signup/signup_contact_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
@@ -39,72 +40,67 @@ class _SignUpPhotoScreenState extends State<SignUpPhotoScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.r),
           child: Column(
             children: [
-              const SizedBox(height: 40),
+              SizedBox(height: 40.h),
 
               // Logo
-              const LogoWidget(size: 60),
+              LogoWidget(size: 60.w),
 
-              const SizedBox(height: 80),
+              SizedBox(height: 80.h),
 
               // Profile Photo Section
               GestureDetector(
                 onTap: _uploadPhoto,
                 child: Container(
-                  width: 120,
-                  height: 120,
+                  width: 120.w,
+                  height: 120.w,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
                     shape: BoxShape.circle,
                   ),
-                  child:
-                      _hasPhoto
-                          ? const Icon(
-                            Icons.person,
-                            size: 60,
-                            color: Colors.grey,
-                          )
-                          : Stack(
-                            children: [
-                              const Center(
+                  child: _hasPhoto
+                      ? Icon(Icons.person, size: 60.sp, color: Colors.grey)
+                      : Stack(
+                          children: [
+                            Center(
+                              child: Icon(
+                                Icons.person,
+                                size: 60.sp,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: Container(
+                                width: 32.w,
+                                height: 32.w,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF4A3FFF),
+                                  shape: BoxShape.circle,
+                                ),
                                 child: Icon(
-                                  Icons.person,
-                                  size: 60,
-                                  color: Colors.grey,
+                                  Icons.add,
+                                  color: Colors.white,
+                                  size: 20.sp,
                                 ),
                               ),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: Container(
-                                  width: 32,
-                                  height: 32,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFF4A3FFF),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
                 ),
               ),
 
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
 
               // Text
               Text(
                 'Personalize your account with a photo You\ncan always change it later.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   color: Colors.grey.shade600,
                   height: 1.5,
                 ),
@@ -121,22 +117,24 @@ class _SignUpPhotoScreenState extends State<SignUpPhotoScreen> {
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: Colors.grey.shade300),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: EdgeInsets.symmetric(vertical: 12.h),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Back',
                         style: TextStyle(
                           color: Colors.black87,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  Expanded(child: CustomButton(text: 'Next', onPressed: _next)),
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    child: CustomButton(text: 'Next', onPressed: _next),
+                  ),
                 ],
               ),
             ],

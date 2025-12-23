@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/snackbar_utils.dart';
 
 class LogoutButton extends StatelessWidget {
@@ -9,21 +10,21 @@ class LogoutButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => _showLogoutDialog(context),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: EdgeInsets.symmetric(vertical: 16.h),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.grey.shade200),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.logout, color: const Color(0xFF4C40F7), size: 20),
-            const SizedBox(width: 8),
+            Icon(Icons.logout, color: const Color(0xFF4C40F7), size: 20.r),
+            SizedBox(width: 8.w),
             Text(
               'Log Out',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
                 color: const Color(0xFF4C40F7),
               ),
@@ -40,15 +41,15 @@ class LogoutButton extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
           ),
-          title: const Text(
+          title: Text(
             'Log Out',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
           ),
-          content: const Text(
+          content: Text(
             'Are you sure you want to log out?',
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16.sp),
           ),
           actions: [
             TextButton(
@@ -57,7 +58,7 @@ class LogoutButton extends StatelessWidget {
                 'Cancel',
                 style: TextStyle(
                   color: Colors.grey.shade600,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -73,11 +74,11 @@ class LogoutButton extends StatelessWidget {
                   }
                 });
               },
-              child: const Text(
+              child: Text(
                 'Log Out',
                 style: TextStyle(
-                  color: Color(0xFFF44336),
-                  fontSize: 16,
+                  color: const Color(0xFFF44336),
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),

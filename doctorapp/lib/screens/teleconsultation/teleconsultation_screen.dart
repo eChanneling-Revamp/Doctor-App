@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/teleconsultation_widgets/next_consultation_card.dart';
 import '../../widgets/teleconsultation_widgets/consultation_list_view.dart';
 import '../../services/teleconsultation_service.dart';
@@ -82,7 +83,6 @@ class _TeleconsultScreenState extends State<TeleconsultScreen> {
     return upcoming.isNotEmpty ? upcoming.first : null;
   }
 
-
   Future<void> _startConsultationNow({required String appointmentId}) async {
     // Let doctor choose Video vs Voice first
     final isVideo = await showModalBottomSheet<bool>(
@@ -90,16 +90,19 @@ class _TeleconsultScreenState extends State<TeleconsultScreen> {
       builder: (ctx) {
         return SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Start consultation',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 Row(
                   children: [
                     Expanded(
@@ -109,7 +112,7 @@ class _TeleconsultScreenState extends State<TeleconsultScreen> {
                         label: const Text('Video call'),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: OutlinedButton.icon(
                         onPressed: () => Navigator.of(ctx).pop(false),
@@ -159,14 +162,13 @@ class _TeleconsultScreenState extends State<TeleconsultScreen> {
     if (!mounted) return;
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder:
-            (_) => TeleconsultationCallPage(
-              appointmentId: appointmentId,
-              userId: userId,
-              userName: userName,
-              isVideo: isVideo,
-              token: token,
-            ),
+        builder: (_) => TeleconsultationCallPage(
+          appointmentId: appointmentId,
+          userId: userId,
+          userName: userName,
+          isVideo: isVideo,
+          token: token,
+        ),
       ),
     );
   }
@@ -193,10 +195,10 @@ class _TeleconsultScreenState extends State<TeleconsultScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Teleconsult',
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 22.sp,
             fontWeight: FontWeight.w600,
             color: Colors.black,
           ),
@@ -204,58 +206,64 @@ class _TeleconsultScreenState extends State<TeleconsultScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Next Consultation Card (only when viewing upcoming)
-            if (!_showPast && nextConsultation != null)
-              NextConsultationCard(
-                consultation: nextConsultation!,
-                onStart: () {
-                  final id = nextConsultation!['id'] as String;
-                  _startConsultationNow(appointmentId: id);
-                },
-                onViewPHR: () {
-                  // Handle view PHR
-                },
-                onStop: _stopCurrentNextConsultation,
-              ),
-            const SizedBox(height: 24),
-            // Section header with Past toggle
-            Row(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  _showPast ? 'Past Consultations' : 'Upcoming Consultation',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                // Next Consultation Card (only when viewing upcoming)
+                if (!_showPast && nextConsultation != null)
+                  NextConsultationCard(
+                    consultation: nextConsultation!,
+                    onStart: () {
+                      final id = nextConsultation!['id'] as String;
+                      _startConsultationNow(appointmentId: id);
+                    },
+                    onViewPHR: () {
+                      // Handle view PHR
+                    },
+                    onStop: _stopCurrentNextConsultation,
                   ),
+                SizedBox(height: 24.h),
+                // Section header with Past toggle
+                Row(
+                  children: [
+                    Text(
+                      _showPast
+                          ? 'Past Consultations'
+                          : 'Upcoming Consultation',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () => setState(() => _showPast = !_showPast),
+                      child: Text(_showPast ? 'Upcoming' : 'Past'),
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () => setState(() => _showPast = !_showPast),
-                  child: Text(_showPast ? 'Upcoming' : 'Past'),
+                SizedBox(height: 16.h),
+                // Consultation List
+                ConsultationListView(
+                  consultations: _showPast
+                      ? _pastConsultations
+                      : upcomingConsultations,
+                  onStart: (consultation) {
+                    final id = consultation['id'] as String;
+                    _startConsultationNow(appointmentId: id);
+                  },
+                  emptyText: _showPast
+                      ? 'No past teleconsultations'
+                      : 'No upcoming teleconsultations',
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-            // Consultation List
-            ConsultationListView(
-              consultations:
-                  _showPast ? _pastConsultations : upcomingConsultations,
-              onStart: (consultation) {
-                final id = consultation['id'] as String;
-                _startConsultationNow(appointmentId: id);
-              },
-              emptyText:
-                  _showPast
-                      ? 'No past teleconsultations'
-                      : 'No upcoming teleconsultations',
-            ),
-          ],
+          ),
         ),
       ),
     );

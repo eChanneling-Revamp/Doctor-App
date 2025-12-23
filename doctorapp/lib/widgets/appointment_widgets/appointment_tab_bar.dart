@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'appointment_tab.dart';
 
 class AppointmentTabBar extends StatelessWidget {
@@ -14,7 +15,7 @@ class AppointmentTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 16.r, vertical: 8.h),
       child: Row(
         children: [
           AppointmentTab(
@@ -24,7 +25,7 @@ class AppointmentTabBar extends StatelessWidget {
             isSelected: currentTabIndex == 0,
             onTap: () => onTabChanged(0),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16.w),
           AppointmentTab(
             title: 'Upcoming',
             index: 1,
@@ -32,7 +33,7 @@ class AppointmentTabBar extends StatelessWidget {
             isSelected: currentTabIndex == 1,
             onTap: () => onTabChanged(1),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16.w),
           AppointmentTab(
             title: 'Past',
             index: 2,

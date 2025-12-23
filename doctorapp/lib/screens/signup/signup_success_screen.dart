@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../signin_screen.dart';
@@ -29,27 +30,27 @@ class SignUpSuccessScreen extends StatelessWidget {
         child: SafeArea(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: EdgeInsets.all(24.r),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Logo
-                  const LogoWidget(size: 60),
+                  LogoWidget(size: 60.w),
 
-                  const SizedBox(height: 60),
+                  SizedBox(height: 60.h),
 
                   // Success Icon and Modal
                   Container(
-                    width: 200,
-                    height: 280,
+                    width: 200.w,
+                    height: 280.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(16.r),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
+                          blurRadius: 20.r,
+                          offset: Offset(0, 10.h),
                         ),
                       ],
                     ),
@@ -58,41 +59,41 @@ class SignUpSuccessScreen extends StatelessWidget {
                       children: [
                         // Success Icon
                         Container(
-                          width: 80,
-                          height: 80,
+                          width: 80.w,
+                          height: 80.w,
                           decoration: const BoxDecoration(
                             color: Colors.green,
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.check,
                             color: Colors.white,
-                            size: 40,
+                            size: 40.sp,
                           ),
                         ),
 
-                        const SizedBox(height: 24),
+                        SizedBox(height: 24.h),
 
                         // Title
-                        const Text(
+                        Text(
                           'Congratulations!',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.black87,
                           ),
                           textAlign: TextAlign.center,
                         ),
 
-                        const SizedBox(height: 12),
+                        SizedBox(height: 12.h),
 
                         // Description
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: 20.r),
                           child: Text(
                             'Your account has been created and\nwill be activated in the next\nPage in a few seconds.',
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               color: Colors.grey.shade600,
                               height: 1.4,
                             ),
@@ -100,17 +101,17 @@ class SignUpSuccessScreen extends StatelessWidget {
                           ),
                         ),
 
-                        const SizedBox(height: 24),
+                        SizedBox(height: 24.h),
 
                         // Done Button
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: 20.r),
                           child: SizedBox(
                             width: double.infinity,
                             child: CustomButton(
                               text: 'Done',
                               onPressed: () => _signUp(context),
-                              height: 40,
+                              height: 40.h,
                             ),
                           ),
                         ),
@@ -118,7 +119,7 @@ class SignUpSuccessScreen extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 60),
+                  SizedBox(height: 60.h),
                 ],
               ),
             ),

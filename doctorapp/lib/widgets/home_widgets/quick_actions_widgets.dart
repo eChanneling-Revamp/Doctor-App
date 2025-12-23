@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../screens/home/add_session_screen.dart';
 import '../../screens/home/prescription_screen.dart';
+import '../../screens/home/reminders_screen.dart';
 
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key});
@@ -8,19 +10,19 @@ class QuickActionsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Quick Actions',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 18.sp,
               fontWeight: FontWeight.w800,
               color: Colors.black87,
             ),
           ),
-          const SizedBox(height: 15),
+          SizedBox(height: 15.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -49,9 +51,16 @@ class QuickActionsSection extends StatelessWidget {
                 },
               ),
               _buildQuickActionItem(
-                icon: Icons.calendar_today_outlined,
-                label: 'Upcoming\nAppointment',
-                onTap: () {},
+                icon: Icons.assignment_outlined,
+                label: 'Reminders\nManager',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RemindersScreen(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -68,22 +77,22 @@ class QuickActionsSection extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 115,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        width: 115.w,
+        padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
         decoration: BoxDecoration(
           color: Colors.grey.shade50,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: const Color.fromARGB(255, 25, 113, 235)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 24, color: const Color(0xFF4A3FFF)),
+            Icon(icon, size: 24.r, color: const Color(0xFF4A3FFF)),
             Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 13,
+              style: TextStyle(
+                fontSize: 13.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.black87,
               ),

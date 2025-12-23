@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/appointment_widgets/appointment_tab_bar.dart';
 import '../../widgets/appointment_widgets/appointment_list_view.dart';
 import '../../widgets/share_widgets/buttons.dart';
@@ -156,17 +157,17 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Appointments',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 24,
+            fontSize: 24.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16),
+            padding: EdgeInsets.only(right: 16.w),
             child: CustomOutlinedButton(
               text: 'Schedule',
               onPressed: () {
@@ -178,33 +179,35 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                   ),
                 );
               },
-              height: 40,
+              height: 40.h,
             ),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Tab Bar
-          AppointmentTabBar(
-            currentTabIndex: _currentTabIndex,
-            onTabChanged: (index) {
-              _tabController.animateTo(index);
-            },
-          ),
-          const Divider(height: 1),
-          // Tab Views
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                AppointmentListView(appointments: _currentAppointments),
-                AppointmentListView(appointments: _upcomingAppointments),
-                AppointmentListView(appointments: _pastAppointments),
-              ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Tab Bar
+            AppointmentTabBar(
+              currentTabIndex: _currentTabIndex,
+              onTabChanged: (index) {
+                _tabController.animateTo(index);
+              },
             ),
-          ),
-        ],
+            Divider(height: 1.h),
+            // Tab Views
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  AppointmentListView(appointments: _currentAppointments),
+                  AppointmentListView(appointments: _upcomingAppointments),
+                  AppointmentListView(appointments: _pastAppointments),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

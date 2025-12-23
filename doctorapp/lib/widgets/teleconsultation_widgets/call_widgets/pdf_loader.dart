@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../services/teleconsultation_service.dart';
 import 'pdf_view_with_controller.dart';
 import 'simple_error.dart';
@@ -15,15 +16,23 @@ class PdfLoader extends StatelessWidget {
       future: svc.downloadBytes(url),
       builder: (context, snap) {
         if (snap.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snap.hasError || snap.data == null) {
-          return SimpleError(
-            title: 'Failed to load PDF',
-            message: snap.error?.toString() ?? 'Unknown error',
+          return Center(
+            child: SizedBox(
+              height: 40.r,
+              width: 40.r,
+              child: CircularProgressIndicator(strokeWidth: 3.r),
+            ),
           );
         }
-        return PdfViewWithController(bytes: snap.data!);
+        if (snap.hasError || snap.data == null) {
+          return SafeArea(
+            child: SimpleError(
+              title: 'Failed to load PDF',
+              message: snap.error?.toString() ?? 'Unknown error',
+            ),
+          );
+        }
+        return SafeArea(child: PdfViewWithController(bytes: snap.data!));
       },
     );
   }

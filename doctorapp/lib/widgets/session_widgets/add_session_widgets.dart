@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/snackbar_utils.dart';
 import '../share_widgets/buttons.dart';
 import 'session_form_fields.dart';
@@ -111,6 +112,8 @@ class _AddSessionFormState extends State<AddSessionForm> {
             },
           ),
           const SizedBox(height: 40),
+          // Spacer
+          SizedBox(height: 40.h),
         ],
       ),
     );
