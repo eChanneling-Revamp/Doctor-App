@@ -73,6 +73,7 @@ class AppointmentCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
                         Icons.access_time,
@@ -80,11 +81,15 @@ class AppointmentCard extends StatelessWidget {
                         color: Colors.grey.shade600,
                       ),
                       SizedBox(width: 4.w),
-                      Text(
-                        time,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: Colors.grey.shade600,
+                      Flexible(
+                        child: Text(
+                          time,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.grey.shade600,
+                          ),
                         ),
                       ),
                     ],

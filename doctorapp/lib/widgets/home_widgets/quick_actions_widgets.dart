@@ -52,7 +52,7 @@ class QuickActionsSection extends StatelessWidget {
               ),
               _buildQuickActionItem(
                 icon: Icons.assignment_outlined,
-                label: 'Reminders\nManager',
+                label: 'Manage\nReminders',
                 onTap: () {
                   Navigator.push(
                     context,
