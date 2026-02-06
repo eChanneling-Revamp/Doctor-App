@@ -26,6 +26,8 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
       TextEditingController();
   final TextEditingController medicineSearchController =
       TextEditingController();
+  final TextEditingController specialNoteController =
+      TextEditingController();
 
   // search state
   List<String> searchResults = [];
@@ -49,6 +51,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
   void dispose() {
     appointmentSearchController.dispose();
     medicineSearchController.dispose();
+    specialNoteController.dispose();
     _debounce?.cancel();
     for (final e in entries) {
       e.dispose();
@@ -334,14 +337,123 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                 ),
                 SizedBox(height: 8.h),
 
-                Column(
-                  children: List.generate(
-                    entries.length,
-                    (i) => PrescriptionEntryCard(
-                      entry: entries[i],
-                      index: i,
-                      onRemove: _removeEntry,
-                      onToggleFavorite: _onToggleFavorite,
+                // Show medicine entries when medicines are added
+                if (entries.isNotEmpty)
+                  Column(
+                    children: List.generate(
+                      entries.length,
+                      (i) => PrescriptionEntryCard(
+                        entry: entries[i],
+                        index: i,
+                        onRemove: _removeEntry,
+                        onToggleFavorite: _onToggleFavorite,
+                      ),
+                    ),
+                  ),
+
+                // Always show special note card
+                Card(
+                  margin: EdgeInsets.symmetric(vertical: 8.h),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(16.r),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.note_add,
+                              color: const Color(0xFF3B82F6),
+                              size: 24.r,
+                            ),
+                            SizedBox(width: 8.w),
+                            Text(
+                              'Special Note',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.sp,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 12.h),
+                        Container(
+                          padding: EdgeInsets.all(12.r),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFEF3C7),
+                            borderRadius: BorderRadius.circular(8.r),
+                            border: Border.all(
+                              color: const Color(0xFFF59E0B),
+                              width: 1,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.info_outline,
+                                color: const Color(0xFFD97706),
+                                size: 20.r,
+                              ),
+                              SizedBox(width: 8.w),
+                              Expanded(
+                                child: Text(
+                                  'Use this note for special instructions.',
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                    color: const Color(0xFF78350F),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 12.h),
+                        Text(
+                          'Note for Patient',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14.sp,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        TextField(
+                          controller: specialNoteController,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            hintText: 'Enter special instructions or notes for the patient...',
+                            hintStyle: TextStyle(
+                              fontSize: 13.sp,
+                              color: Colors.grey.shade400,
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey.shade50,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade300,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade300,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                              borderSide: const BorderSide(
+                                color: Color(0xFF3B82F6),
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
