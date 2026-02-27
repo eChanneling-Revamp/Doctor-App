@@ -38,20 +38,20 @@ class _RemindersScreenState extends State<RemindersScreen> {
       description: 'Discuss test results',
       category: 'Follow-up Reminder',
     ),
-    Reminder(
-      title: 'Blood Test',
-      time: const TimeOfDay(hour: 9, minute: 0),
-      repeat: 'None',
-      description: 'Fasting required',
-      category: 'Lab/Test Reminder',
-    ),
-    Reminder(
-      title: 'Evening Walk',
-      time: const TimeOfDay(hour: 18, minute: 0),
-      repeat: 'Daily',
-      description: '20 minutes',
-      category: 'Health Routine Reminder',
-    ),
+    // Reminder(
+    //   title: 'Blood Test',
+    //   time: const TimeOfDay(hour: 9, minute: 0),
+    //   repeat: 'None',
+    //   description: 'Fasting required',
+    //   category: 'Lab/Test Reminder',
+    // ),
+    // Reminder(
+    //   title: 'Evening Walk',
+    //   time: const TimeOfDay(hour: 18, minute: 0),
+    //   repeat: 'Daily',
+    //   description: '20 minutes',
+    //   category: 'Health Routine Reminder',
+    // ),
   ];
 
   void _openAddReminderSheet() async {
