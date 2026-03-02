@@ -1,26 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../models/patient_history_entry.dart';
+import '../../widgets/patient_history_widgets/history_card.dart';
+import '../../widgets/patient_history_widgets/history_stat_tile.dart';
+import '../../widgets/patient_history_widgets/history_status_badge.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
-
-// ─── Data models ─────────────────────────────────────────────────────────────
-
-enum HistoryType { prescription, labResult, visit, procedure }
-
-class PatientHistoryEntry {
-  final String title;
-  final String subtitle;
-  final String date;
-  final HistoryType type;
-  final String? note;
-
-  const PatientHistoryEntry({
-    required this.title,
-    required this.subtitle,
-    required this.date,
-    required this.type,
-    this.note,
-  });
-}
 
 // ─── Sample data ─────────────────────────────────────────────────────────────
 
@@ -192,7 +176,7 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen>
                           ],
                         ),
                       ),
-                      _StatusBadge(
+                      HistoryStatusBadge(
                         label: 'Active',
                         color: const Color(0xFF10B981),
                       ),
@@ -207,7 +191,7 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen>
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Row(
                 children: [
-                  _StatTile(
+                  HistoryStatTile(
                     icon: Icons.receipt_long_rounded,
                     label: 'Prescriptions',
                     value: _sampleHistory
@@ -217,7 +201,7 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen>
                     color: const Color(0xFF4A3FFF),
                   ),
                   SizedBox(width: 10.w),
-                  _StatTile(
+                  HistoryStatTile(
                     icon: Icons.biotech_rounded,
                     label: 'Lab Results',
                     value: _sampleHistory
@@ -227,7 +211,7 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen>
                     color: const Color(0xFF0EA5E9),
                   ),
                   SizedBox(width: 10.w),
-                  _StatTile(
+                  HistoryStatTile(
                     icon: Icons.local_hospital_rounded,
                     label: 'Visits',
                     value: _sampleHistory
@@ -311,215 +295,8 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen>
                       itemCount: _filtered.length,
                       separatorBuilder: (_, __) => SizedBox(height: 10.h),
                       itemBuilder: (context, i) =>
-                          _HistoryCard(entry: _filtered[i]),
+                          HistoryCard(entry: _filtered[i]),
                     ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ─── Reusable widgets ─────────────────────────────────────────────────────────
-
-class _StatusBadge extends StatelessWidget {
-  final String label;
-  final Color color;
-
-  const _StatusBadge({required this.label, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: color,
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-}
-
-class _StatTile extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color color;
-
-  const _StatTile({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10.w),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        child: Column(
-          children: [
-            Icon(icon, color: color, size: 22.r),
-            SizedBox(height: 6.h),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w800,
-                color: color,
-              ),
-            ),
-            SizedBox(height: 2.h),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 10.sp,
-                color: Colors.black54,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _HistoryCard extends StatelessWidget {
-  final PatientHistoryEntry entry;
-
-  const _HistoryCard({required this.entry});
-
-  static const _typeConfig = {
-    HistoryType.prescription: (
-      icon: Icons.receipt_long_rounded,
-      color: Color(0xFF4A3FFF),
-      bg: Color(0xFFEEF2FF),
-    ),
-    HistoryType.labResult: (
-      icon: Icons.biotech_rounded,
-      color: Color(0xFF0EA5E9),
-      bg: Color(0xFFE0F2FE),
-    ),
-    HistoryType.visit: (
-      icon: Icons.local_hospital_rounded,
-      color: Color(0xFF10B981),
-      bg: Color(0xFFE6F7EB),
-    ),
-    HistoryType.procedure: (
-      icon: Icons.medical_services_rounded,
-      color: Color(0xFFF59E0B),
-      bg: Color(0xFFFEF3C7),
-    ),
-  };
-
-  @override
-  Widget build(BuildContext context) {
-    final cfg = _typeConfig[entry.type]!;
-
-    return Card(
-      margin: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      child: Padding(
-        padding: EdgeInsets.all(14.r),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Icon badge
-            Container(
-              padding: EdgeInsets.all(10.r),
-              decoration: BoxDecoration(
-                color: cfg.bg,
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Icon(cfg.icon, color: cfg.color, size: 20.r),
-            ),
-            SizedBox(width: 12.w),
-
-            // Content
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          entry.title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13.sp,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        entry.date,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: Colors.black38,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    entry.subtitle,
-                    style: TextStyle(fontSize: 12.sp, color: Colors.black54),
-                  ),
-                  if (entry.note != null) ...[
-                    SizedBox(height: 8.h),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10.w,
-                        vertical: 6.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade50,
-                        borderRadius: BorderRadius.circular(8.r),
-                        border: Border.all(color: Colors.grey.shade200),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.notes_rounded,
-                            size: 13.r,
-                            color: Colors.black38,
-                          ),
-                          SizedBox(width: 6.w),
-                          Expanded(
-                            child: Text(
-                              entry.note!,
-                              style: TextStyle(
-                                fontSize: 11.sp,
-                                color: Colors.black54,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ],
-              ),
             ),
           ],
         ),
