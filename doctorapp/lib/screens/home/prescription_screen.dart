@@ -1,5 +1,8 @@
+import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/prescription_widgets.dart/favorite_medicine_list.dart';
@@ -8,7 +11,9 @@ import '../../widgets/prescription_widgets.dart/prescription_header_and_actions.
 import '../../models/prescription_entry.dart';
 import '../../utils/snackbar_utils.dart';
 import '../../services/drug_api.dart';
-import 'dart:async';
+import '../../services/prescription_pdf_service.dart';
+import '../../services/signature_service.dart';
+import 'signature_pad_screen.dart';
 
 class CreatePrescriptionScreen extends StatefulWidget {
   const CreatePrescriptionScreen({super.key});
@@ -26,8 +31,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
       TextEditingController();
   final TextEditingController medicineSearchController =
       TextEditingController();
-  final TextEditingController specialNoteController =
-      TextEditingController();
+  final TextEditingController specialNoteController = TextEditingController();
 
   // search state
   List<String> searchResults = [];
@@ -46,6 +50,15 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
 
   // entries
   final List<PrescriptionEntry> entries = [];
+
+  // Doctor's drawn signature (PNG bytes)
+  Uint8List? _signatureBytes;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSignature();
+  }
 
   @override
   void dispose() {
@@ -103,6 +116,104 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
       if (favIndex >= 0) selectedFavoriteIndices.remove(favIndex);
     });
   }
+
+  // ─── Signature ────────────────────────────────────────────────────────────
+
+  Future<void> _loadSignature() async {
+    final bytes = await SignatureService.load();
+    if (!mounted) return;
+    setState(() => _signatureBytes = bytes);
+  }
+
+  Future<void> _openSignaturePad() async {
+    final saved = await SignaturePadScreen.push(
+      context,
+      existingBytes: _signatureBytes,
+    );
+    if (saved == true) {
+      await _loadSignature();
+    }
+  }
+
+  // ─── PDF Share ────────────────────────────────────────────────────────────
+
+  void _showShareOptions() {
+    if (_signatureBytes == null) {
+      SnackbarUtils.error(
+        context,
+        'Please add your signature before sharing the prescription.',
+      );
+      return;
+    }
+    final hasContent =
+        entries.isNotEmpty || specialNoteController.text.trim().isNotEmpty;
+    if (!hasContent) {
+      SnackbarUtils.info(
+        context,
+        'Please add a medicine or a special note before sharing.',
+      );
+      return;
+    }
+    _generateAndShare();
+  }
+
+  /// Generates the PDF then shows system share sheet.
+  Future<void> _generateAndShare() async {
+    if (!mounted) return;
+    final nav = Navigator.of(context);
+    _showLoadingDialog('Generating PDF…');
+    try {
+      final file = await PrescriptionPdfService.generate(
+        patientName: 'Mary De Silva',
+        patientAge: '28',
+        patientId: 'E00210',
+        refNumber: 'App-2025002',
+        status: 'Active',
+        entries: entries,
+        specialNote: specialNoteController.text,
+        signatureBytes: _signatureBytes,
+      );
+      if (!mounted) return;
+      nav.pop(); // close loading
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile(file.path, mimeType: 'application/pdf')],
+          subject: 'ePrescription – Mary De Silva',
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      nav.pop();
+      SnackbarUtils.error(context, 'Failed to generate PDF. Please try again.');
+    }
+  }
+
+  void _showLoadingDialog(String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          content: Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.h),
+            child: Row(
+              children: [
+                const CircularProgressIndicator(),
+                SizedBox(width: 20.w),
+                Text(message, style: TextStyle(fontSize: 14.sp)),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
 
   void _onToggleFavorite(int index, String medicineName, bool isFavorite) {
     setState(() {
@@ -425,7 +536,8 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                           controller: specialNoteController,
                           maxLines: 5,
                           decoration: InputDecoration(
-                            hintText: 'Enter special instructions or notes for the patient...',
+                            hintText:
+                                'Enter special instructions or notes for the patient...',
                             hintStyle: TextStyle(
                               fontSize: 13.sp,
                               color: Colors.grey.shade400,
@@ -458,9 +570,153 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                   ),
                 ),
 
+                // ─── Signature Card ────────────────────────────────────
+                SizedBox(height: 14.h),
+                Card(
+                  margin: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(16.r),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.draw_outlined,
+                              color: const Color(0xFF4A3FFF),
+                              size: 22.r,
+                            ),
+                            SizedBox(width: 8.w),
+                            Text(
+                              'Doctor\'s Signature',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15.sp,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            const Spacer(),
+                            TextButton.icon(
+                              onPressed: _openSignaturePad,
+                              icon: Icon(
+                                _signatureBytes == null
+                                    ? Icons.add
+                                    : Icons.edit_outlined,
+                                size: 16.r,
+                              ),
+                              label: Text(
+                                _signatureBytes == null ? 'Add' : 'Change',
+                                style: TextStyle(fontSize: 13.sp),
+                              ),
+                              style: TextButton.styleFrom(
+                                foregroundColor: const Color(0xFF4A3FFF),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w,
+                                  vertical: 4.h,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 12.h),
+                        if (_signatureBytes != null) ...[
+                          // Show the drawn signature
+                          Container(
+                            width: double.infinity,
+                            height: 100.h,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8.r),
+                              border: Border.all(
+                                color: const Color(0xFF4A3FFF),
+                                width: 1,
+                              ),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.memory(
+                              _signatureBytes!,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          // Remove button
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton.icon(
+                              onPressed: () async {
+                                await SignatureService.clear();
+                                setState(() => _signatureBytes = null);
+                              },
+                              icon: Icon(
+                                Icons.delete_outline,
+                                size: 16.r,
+                                color: Colors.redAccent,
+                              ),
+                              label: Text(
+                                'Remove Signature',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w,
+                                  vertical: 4.h,
+                                ),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                            ),
+                          ),
+                        ] else ...[
+                          // Placeholder
+                          InkWell(
+                            onTap: _openSignaturePad,
+                            borderRadius: BorderRadius.circular(10.r),
+                            child: Container(
+                              width: double.infinity,
+                              height: 90.h,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF9FAFB),
+                                borderRadius: BorderRadius.circular(10.r),
+                                border: Border.all(
+                                  color: Colors.grey.shade300,
+                                  style: BorderStyle.solid,
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.gesture,
+                                    size: 28.r,
+                                    color: Colors.grey.shade400,
+                                  ),
+                                  SizedBox(height: 6.h),
+                                  Text(
+                                    'Tap to draw your signature',
+                                    style: TextStyle(
+                                      fontSize: 13.sp,
+                                      color: Colors.grey.shade400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+
                 SizedBox(height: 18.h),
                 PrescriptionBottomActions(
-                  onShare: () => SnackbarUtils.info(context, 'Shared'),
+                  onShare: _showShareOptions,
                   onSend: () => SnackbarUtils.info(context, 'Sent to patient'),
                 ),
                 SizedBox(height: 30.h),
