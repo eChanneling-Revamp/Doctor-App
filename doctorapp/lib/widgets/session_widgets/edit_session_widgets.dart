@@ -159,11 +159,11 @@ class _EditSessionModalState extends State<EditSessionModal> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Title
-                  const Center(
+                  Center(
                     child: Text(
                       'Edit Session',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF1A1A1A),
                       ),
@@ -209,7 +209,7 @@ class _EditSessionModalState extends State<EditSessionModal> {
                           },
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12.w),
                       Expanded(
                         child: CustomButton(
                           text: 'Cancel',
