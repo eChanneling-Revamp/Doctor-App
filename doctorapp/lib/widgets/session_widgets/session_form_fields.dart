@@ -38,9 +38,9 @@ class SessionFormFields extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 6.h),
-        const Text(
+        Text(
           'Session Type',
-          style: TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
         ),
         SizedBox(height: 8.h),
         DropdownButtonFormField<String>(
@@ -66,9 +66,9 @@ class SessionFormFields extends StatelessWidget {
         ),
 
         SizedBox(height: 16.h),
-        const Text(
+        Text(
           'Hospital / Location',
-          style: TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
         ),
         SizedBox(height: 8.h),
         DropdownButtonFormField<String>(
@@ -108,9 +108,9 @@ class SessionFormFields extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Date',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 8.h),
                   GestureDetector(
@@ -147,9 +147,9 @@ class SessionFormFields extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Max Patients',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 8.h),
                   CustomTextField(
@@ -170,9 +170,9 @@ class SessionFormFields extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Start Time',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 8.h),
                   GestureDetector(
@@ -193,9 +193,9 @@ class SessionFormFields extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'End Time',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 8.h),
                   GestureDetector(
@@ -215,7 +215,7 @@ class SessionFormFields extends StatelessWidget {
         ),
 
         SizedBox(height: 16.h),
-        const Text('Notes', style: TextStyle(fontWeight: FontWeight.w600)),
+        Text('Notes', style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
         SizedBox(height: 8.h),
         CustomTextField(
           hintText: 'Video Consultation Slots',
@@ -225,7 +225,7 @@ class SessionFormFields extends StatelessWidget {
         SizedBox(height: 14.h),
         Text(
           'Current: 12/${maxPatientsController.text} Patients Booked',
-          style: const TextStyle(color: Colors.green),
+          style: TextStyle(fontSize: 13.sp, color: Colors.green),
         ),
 
         SizedBox(height: 24.h),

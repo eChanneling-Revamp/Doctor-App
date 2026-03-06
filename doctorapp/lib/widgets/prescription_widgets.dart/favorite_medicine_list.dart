@@ -40,12 +40,18 @@ class FavoriteMedicineList extends StatelessWidget {
                     children: [
                       Text(
                         m,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       SizedBox(height: 4.h),
-                      const Text(
+                      Text(
                         '1-2 tablets / Every 6 hours',
-                        style: TextStyle(color: Colors.black54),
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: Colors.black54,
+                        ),
                       ),
                     ],
                   ),

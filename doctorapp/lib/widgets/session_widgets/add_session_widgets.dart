@@ -111,8 +111,6 @@ class _AddSessionFormState extends State<AddSessionForm> {
               }
             },
           ),
-          const SizedBox(height: 40),
-          // Spacer
           SizedBox(height: 40.h),
         ],
       ),

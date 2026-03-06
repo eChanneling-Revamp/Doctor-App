@@ -53,7 +53,7 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                 Expanded(
                   child: Text(
                     '${widget.index + 1}. ${entry.medicineName}',
-                    style: const TextStyle(fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700),
                   ),
                 ),
                 IconButton(
@@ -78,9 +78,9 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Dosage',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
                       ),
                       SizedBox(height: 6.h),
                       CustomTextField(
@@ -96,9 +96,9 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Frequency',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
                       ),
                       SizedBox(height: 6.h),
                       DropdownButtonFormField<int>(
@@ -132,9 +132,9 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Duration',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
                       ),
                       SizedBox(height: 6.h),
                       DropdownButtonFormField<String>(
@@ -210,9 +210,9 @@ class _PrescriptionEntryCardState extends State<PrescriptionEntryCard> {
             ),
 
             SizedBox(height: 12.h),
-            const Text(
+            Text(
               'Special Instructions',
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 6.h),
             CustomTextField(
