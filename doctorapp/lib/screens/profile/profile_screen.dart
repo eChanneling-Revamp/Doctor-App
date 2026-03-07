@@ -4,9 +4,50 @@ import '../../widgets/share_widgets/custom_back_button.dart';
 import '../../widgets/profile_widgets/profile_card.dart';
 import '../../widgets/profile_widgets/settings_section.dart';
 import '../../widgets/profile_widgets/logout_button.dart';
+import '../../services/profile_service.dart';
+import '../../utils/snackbar_utils.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isLoading = true;
+  Map<String, dynamic>? _profileData;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final result = await ProfileService.getProfile();
+
+    if (mounted) {
+      if (result['success']) {
+        setState(() {
+          _profileData = result['data'];
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        SnackbarUtils.error(
+          context,
+          result['message'] ?? 'Failed to load profile',
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,40 +67,51 @@ class ProfileScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 20.h),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SafeArea(
+              child: RefreshIndicator(
+                onRefresh: _loadProfile,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20.h),
 
-              // Profile Card
-              const ProfileCard(
-                name: 'Daniel Martinez',
-                specialty: 'Cardiologist',
-                hospital: 'Colombo General Hospital',
+                      // Profile Card
+                      ProfileCard(
+                        name: _profileData?['name'] ?? 'Unknown',
+                        specialty:
+                            _profileData?['medicalSpecs'] ?? 'Specialist',
+                        hospital: _profileData?['hospital'] ?? 'Hospital',
+                        profileImage: _profileData?['profileImage'],
+                        onProfileUpdated: _loadProfile,
+                      ),
+
+                      SizedBox(height: 24.h),
+
+                      // Settings Section
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.r),
+                        child: SettingsSection(
+                          biometricEnabled: _profileData?['biometric'] ?? false,
+                        ),
+                      ),
+
+                      SizedBox(height: 32.h),
+
+                      // Logout Button
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.r),
+                        child: const LogoutButton(),
+                      ),
+
+                      SizedBox(height: 32.h),
+                    ],
+                  ),
+                ),
               ),
-
-              SizedBox(height: 24.h),
-
-              // Settings Section
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.r),
-                child: const SettingsSection(),
-              ),
-
-              SizedBox(height: 32.h),
-
-              // Logout Button
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.r),
-                child: const LogoutButton(),
-              ),
-
-              SizedBox(height: 32.h),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
