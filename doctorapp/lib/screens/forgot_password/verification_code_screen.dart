@@ -6,9 +6,12 @@ import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
 import 'new_password_screen.dart';
+import '../../services/auth_service.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
-  const VerificationCodeScreen({super.key});
+  final String emailOrPhone;
+
+  const VerificationCodeScreen({super.key, required this.emailOrPhone});
 
   @override
   State<VerificationCodeScreen> createState() => _VerificationCodeScreenState();
@@ -21,6 +24,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
   );
   final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
   String _verificationCode = '';
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -54,30 +58,87 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
     setState(() {});
   }
 
-  void _verify() {
-    if (_verificationCode.length == 4) {
-      // Navigate to new password screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => NewPasswordScreen()),
-      );
-    } else {
+  void _verify() async {
+    if (_verificationCode.length != 4) {
       SnackbarUtils.error(
         context,
         'Please enter the complete verification code',
       );
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final result = await AuthService.verifyOtp(
+        emailOrPhone: widget.emailOrPhone,
+        code: _verificationCode,
+      );
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (result['success']) {
+          SnackbarUtils.success(context, result['message']);
+          // Navigate to new password screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  NewPasswordScreen(emailOrPhone: widget.emailOrPhone),
+            ),
+          );
+        } else {
+          SnackbarUtils.error(context, result['message']);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        SnackbarUtils.error(context, 'An error occurred. Please try again.');
+      }
     }
   }
 
-  void _resendCode() {
-    SnackbarUtils.success(context, 'Verification code resent!');
+  void _resendCode() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final result = await AuthService.forgotPassword(
+        emailOrPhone: widget.emailOrPhone,
+      );
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (result['success']) {
+          SnackbarUtils.success(context, 'Verification code resent!');
+        } else {
+          SnackbarUtils.error(context, result['message']);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        SnackbarUtils.error(context, 'Failed to resend code.');
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final String email =
-        ModalRoute.of(context)?.settings.arguments as String? ?? 'your phone';
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -126,7 +187,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                             'Please enter the 4 digit code sent to your mobile\nnumber ',
                       ),
                       TextSpan(
-                        text: email,
+                        text: widget.emailOrPhone,
                         style: TextStyle(
                           color: Colors.blue.shade600,
                           fontWeight: FontWeight.w500,
@@ -154,11 +215,17 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 SizedBox(height: 32.h),
 
                 // Verify Button
-                CustomButton(
-                  text: 'Verify',
-                  onPressed: _verify,
-                  backgroundColor: const Color(0xFF4A3FFF),
-                ),
+                _isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF4A3FFF),
+                        ),
+                      )
+                    : CustomButton(
+                        text: 'Verify',
+                        onPressed: _verify,
+                        backgroundColor: const Color(0xFF4A3FFF),
+                      ),
 
                 SizedBox(height: 24.h),
 
