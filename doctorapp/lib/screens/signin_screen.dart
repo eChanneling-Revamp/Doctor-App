@@ -10,6 +10,7 @@ import '../widgets/share_widgets/logo_widget.dart';
 import 'forgot_password/forgot_password_screen.dart';
 import 'signup/signup_screen.dart';
 import '../utils/snackbar_utils.dart';
+import '../services/auth_service.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -23,6 +24,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _rememberMe = false;
   bool _isPasswordVisible = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -31,19 +33,46 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  void _signIn() {
+  void _signIn() async {
     // Handle sign in logic
-    String email = _emailController.text;
+    String email = _emailController.text.trim();
     String password = _passwordController.text;
 
-    if (email.isNotEmpty && password.isNotEmpty) {
-      // Navigate to home screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const DoctorMainApp()),
-      );
-    } else {
+    if (email.isEmpty || password.isEmpty) {
       SnackbarUtils.info(context, 'Please enter email and password');
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final result = await AuthService.login(email: email, password: password);
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (result['success']) {
+          SnackbarUtils.success(context, result['message']);
+          // Navigate to home screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const DoctorMainApp()),
+          );
+        } else {
+          SnackbarUtils.error(context, result['message']);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        SnackbarUtils.error(context, 'An error occurred. Please try again.');
+      }
     }
   }
 
@@ -165,7 +194,13 @@ class _SignInScreenState extends State<SignInScreen> {
                   SizedBox(height: 20.h),
 
                   // Sign In Button
-                  CustomButton(text: 'Sign in', onPressed: _signIn),
+                  _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF4A3FFF),
+                          ),
+                        )
+                      : CustomButton(text: 'Sign in', onPressed: _signIn),
 
                   SizedBox(height: 12.h),
 
