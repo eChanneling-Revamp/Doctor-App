@@ -5,9 +5,13 @@ import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
 import 'signup_success_screen.dart';
+import '../../models/signup_data.dart';
+import '../../services/auth_service.dart';
 
 class SignUpContactScreen extends StatefulWidget {
-  const SignUpContactScreen({super.key});
+  final SignUpData signupData;
+
+  const SignUpContactScreen({super.key, required this.signupData});
 
   @override
   State<SignUpContactScreen> createState() => _SignUpContactScreenState();
@@ -22,6 +26,7 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -36,7 +41,7 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
     Navigator.pop(context);
   }
 
-  void _signUp() {
+  void _signUp() async {
     // Validate and create account
     String contact = _contactController.text.trim();
     String email = _emailController.text.trim();
@@ -56,11 +61,50 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
       return;
     }
 
-    // Navigate to success screen
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => SignUpSuccessScreen()),
-    );
+    // Update signup data with contact details
+    widget.signupData.phone = contact;
+    widget.signupData.email = email;
+    widget.signupData.password = password;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final result = await AuthService.register(
+        fullName: widget.signupData.fullName!,
+        email: widget.signupData.email!,
+        phone: widget.signupData.phone!,
+        password: widget.signupData.password!,
+        medicalSpec: widget.signupData.medicalSpec!,
+        hospital: widget.signupData.hospital!,
+        slmcNumber: widget.signupData.slmcNumber!,
+      );
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (result['success']) {
+          SnackbarUtils.success(context, result['message']);
+          // Navigate to success screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => SignUpSuccessScreen()),
+          );
+        } else {
+          SnackbarUtils.error(context, result['message']);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        SnackbarUtils.error(context, 'An error occurred. Please try again.');
+      }
+    }
   }
 
   @override
@@ -203,7 +247,7 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: _back,
+                      onPressed: _isLoading ? null : _back,
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: Colors.grey.shade300),
                         shape: RoundedRectangleBorder(
@@ -223,7 +267,13 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                   ),
                   SizedBox(width: 16.w),
                   Expanded(
-                    child: CustomButton(text: 'Sign up', onPressed: _signUp),
+                    child: _isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: Color(0xFF4A3FFF),
+                            ),
+                          )
+                        : CustomButton(text: 'Sign up', onPressed: _signUp),
                   ),
                 ],
               ),

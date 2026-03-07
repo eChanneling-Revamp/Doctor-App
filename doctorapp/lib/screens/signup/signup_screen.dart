@@ -6,6 +6,7 @@ import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
 import '../signin_screen.dart';
 import 'signup_photo_screen.dart';
+import '../../models/signup_data.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -39,10 +40,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       SnackbarUtils.error(context, 'Please fill in all fields');
       return;
     }
+
+    // Create signup data object
+    final signupData = SignUpData(
+      fullName: _fullNameController.text.trim(),
+      medicalSpec: _selectedSpecialty,
+      hospital: _primaryHospitalController.text.trim(),
+      slmcNumber: _slmcNumberController.text.trim(),
+    );
+
     SnackbarUtils.success(context, 'Step 1 completed');
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SignUpPhotoScreen()),
+      MaterialPageRoute(
+        builder: (context) => SignUpPhotoScreen(signupData: signupData),
+      ),
     );
   }
 
