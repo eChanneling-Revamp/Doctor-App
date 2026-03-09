@@ -1,4 +1,4 @@
-import 'package:doctorapp/screens/signup/signup_screen.dart';
+import 'package:doctorapp/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/share_widgets/buttons.dart';
@@ -76,7 +76,7 @@ class OnboardingScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                    MaterialPageRoute(builder: (context) => SignInScreen()),
                   );
                 },
               ),

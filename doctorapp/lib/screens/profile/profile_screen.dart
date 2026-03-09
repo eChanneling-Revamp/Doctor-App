@@ -82,7 +82,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ProfileCard(
                         name: _profileData?['name'] ?? 'Unknown',
                         specialty:
-                            _profileData?['medicalSpecs'] ?? 'Specialist',
+                            _profileData?['medicalSpecs'] ??
+                            'Select your specialty',
                         hospital: _profileData?['hospital'] ?? 'Hospital',
                         profileImage: _profileData?['profileImage'],
                         onProfileUpdated: _loadProfile,
