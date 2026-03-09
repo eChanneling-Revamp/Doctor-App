@@ -4,6 +4,7 @@ import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
+import '../../utils/validation_utils.dart';
 import '../signin_screen.dart';
 import 'signup_photo_screen.dart';
 import '../../models/signup_data.dart';
@@ -23,6 +24,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   String _selectedSpecialty = 'Select your specialty';
 
+  // Error messages
+  String? _fullNameError;
+  String? _specialtyError;
+  String? _hospitalError;
+  String? _slmcError;
+
   @override
   void dispose() {
     _fullNameController.dispose();
@@ -32,12 +39,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _next() {
-    // Validate and navigate to next screen
-    if (_fullNameController.text.isEmpty ||
-        _primaryHospitalController.text.isEmpty ||
-        _slmcNumberController.text.isEmpty ||
-        _selectedSpecialty == 'Select your specialty') {
-      SnackbarUtils.error(context, 'Please fill in all fields');
+    // Clear previous errors
+    setState(() {
+      _fullNameError = null;
+      _specialtyError = null;
+      _hospitalError = null;
+      _slmcError = null;
+    });
+
+    // Validate all fields
+    bool hasError = false;
+
+    final fullNameError = ValidationUtils.validateFullName(
+      _fullNameController.text,
+    );
+    final specialtyError = ValidationUtils.validateSpecialty(
+      _selectedSpecialty,
+    );
+    final hospitalError = ValidationUtils.validateHospital(
+      _primaryHospitalController.text,
+    );
+    final slmcError = ValidationUtils.validateSLMCNumber(
+      _slmcNumberController.text,
+    );
+
+    if (fullNameError != null) {
+      setState(() => _fullNameError = fullNameError);
+      hasError = true;
+    }
+
+    if (specialtyError != null) {
+      setState(() => _specialtyError = specialtyError);
+      hasError = true;
+    }
+
+    if (hospitalError != null) {
+      setState(() => _hospitalError = hospitalError);
+      hasError = true;
+    }
+
+    if (slmcError != null) {
+      setState(() => _slmcError = slmcError);
+      hasError = true;
+    }
+
+    if (hasError) {
+      SnackbarUtils.error(context, 'Please fix the errors before continuing');
       return;
     }
 
@@ -118,6 +165,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: 'Your Name',
                     controller: _fullNameController,
                   ),
+                  if (_fullNameError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _fullNameError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -140,7 +195,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: double.infinity,
                     height: 48.h,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
+                      border: Border.all(
+                        color: _specialtyError != null
+                            ? Colors.red
+                            : Colors.grey.shade300,
+                      ),
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: DropdownButtonHideUnderline(
@@ -173,11 +232,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onChanged: (String? newValue) {
                           setState(() {
                             _selectedSpecialty = newValue!;
+                            _specialtyError = null;
                           });
                         },
                       ),
                     ),
                   ),
+                  if (_specialtyError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _specialtyError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -200,6 +268,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: 'Hospital Name',
                     controller: _primaryHospitalController,
                   ),
+                  if (_hospitalError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _hospitalError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -221,7 +297,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   CustomTextField(
                     hintText: 'SLMC Number',
                     controller: _slmcNumberController,
+                    keyboardType: TextInputType.number,
                   ),
+                  if (_slmcError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _slmcError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
