@@ -4,7 +4,8 @@ import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
-import 'signup_success_screen.dart';
+import '../../utils/validation_utils.dart';
+import 'signup_otp_screen.dart';
 import '../../models/signup_data.dart';
 import '../../services/auth_service.dart';
 
@@ -28,6 +29,12 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
   bool _isConfirmPasswordVisible = false;
   bool _isLoading = false;
 
+  // Error messages
+  String? _contactError;
+  String? _emailError;
+  String? _passwordError;
+  String? _confirmPasswordError;
+
   @override
   void dispose() {
     _contactController.dispose();
@@ -42,22 +49,53 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
   }
 
   void _signUp() async {
+    // Clear previous errors
+    setState(() {
+      _contactError = null;
+      _emailError = null;
+      _passwordError = null;
+      _confirmPasswordError = null;
+    });
+
     // Validate and create account
     String contact = _contactController.text.trim();
     String email = _emailController.text.trim();
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
 
-    if (contact.isEmpty ||
-        email.isEmpty ||
-        password.isEmpty ||
-        confirmPassword.isEmpty) {
-      SnackbarUtils.info(context, 'Please fill in all fields');
-      return;
+    // Validate all fields
+    bool hasError = false;
+
+    final contactError = ValidationUtils.validatePhone(contact);
+    final emailError = ValidationUtils.validateEmail(email);
+    final passwordError = ValidationUtils.validatePassword(password);
+    final confirmPasswordError = ValidationUtils.validateConfirmPassword(
+      confirmPassword,
+      password,
+    );
+
+    if (contactError != null) {
+      setState(() => _contactError = contactError);
+      hasError = true;
     }
 
-    if (password != confirmPassword) {
-      SnackbarUtils.error(context, 'Passwords do not match');
+    if (emailError != null) {
+      setState(() => _emailError = emailError);
+      hasError = true;
+    }
+
+    if (passwordError != null) {
+      setState(() => _passwordError = passwordError);
+      hasError = true;
+    }
+
+    if (confirmPasswordError != null) {
+      setState(() => _confirmPasswordError = confirmPasswordError);
+      hasError = true;
+    }
+
+    if (hasError) {
+      SnackbarUtils.error(context, 'Please fix the errors before continuing');
       return;
     }
 
@@ -87,11 +125,19 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
         });
 
         if (result['success']) {
-          SnackbarUtils.success(context, result['message']);
-          // Navigate to success screen
+          SnackbarUtils.success(
+            context,
+            'Registration successful! Please verify your account.',
+          );
+          // Navigate to OTP verification screen
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => SignUpSuccessScreen()),
+            MaterialPageRoute(
+              builder: (context) => SignUpOTPScreen(
+                emailOrPhone: email,
+                displayIdentifier: email,
+              ),
+            ),
           );
         } else {
           SnackbarUtils.error(context, result['message']);
@@ -141,6 +187,14 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                     controller: _contactController,
                     keyboardType: TextInputType.phone,
                   ),
+                  if (_contactError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _contactError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -164,6 +218,14 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                   ),
+                  if (_emailError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _emailError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -200,6 +262,14 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                       },
                     ),
                   ),
+                  if (_passwordError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _passwordError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -237,6 +307,14 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                       },
                     ),
                   ),
+                  if (_confirmPasswordError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _confirmPasswordError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
