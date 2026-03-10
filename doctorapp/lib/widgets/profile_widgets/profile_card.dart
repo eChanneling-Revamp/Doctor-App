@@ -9,6 +9,7 @@ class ProfileCard extends StatelessWidget {
   final String hospital;
   final String? profileImage;
   final VoidCallback? onProfileUpdated;
+  final Map<String, dynamic>? fullProfileData;
 
   const ProfileCard({
     super.key,
@@ -17,6 +18,7 @@ class ProfileCard extends StatelessWidget {
     required this.hospital,
     this.profileImage,
     this.onProfileUpdated,
+    this.fullProfileData,
   });
 
   @override
@@ -99,12 +101,14 @@ class ProfileCard extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => EditProfileScreen(
-                    profileData: {
-                      'name': name,
-                      'medicalSpecs': specialty,
-                      'hospital': hospital,
-                      'profileImage': profileImage,
-                    },
+                    profileData:
+                        fullProfileData ??
+                        {
+                          'name': name,
+                          'medicalSpecs': specialty,
+                          'hospital': hospital,
+                          'profileImage': profileImage,
+                        },
                   ),
                 ),
               );
