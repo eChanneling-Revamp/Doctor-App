@@ -87,6 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         hospital: _profileData?['hospital'] ?? 'Hospital',
                         profileImage: _profileData?['profileImage'],
                         onProfileUpdated: _loadProfile,
+                        fullProfileData: _profileData,
                       ),
 
                       SizedBox(height: 24.h),

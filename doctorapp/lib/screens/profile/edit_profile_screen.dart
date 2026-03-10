@@ -21,11 +21,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _slmcController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   String _selectedSpecialty = 'Select your specialty';
   bool _isLoading = false;
   Map<String, dynamic>? _profileData;
+  final _formKey = GlobalKey<ProfileFormFieldsState>();
 
   @override
   void initState() {
@@ -66,7 +66,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       _fullNameController.text = data['name'] ?? '';
       _selectedSpecialty = data['medicalSpecs'] ?? 'Select your specialty';
       _hospitalController.text = data['hospital'] ?? '';
-      _slmcController.text = data['slmcNumber'] ?? '';
+      // slmcNumber is stored as Int in DB, so convert to String
+      _slmcController.text = data['slmcNumber']?.toString() ?? '';
       _contactController.text = data['contactNumber'] ?? '';
       _emailController.text = data['email'] ?? '';
     });
@@ -79,7 +80,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _slmcController.dispose();
     _contactController.dispose();
     _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
@@ -154,12 +154,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                       // Form Fields
                       ProfileFormFields(
+                        key: _formKey,
                         fullNameController: _fullNameController,
                         hospitalController: _hospitalController,
                         slmcController: _slmcController,
                         contactController: _contactController,
                         emailController: _emailController,
-                        passwordController: _passwordController,
                         selectedSpecialty: _selectedSpecialty,
                         onSpecialtyChanged: (String? newValue) {
                           setState(() {
@@ -178,36 +178,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Future<void> _saveProfile() async {
-    // Validate fields
-    if (_fullNameController.text.isEmpty) {
-      SnackbarUtils.error(context, 'Please enter your full name');
-      return;
-    }
-
-    if (_emailController.text.isEmpty) {
-      SnackbarUtils.error(context, 'Please enter your email');
-      return;
-    }
-
-    if (_contactController.text.isEmpty) {
-      SnackbarUtils.error(context, 'Please enter your contact number');
-      return;
-    }
-
-    if (_selectedSpecialty == 'Select your specialty') {
-      SnackbarUtils.error(context, 'Please select your specialty');
-      return;
-    }
-
-    if (_hospitalController.text.isEmpty) {
-      SnackbarUtils.error(context, 'Please enter your hospital');
-      return;
-    }
-
-    if (_slmcController.text.isEmpty) {
-      SnackbarUtils.error(context, 'Please enter your SLMC number');
-      return;
-    }
+    if (!(_formKey.currentState?.validate() ?? false)) return;
 
     setState(() {
       _isLoading = true;
