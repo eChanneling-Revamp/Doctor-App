@@ -10,6 +10,10 @@ class ProfileService {
   // Get user profile
   static Future<Map<String, dynamic>> getProfile() async {
     try {
+      // Load persisted token if not already in memory
+      if (AuthService.authToken == null) {
+        await AuthService.initializeToken();
+      }
       final token = AuthService.authToken;
       if (token == null) {
         return {'success': false, 'message': 'Not authenticated'};
@@ -49,6 +53,7 @@ class ProfileService {
     String? profileImage,
   }) async {
     try {
+      if (AuthService.authToken == null) await AuthService.initializeToken();
       final token = AuthService.authToken;
       if (token == null) {
         return {'success': false, 'message': 'Not authenticated'};
@@ -95,6 +100,7 @@ class ProfileService {
     required String newPassword,
   }) async {
     try {
+      if (AuthService.authToken == null) await AuthService.initializeToken();
       final token = AuthService.authToken;
       if (token == null) {
         return {'success': false, 'message': 'Not authenticated'};
@@ -135,6 +141,7 @@ class ProfileService {
     required bool enabled,
   }) async {
     try {
+      if (AuthService.authToken == null) await AuthService.initializeToken();
       final token = AuthService.authToken;
       if (token == null) {
         return {'success': false, 'message': 'Not authenticated'};
