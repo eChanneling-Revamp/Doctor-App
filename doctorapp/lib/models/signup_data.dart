@@ -2,7 +2,7 @@ class SignUpData {
   String? fullName;
   String? medicalSpec;
   String? hospital;
-  String? slmcNumber;
+  int? slmcNumber;
   String? phone;
   String? email;
   String? password;
@@ -24,8 +24,7 @@ class SignUpData {
         medicalSpec != 'Select your specialty' &&
         hospital != null &&
         hospital!.isNotEmpty &&
-        slmcNumber != null &&
-        slmcNumber!.isNotEmpty;
+        slmcNumber != null;
   }
 
   bool isComplete() {
