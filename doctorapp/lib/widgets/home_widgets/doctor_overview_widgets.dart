@@ -1,9 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/date_time_utils.dart';
+import '../../services/profile_service.dart';
 
-class DoctorOverviewCard extends StatelessWidget {
+class DoctorOverviewCard extends StatefulWidget {
   const DoctorOverviewCard({super.key});
+
+  @override
+  State<DoctorOverviewCard> createState() => _DoctorOverviewCardState();
+}
+
+class _DoctorOverviewCardState extends State<DoctorOverviewCard> {
+  String _doctorName = 'Doctor';
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    final result = await ProfileService.getProfile();
+    if (mounted && result['success']) {
+      setState(() {
+        _doctorName = result['data']['name'] ?? 'Doctor';
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +68,25 @@ class DoctorOverviewCard extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    Text(
-                      'Dr. Erika Fernando',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    _isLoading
+                        ? SizedBox(
+                            width: 100.w,
+                            height: 16.h,
+                            child: const LinearProgressIndicator(
+                              backgroundColor: Colors.white24,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
+                            ),
+                          )
+                        : Text(
+                            'Dr. $_doctorName',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                   ],
                 ),
                 Padding(
