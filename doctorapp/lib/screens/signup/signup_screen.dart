@@ -93,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       fullName: _fullNameController.text.trim(),
       medicalSpec: _selectedSpecialty,
       hospital: _primaryHospitalController.text.trim(),
-      slmcNumber: _slmcNumberController.text.trim(),
+      slmcNumber: int.tryParse(_slmcNumberController.text.trim()),
     );
 
     SnackbarUtils.success(context, 'Step 1 completed');
