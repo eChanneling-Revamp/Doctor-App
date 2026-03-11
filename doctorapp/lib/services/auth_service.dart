@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   // Get base URL from environment or use default
@@ -8,17 +9,29 @@ class AuthService {
 
   static String get apiUrl => '$baseUrl/api/auth';
 
-  // Store token after successful login
+  static const String _tokenKey = 'auth_token';
+
+  // In-memory cache of the token
   static String? _authToken;
 
   static String? get authToken => _authToken;
 
-  static void setAuthToken(String token) {
-    _authToken = token;
+  /// Load persisted token from storage on app startup.
+  static Future<void> initializeToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    _authToken = prefs.getString(_tokenKey);
   }
 
-  static void clearAuthToken() {
+  static Future<void> setAuthToken(String token) async {
+    _authToken = token;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_tokenKey, token);
+  }
+
+  static Future<void> clearAuthToken() async {
     _authToken = null;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_tokenKey);
   }
 
   // Register new doctor account
@@ -29,7 +42,7 @@ class AuthService {
     required String password,
     required String medicalSpec,
     required String hospital,
-    required String slmcNumber,
+    required int slmcNumber,
   }) async {
     try {
       final response = await http.post(
@@ -82,16 +95,16 @@ class AuthService {
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        // Login successful - store token
-        if (data['data'] != null && data['data']['token'] != null) {
-          setAuthToken(data['data']['token']);
+        // Backend returns { token: "...", user: {...} } at top level
+        if (data['token'] != null) {
+          await setAuthToken(data['token']);
         }
 
         return {
           'success': true,
           'message': data['message'] ?? 'Login successful',
-          'data': data['data'],
-          'token': data['data']?['token'],
+          'data': data['user'],
+          'token': data['token'],
         };
       } else {
         // Login failed
@@ -208,7 +221,7 @@ class AuthService {
         },
       );
 
-      clearAuthToken();
+      await clearAuthToken();
 
       if (response.statusCode == 200) {
         return {'success': true, 'message': 'Logged out successfully'};
@@ -219,7 +232,7 @@ class AuthService {
         };
       }
     } catch (e) {
-      clearAuthToken(); // Clear token even on error
+      await clearAuthToken(); // Clear token even on error
       return {'success': true, 'message': 'Logged out successfully'};
     }
   }
