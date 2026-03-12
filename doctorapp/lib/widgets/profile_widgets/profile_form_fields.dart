@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../share_widgets/inputs.dart';
+import '../../utils/validation_utils.dart';
 
-class ProfileFormFields extends StatelessWidget {
+class ProfileFormFields extends StatefulWidget {
   final TextEditingController fullNameController;
   final TextEditingController hospitalController;
   final TextEditingController slmcController;
   final TextEditingController contactController;
   final TextEditingController emailController;
-  final TextEditingController passwordController;
   final String selectedSpecialty;
   final ValueChanged<String?> onSpecialtyChanged;
 
@@ -19,10 +19,51 @@ class ProfileFormFields extends StatelessWidget {
     required this.slmcController,
     required this.contactController,
     required this.emailController,
-    required this.passwordController,
     required this.selectedSpecialty,
     required this.onSpecialtyChanged,
   });
+
+  @override
+  State<ProfileFormFields> createState() => ProfileFormFieldsState();
+}
+
+class ProfileFormFieldsState extends State<ProfileFormFields> {
+  String? _fullNameError;
+  String? _specialtyError;
+  String? _hospitalError;
+  String? _contactError;
+
+  bool validate() {
+    setState(() {
+      _fullNameError = ValidationUtils.validateFullName(
+        widget.fullNameController.text,
+      );
+      _specialtyError = widget.selectedSpecialty == 'Select your specialty'
+          ? 'Please select your medical specialty'
+          : null;
+      _hospitalError = ValidationUtils.validateHospital(
+        widget.hospitalController.text,
+      );
+      _contactError = ValidationUtils.validatePhone(
+        widget.contactController.text,
+      );
+    });
+    return _fullNameError == null &&
+        _specialtyError == null &&
+        _hospitalError == null &&
+        _contactError == null;
+  }
+
+  Widget _errorText(String? error) {
+    if (error == null) return const SizedBox.shrink();
+    return Padding(
+      padding: EdgeInsets.only(top: 4.h),
+      child: Text(
+        error,
+        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +80,16 @@ class ProfileFormFields extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8.h),
-        CustomTextField(hintText: 'Your Name', controller: fullNameController),
+        CustomTextField(
+          hintText: 'Your Name',
+          controller: widget.fullNameController,
+          onChanged: (_) => setState(() {
+            _fullNameError = ValidationUtils.validateFullName(
+              widget.fullNameController.text,
+            );
+          }),
+        ),
+        _errorText(_fullNameError),
 
         SizedBox(height: 20.h),
 
@@ -57,12 +107,16 @@ class ProfileFormFields extends StatelessWidget {
           width: double.infinity,
           height: 48.h,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade300),
+            border: Border.all(
+              color: _specialtyError != null
+                  ? Colors.red
+                  : Colors.grey.shade300,
+            ),
             borderRadius: BorderRadius.circular(8.r),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              value: selectedSpecialty,
+              value: widget.selectedSpecialty,
               isExpanded: true,
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               items:
@@ -87,10 +141,18 @@ class ProfileFormFields extends StatelessWidget {
                       ),
                     );
                   }).toList(),
-              onChanged: onSpecialtyChanged,
+              onChanged: (val) {
+                widget.onSpecialtyChanged(val);
+                setState(() {
+                  _specialtyError = val == 'Select your specialty'
+                      ? 'Please select your medical specialty'
+                      : null;
+                });
+              },
             ),
           ),
         ),
+        _errorText(_specialtyError),
 
         SizedBox(height: 20.h),
 
@@ -106,8 +168,14 @@ class ProfileFormFields extends StatelessWidget {
         SizedBox(height: 8.h),
         CustomTextField(
           hintText: 'Hospital Name',
-          controller: hospitalController,
+          controller: widget.hospitalController,
+          onChanged: (_) => setState(() {
+            _hospitalError = ValidationUtils.validateHospital(
+              widget.hospitalController.text,
+            );
+          }),
         ),
+        _errorText(_hospitalError),
 
         SizedBox(height: 20.h),
 
@@ -121,7 +189,11 @@ class ProfileFormFields extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8.h),
-        CustomTextField(hintText: 'SLMC Number', controller: slmcController),
+        CustomTextField(
+          hintText: 'SLMC Number',
+          controller: widget.slmcController,
+          readOnly: true,
+        ),
 
         SizedBox(height: 20.h),
 
@@ -137,9 +209,15 @@ class ProfileFormFields extends StatelessWidget {
         SizedBox(height: 8.h),
         CustomTextField(
           hintText: 'Enter your contact number',
-          controller: contactController,
+          controller: widget.contactController,
           keyboardType: TextInputType.phone,
+          onChanged: (_) => setState(() {
+            _contactError = ValidationUtils.validatePhone(
+              widget.contactController.text,
+            );
+          }),
         ),
+        _errorText(_contactError),
 
         SizedBox(height: 20.h),
 
@@ -155,26 +233,9 @@ class ProfileFormFields extends StatelessWidget {
         SizedBox(height: 8.h),
         CustomTextField(
           hintText: 'Enter your email address',
-          controller: emailController,
+          controller: widget.emailController,
           keyboardType: TextInputType.emailAddress,
-        ),
-
-        SizedBox(height: 20.h),
-
-        // Password
-        Text(
-          'Password',
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w500,
-            color: Colors.black87,
-          ),
-        ),
-        SizedBox(height: 8.h),
-        CustomTextField(
-          hintText: '••••••••',
-          controller: passwordController,
-          isPassword: true,
+          readOnly: true,
         ),
       ],
     );

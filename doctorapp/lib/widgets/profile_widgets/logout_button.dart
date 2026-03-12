@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/snackbar_utils.dart';
+import '../../services/auth_service.dart';
+import '../../screens/signin_screen.dart';
 
-class LogoutButton extends StatelessWidget {
+class LogoutButton extends StatefulWidget {
   const LogoutButton({super.key});
+
+  @override
+  State<LogoutButton> createState() => _LogoutButtonState();
+}
+
+class _LogoutButtonState extends State<LogoutButton> {
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _showLogoutDialog(context),
+      onTap: _isLoading ? null : () => _showLogoutDialog(context),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 16.h),
         decoration: BoxDecoration(
@@ -16,21 +25,38 @@ class LogoutButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.grey.shade200),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.logout, color: const Color(0xFF4C40F7), size: 20.r),
-            SizedBox(width: 8.w),
-            Text(
-              'Log Out',
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: const Color(0xFF4C40F7),
+        child: _isLoading
+            ? Center(
+                child: SizedBox(
+                  height: 20.h,
+                  width: 20.w,
+                  child: const CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFF4C40F7),
+                    ),
+                  ),
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.logout,
+                    color: const Color(0xFF4C40F7),
+                    size: 20.r,
+                  ),
+                  SizedBox(width: 8.w),
+                  Text(
+                    'Log Out',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF4C40F7),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -64,15 +90,9 @@ class LogoutButton extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pop(context); // Close dialog
-                SnackbarUtils.success(context, 'Logged out successfully');
-                // Navigate back after a short delay
-                Future.delayed(const Duration(milliseconds: 500), () {
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
-                });
+                await _performLogout();
               },
               child: Text(
                 'Log Out',
@@ -87,5 +107,45 @@ class LogoutButton extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> _performLogout() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final result = await AuthService.logout();
+
+      if (!mounted) return;
+
+      if (result['success']) {
+        SnackbarUtils.success(
+          context,
+          result['message'] ?? 'Logged out successfully',
+        );
+
+        // Navigate to sign-in screen and clear all routes
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const SignInScreen()),
+              (route) => false,
+            );
+          }
+        });
+      } else {
+        SnackbarUtils.error(context, result['message'] ?? 'Logout failed');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (!mounted) return;
+      SnackbarUtils.error(context, 'An error occurred during logout');
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 }

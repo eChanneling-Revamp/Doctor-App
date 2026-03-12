@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'screens/splash_screen.dart';
+import 'services/auth_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +11,8 @@ Future<void> main() async {
   try {
     await dotenv.load(fileName: '.env');
   } catch (_) {}
+  // Restore persisted auth token so profile and other screens work after restart
+  await AuthService.initializeToken();
   runApp(const DoctorApp());
 }
 

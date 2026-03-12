@@ -7,9 +7,12 @@ import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../signin_screen.dart';
 import '../../utils/snackbar_utils.dart';
+import '../../services/auth_service.dart';
 
 class NewPasswordScreen extends StatefulWidget {
-  const NewPasswordScreen({super.key});
+  final String emailOrPhone;
+
+  const NewPasswordScreen({super.key, required this.emailOrPhone});
 
   @override
   State<NewPasswordScreen> createState() => _NewPasswordScreenState();
@@ -21,6 +24,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       TextEditingController();
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  bool _isLoading = false;
 
   // Password validation
   bool _hasMinLength = false;
@@ -44,7 +48,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     });
   }
 
-  void _resetPassword() {
+  void _resetPassword() async {
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
 
@@ -63,15 +67,41 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       return;
     }
 
-    // Password reset successful
-    SnackbarUtils.success(context, 'Password reset successful!');
+    setState(() {
+      _isLoading = true;
+    });
 
-    // Navigate back to sign in
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => SignInScreen()),
-      (route) => false,
-    );
+    try {
+      final result = await AuthService.resetPassword(
+        emailOrPhone: widget.emailOrPhone,
+        newPassword: password,
+      );
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (result['success']) {
+          SnackbarUtils.success(context, 'Password reset successful!');
+          // Navigate back to sign in
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => SignInScreen()),
+            (route) => false,
+          );
+        } else {
+          SnackbarUtils.error(context, result['message']);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        SnackbarUtils.error(context, 'An error occurred. Please try again.');
+      }
+    }
   }
 
   @override
@@ -191,11 +221,17 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 SizedBox(height: 32.h),
 
                 // Reset Password Button
-                CustomButton(
-                  text: 'Reset Password',
-                  onPressed: _resetPassword,
-                  backgroundColor: const Color(0xFF4A3FFF),
-                ),
+                _isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF4A3FFF),
+                        ),
+                      )
+                    : CustomButton(
+                        text: 'Reset Password',
+                        onPressed: _resetPassword,
+                        backgroundColor: const Color(0xFF4A3FFF),
+                      ),
               ],
             ),
           ),
