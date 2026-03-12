@@ -5,17 +5,56 @@ import '../../utils/snackbar_utils.dart';
 import '../../screens/profile/security_settings_screen.dart';
 import '../../screens/profile/help_center_screen.dart';
 import '../../screens/profile/terms_conditions_screen.dart';
+import '../../services/profile_service.dart';
 
 class SettingsSection extends StatefulWidget {
-  const SettingsSection({super.key});
+  final bool biometricEnabled;
+
+  const SettingsSection({super.key, this.biometricEnabled = false});
 
   @override
   State<SettingsSection> createState() => _SettingsSectionState();
 }
 
 class _SettingsSectionState extends State<SettingsSection> {
-  bool _biometricEnabled = false;
+  late bool _biometricEnabled;
   bool _isDarkMode = false;
+  bool _isUpdatingBiometric = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _biometricEnabled = widget.biometricEnabled;
+  }
+
+  Future<void> _toggleBiometric(bool value) async {
+    setState(() {
+      _isUpdatingBiometric = true;
+    });
+
+    final result = await ProfileService.toggleBiometric(enabled: value);
+
+    if (mounted) {
+      setState(() {
+        _isUpdatingBiometric = false;
+      });
+
+      if (result['success']) {
+        setState(() {
+          _biometricEnabled = value;
+        });
+        SnackbarUtils.success(
+          context,
+          value ? 'Biometric login enabled' : 'Biometric login disabled',
+        );
+      } else {
+        SnackbarUtils.error(
+          context,
+          result['message'] ?? 'Failed to update biometric setting',
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +78,17 @@ class _SettingsSectionState extends State<SettingsSection> {
           iconBgColor: const Color(0xFFF3E8FF),
           title: 'Biometric Login',
           subtitle: 'Use fingerprint to login',
-          trailing: Switch(
-            value: _biometricEnabled,
-            onChanged: (value) {
-              setState(() {
-                _biometricEnabled = value;
-              });
-              SnackbarUtils.info(
-                context,
-                value ? 'Biometric login enabled' : 'Biometric login disabled',
-              );
-            },
-            activeColor: const Color(0xFF4C40F7),
-          ),
+          trailing: _isUpdatingBiometric
+              ? SizedBox(
+                  width: 24.w,
+                  height: 24.h,
+                  child: const CircularProgressIndicator(strokeWidth: 2),
+                )
+              : Switch(
+                  value: _biometricEnabled,
+                  onChanged: _toggleBiometric,
+                  activeColor: const Color(0xFF4C40F7),
+                ),
           showArrow: false,
         ),
 

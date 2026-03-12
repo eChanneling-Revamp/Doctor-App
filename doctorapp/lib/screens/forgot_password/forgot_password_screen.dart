@@ -6,6 +6,7 @@ import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
 import 'verification_code_screen.dart';
+import '../../services/auth_service.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -16,6 +17,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -23,19 +25,45 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  void _sendCode() {
+  void _sendCode() async {
     String email = _emailController.text.trim();
-    if (email.isNotEmpty) {
-      // Navigate to verification screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => VerificationCodeScreen(),
-          settings: RouteSettings(arguments: email),
-        ),
-      );
-    } else {
+    if (email.isEmpty) {
       SnackbarUtils.info(context, 'Please enter your email or phone number');
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final result = await AuthService.forgotPassword(emailOrPhone: email);
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (result['success']) {
+          SnackbarUtils.success(context, result['message']);
+          // Navigate to verification screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => VerificationCodeScreen(emailOrPhone: email),
+            ),
+          );
+        } else {
+          SnackbarUtils.error(context, result['message']);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        SnackbarUtils.error(context, 'An error occurred. Please try again.');
+      }
     }
   }
 
@@ -97,11 +125,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 SizedBox(height: 24.h),
 
                 // Send Code Button
-                CustomButton(
-                  text: 'Send Code',
-                  onPressed: _sendCode,
-                  backgroundColor: const Color(0xFF4A3FFF),
-                ),
+                _isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF4A3FFF),
+                        ),
+                      )
+                    : CustomButton(
+                        text: 'Send Code',
+                        onPressed: _sendCode,
+                        backgroundColor: const Color(0xFF4A3FFF),
+                      ),
               ],
             ),
           ),

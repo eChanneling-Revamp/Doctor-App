@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../share_widgets/inputs.dart';
 import '../share_widgets/buttons.dart';
 import '../../utils/snackbar_utils.dart';
+import '../../services/profile_service.dart';
 
 class ChangePasswordSection extends StatefulWidget {
   const ChangePasswordSection({super.key});
@@ -21,6 +22,7 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
   bool _obscureCurrentPassword = true;
   bool _obscureNewPassword = true;
   bool _obscureConfirmPassword = true;
+  bool _isLoading = false;
 
   // Password validation states
   bool _hasMinLength = false;
@@ -45,7 +47,7 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
     });
   }
 
-  void _changePassword() {
+  Future<void> _changePassword() async {
     if (_currentPasswordController.text.isEmpty) {
       SnackbarUtils.error(context, 'Please enter current password');
       return;
@@ -66,12 +68,47 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
       return;
     }
 
-    SnackbarUtils.success(context, 'Password changed successfully');
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        Navigator.pop(context);
-      }
+    setState(() {
+      _isLoading = true;
     });
+
+    final result = await ProfileService.changePassword(
+      currentPassword: _currentPasswordController.text,
+      newPassword: _newPasswordController.text,
+    );
+
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (result['success']) {
+        SnackbarUtils.success(
+          context,
+          result['message'] ?? 'Password changed successfully',
+        );
+        // Clear the form
+        _currentPasswordController.clear();
+        _newPasswordController.clear();
+        _confirmPasswordController.clear();
+        setState(() {
+          _hasMinLength = false;
+          _hasNumber = false;
+          _hasLowercase = false;
+          _hasUppercase = false;
+        });
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            Navigator.pop(context);
+          }
+        });
+      } else {
+        SnackbarUtils.error(
+          context,
+          result['message'] ?? 'Failed to change password',
+        );
+      }
+    }
   }
 
   @override
@@ -185,11 +222,17 @@ class _ChangePasswordSectionState extends State<ChangePasswordSection> {
           SizedBox(height: 20.h),
 
           // Change Password Button
-          CustomButton(
-            text: 'Change Password',
-            onPressed: _changePassword,
-            backgroundColor: const Color(0xFF4C40F7),
-          ),
+          _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: const Color(0xFF4C40F7),
+                  ),
+                )
+              : CustomButton(
+                  text: 'Change Password',
+                  onPressed: _changePassword,
+                  backgroundColor: const Color(0xFF4C40F7),
+                ),
         ],
       ),
     );
