@@ -7,12 +7,18 @@ class ProfileCard extends StatelessWidget {
   final String name;
   final String specialty;
   final String hospital;
+  final String? profileImage;
+  final VoidCallback? onProfileUpdated;
+  final Map<String, dynamic>? fullProfileData;
 
   const ProfileCard({
     super.key,
     required this.name,
     required this.specialty,
     required this.hospital,
+    this.profileImage,
+    this.onProfileUpdated,
+    this.fullProfileData,
   });
 
   @override
@@ -34,8 +40,16 @@ class ProfileCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               shape: BoxShape.circle,
+              image: profileImage != null
+                  ? DecorationImage(
+                      image: NetworkImage(profileImage!),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
             ),
-            child: Icon(Icons.person, size: 50.r, color: Colors.grey.shade400),
+            child: profileImage == null
+                ? Icon(Icons.person, size: 50.r, color: Colors.grey.shade400)
+                : null,
           ),
 
           SizedBox(height: 16.h),
@@ -82,13 +96,26 @@ class ProfileCard extends StatelessWidget {
           // Edit Profile Button
           CustomButton(
             text: 'Edit Profile',
-            onPressed: () {
-              Navigator.push(
+            onPressed: () async {
+              final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const EditProfileScreen(),
+                  builder: (context) => EditProfileScreen(
+                    profileData:
+                        fullProfileData ??
+                        {
+                          'name': name,
+                          'medicalSpecs': specialty,
+                          'hospital': hospital,
+                          'profileImage': profileImage,
+                        },
+                  ),
                 ),
               );
+              // Trigger parent refresh if profile was updated
+              if (result == true && onProfileUpdated != null) {
+                onProfileUpdated!();
+              }
             },
             backgroundColor: const Color(0xFF4C40F7),
           ),

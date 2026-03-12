@@ -4,9 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
+import '../../models/signup_data.dart';
 
 class SignUpPhotoScreen extends StatefulWidget {
-  const SignUpPhotoScreen({super.key});
+  final SignUpData signupData;
+
+  const SignUpPhotoScreen({super.key, required this.signupData});
 
   @override
   State<SignUpPhotoScreen> createState() => _SignUpPhotoScreenState();
@@ -30,7 +33,10 @@ class _SignUpPhotoScreenState extends State<SignUpPhotoScreen> {
   void _next() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SignUpContactScreen()),
+      MaterialPageRoute(
+        builder: (context) =>
+            SignUpContactScreen(signupData: widget.signupData),
+      ),
     );
   }
 

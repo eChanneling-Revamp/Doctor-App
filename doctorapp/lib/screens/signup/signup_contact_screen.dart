@@ -4,10 +4,15 @@ import '../../widgets/share_widgets/buttons.dart';
 import '../../widgets/share_widgets/inputs.dart';
 import '../../widgets/share_widgets/logo_widget.dart';
 import '../../utils/snackbar_utils.dart';
-import 'signup_success_screen.dart';
+import '../../utils/validation_utils.dart';
+import 'signup_otp_screen.dart';
+import '../../models/signup_data.dart';
+import '../../services/auth_service.dart';
 
 class SignUpContactScreen extends StatefulWidget {
-  const SignUpContactScreen({super.key});
+  final SignUpData signupData;
+
+  const SignUpContactScreen({super.key, required this.signupData});
 
   @override
   State<SignUpContactScreen> createState() => _SignUpContactScreenState();
@@ -22,6 +27,13 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  bool _isLoading = false;
+
+  // Error messages
+  String? _contactError;
+  String? _emailError;
+  String? _passwordError;
+  String? _confirmPasswordError;
 
   @override
   void dispose() {
@@ -36,31 +48,109 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
     Navigator.pop(context);
   }
 
-  void _signUp() {
+  void _signUp() async {
+    // Clear previous errors
+    setState(() {
+      _contactError = null;
+      _emailError = null;
+      _passwordError = null;
+      _confirmPasswordError = null;
+    });
+
     // Validate and create account
     String contact = _contactController.text.trim();
     String email = _emailController.text.trim();
     String password = _passwordController.text;
     String confirmPassword = _confirmPasswordController.text;
 
-    if (contact.isEmpty ||
-        email.isEmpty ||
-        password.isEmpty ||
-        confirmPassword.isEmpty) {
-      SnackbarUtils.info(context, 'Please fill in all fields');
-      return;
-    }
+    // Validate all fields
+    bool hasError = false;
 
-    if (password != confirmPassword) {
-      SnackbarUtils.error(context, 'Passwords do not match');
-      return;
-    }
-
-    // Navigate to success screen
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => SignUpSuccessScreen()),
+    final contactError = ValidationUtils.validatePhone(contact);
+    final emailError = ValidationUtils.validateEmail(email);
+    final passwordError = ValidationUtils.validatePassword(password);
+    final confirmPasswordError = ValidationUtils.validateConfirmPassword(
+      confirmPassword,
+      password,
     );
+
+    if (contactError != null) {
+      setState(() => _contactError = contactError);
+      hasError = true;
+    }
+
+    if (emailError != null) {
+      setState(() => _emailError = emailError);
+      hasError = true;
+    }
+
+    if (passwordError != null) {
+      setState(() => _passwordError = passwordError);
+      hasError = true;
+    }
+
+    if (confirmPasswordError != null) {
+      setState(() => _confirmPasswordError = confirmPasswordError);
+      hasError = true;
+    }
+
+    if (hasError) {
+      SnackbarUtils.error(context, 'Please fix the errors before continuing');
+      return;
+    }
+
+    // Update signup data with contact details
+    widget.signupData.phone = contact;
+    widget.signupData.email = email;
+    widget.signupData.password = password;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final result = await AuthService.register(
+        fullName: widget.signupData.fullName!,
+        email: widget.signupData.email!,
+        phone: widget.signupData.phone!,
+        password: widget.signupData.password!,
+        medicalSpec: widget.signupData.medicalSpec!,
+        hospital: widget.signupData.hospital!,
+        slmcNumber: widget.signupData.slmcNumber!,
+      );
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (result['success']) {
+          SnackbarUtils.success(
+            context,
+            'Registration successful! Please verify your account.',
+          );
+          // Navigate to OTP verification screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SignUpOTPScreen(
+                emailOrPhone: email,
+                displayIdentifier: email,
+              ),
+            ),
+          );
+        } else {
+          SnackbarUtils.error(context, result['message']);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        SnackbarUtils.error(context, 'An error occurred. Please try again.');
+      }
+    }
   }
 
   @override
@@ -97,6 +187,14 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                     controller: _contactController,
                     keyboardType: TextInputType.phone,
                   ),
+                  if (_contactError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _contactError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -120,6 +218,14 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                   ),
+                  if (_emailError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _emailError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -156,6 +262,14 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                       },
                     ),
                   ),
+                  if (_passwordError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _passwordError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -193,6 +307,14 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                       },
                     ),
                   ),
+                  if (_confirmPasswordError != null)
+                    Padding(
+                      padding: EdgeInsets.only(top: 4.h),
+                      child: Text(
+                        _confirmPasswordError!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
 
@@ -203,7 +325,7 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: _back,
+                      onPressed: _isLoading ? null : _back,
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: Colors.grey.shade300),
                         shape: RoundedRectangleBorder(
@@ -223,7 +345,13 @@ class _SignUpContactScreenState extends State<SignUpContactScreen> {
                   ),
                   SizedBox(width: 16.w),
                   Expanded(
-                    child: CustomButton(text: 'Sign up', onPressed: _signUp),
+                    child: _isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: Color(0xFF4A3FFF),
+                            ),
+                          )
+                        : CustomButton(text: 'Sign up', onPressed: _signUp),
                   ),
                 ],
               ),
