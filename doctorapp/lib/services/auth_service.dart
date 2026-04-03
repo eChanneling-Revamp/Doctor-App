@@ -10,6 +10,7 @@ class AuthService {
   static String get apiUrl => '$baseUrl/api/auth';
 
   static const String _tokenKey = 'auth_token';
+  static const String _doctorIdKey = 'doctor_id';
 
   // In-memory cache of the token
   static String? _authToken;
@@ -32,6 +33,17 @@ class AuthService {
     _authToken = null;
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_tokenKey);
+    await prefs.remove(_doctorIdKey);
+  }
+
+  static Future<String?> getDoctorId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_doctorIdKey);
+  }
+
+  static Future<void> _setDoctorId(String doctorId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_doctorIdKey, doctorId);
   }
 
   // Register new doctor account
@@ -98,6 +110,11 @@ class AuthService {
         // Backend returns { token: "...", user: {...} } at top level
         if (data['token'] != null) {
           await setAuthToken(data['token']);
+        }
+
+        // Store doctorId if provided by backend
+        if (data['user'] != null && data['user']['doctorId'] != null) {
+          await _setDoctorId(data['user']['doctorId']);
         }
 
         return {

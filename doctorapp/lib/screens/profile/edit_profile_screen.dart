@@ -61,10 +61,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void _loadProfileData(Map<String, dynamic> data) {
+    // Map old specialty values to new ones for consistency
+    var specialty = data['medicalSpecs'] ?? 'Select your specialty';
+    if (specialty == 'General') {
+      specialty = 'General Medicine';
+    }
+
     setState(() {
       _profileData = data;
       _fullNameController.text = data['name'] ?? '';
-      _selectedSpecialty = data['medicalSpecs'] ?? 'Select your specialty';
+      _selectedSpecialty = specialty;
       _hospitalController.text = data['hospital'] ?? '';
       // slmcNumber is stored as Int in DB, so convert to String
       _slmcController.text = data['slmcNumber']?.toString() ?? '';
