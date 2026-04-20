@@ -35,15 +35,21 @@ class PrescriptionHeader extends StatelessWidget {
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'Mary De Silva',
-                            style: TextStyle(fontWeight: FontWeight.w700),
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                          SizedBox(height: 4),
+                          SizedBox(height: 4.h),
                           Text(
                             'Age : 28  \nID : E00210\nRef : App-2025002',
-                            style: TextStyle(color: Colors.black54),
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: Colors.black54,
+                            ),
                           ),
                         ],
                       ),
@@ -57,9 +63,12 @@ class PrescriptionHeader extends StatelessWidget {
                         color: const Color(0xFFE6F7EB),
                         borderRadius: BorderRadius.circular(20.r),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Active',
-                        style: TextStyle(color: Color(0xFF10B981)),
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: Color(0xFF10B981),
+                        ),
                       ),
                     ),
                   ],
