@@ -214,3 +214,4 @@ class TeleconsultationService {
   /// General helper to download any bytes (image/pdf). Alias to downloadPdf.
   Future<Uint8List> downloadBytes(String url) => downloadPdf(url);
 }
+
